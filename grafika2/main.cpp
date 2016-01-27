@@ -31,44 +31,59 @@ void borderedRectangle(int x1, int y1, int x2, int y2,
 void setWarna(int x, int y) {
   fb.set(x, y, 100, 15+(x-100)/2, 200-(y-100)/5, 0);
 } 
-int sign(int x){
-  return (x > 0) - (x < 0);
-}
-void line(int x0, int y0, int x1, int y1){
-     float deltax = x1 - x0;
-     float deltay = y1 - y0;
-     float error = 0;
-     float deltaerr = abs(deltay / deltax) ;   
-     int y = y0;
-     if(x1>x0){
-      for(int x=x0;x<=x1;x++){
-        setWarna(x,y);
-        error = error + deltaerr;
-         while (error >= 0.5 ){
-            setWarna(x, y);
-            y = y + sign(y1 - y0);
-            error = error - 1.0;
-         }
+/**
+ * MULAI ICAL EDIT
+ */
+inline int sign(int x) { return (x > 0) - (x < 0); }
+void line(int x0, int y0, int x1, int y1)
+{
+  int deltax = x1 - x0;
+  int adx = abs(deltax);
+  int dx = sign(deltax);
+
+  int deltay = y1 - y0;
+  int ady = abs(deltay);
+  int dy = sign(deltay);
+
+  setWarna(x0, y0);
+  if (adx < ady) {
+    int D = 2 * adx - ady;
+    int x = x0;
+    if (D > 0) {
+      x += dx;
+      D -= 2 * ady;
+    }
+
+    for (int y = y0 + dy; y != y1; y += dy) {
+      setWarna(x, y);
+      D += 2 * adx;
+      while (D > 0) {
+        x += dx;
+        D -= 2 * ady;
       }
-     }
-     else if(x0>x1){
-      for(int x=x0;x>=x1;x--){
-        setWarna(x,y);
-        error = error + deltaerr;
-         while (error >= 0.5 ){
-            setWarna(x, y);
-            y = y + sign(y1 - y0);
-            error = error - 1.0;
-         }
+    }
+  }
+  else {
+    int D = 2 * ady - adx;    
+    int y = y0;
+    if (D > 0) {
+      y += dy;
+      D -= 2 * adx;
+    }
+
+    for (int x = x0 + dx; x != x1; x += dx) {
+      setWarna(x, y);
+      D += 2 * ady;
+      while (D > 0) {
+        y += dy;
+        D -= 2 * adx;
       }
-     }
-     else if(x0==x1){
-       for(int z=y0;z>=y1;z--){
-          setWarna(x0,z);
-       }
-     }
-         
+    }
+  }
 }
+/**
+ * AKHIR
+ */
 void fun1(int px, int py) {
 	int i = 0, x, y;
   // Figure out where in memory to put the pixel
@@ -113,11 +128,11 @@ void *inc_x(void *x_void_ptr)
        if(targetx<800)
        targetx+=10;
      }
-     else if (cmd == 'w' || cmd == 'W' || cmd == -1) {
+     else if (cmd == 'q' || cmd == 'Q' || cmd == -1) {
        if(tembakanx>0)
        tembakanx-=10;
      }
-     else if (cmd == 's' || cmd == 'S' || cmd == -2) {
+     else if (cmd == 'e' || cmd == 'E' || cmd == -2) {
        if(tembakanx<800)
        tembakanx+=10;
      }
