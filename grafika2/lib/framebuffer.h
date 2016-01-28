@@ -19,84 +19,9 @@
 #include <cmath>
 #include <algorithm>
 
-/**
- * Class that represents color (defined by red, green, blue, and alpha values)
- */
-class Color {
-public:
-  Color() : red(0), green(0), blue(0), alpha(0) {}
-  Color(char _red, char _green, char _blue, char _alpha = 0) :
-    red(_red), green(_green), blue(_blue), alpha(_alpha) {}
-  char red, green, blue, alpha;
-
-  bool operator== (const Color &rhs) const {
-    return ((red == rhs.red) and (green == rhs.green) and (blue == rhs.blue) and (alpha == rhs.alpha));
-  }
-
-  bool operator!= (const Color &rhs) const {
-    return (!(*this == rhs));
-  }
-  /* static constants */
-  static const Color RED, GREEN, BLUE, YELLOW, PURPLE, CYAN, BLACK, WHITE, EMPTY;
-};
-
-/**
- * Class that represents 2D point
- */
-class Point {
-public:
-  Point() : x(0), y(0) {}
-  Point(int _x, int _y) : x(_x), y(_y) {}
-  
-  void resize(float size, const Point& center = Point()) {
-    *this -= center;
-    x *= size;
-    y *= size;
-    *this += center;
-  }
-
-  Point operator+=(const Point& rhs) {
-    x += rhs.x;
-    y += rhs.y;
-    return *this;
-  }
-
-  Point operator+(const Point& rhs) {
-    return Point(x+rhs.x, y+rhs.y);
-  }
-
-  Point operator-=(const Point& rhs) {
-    x -= rhs.x;
-    y -= rhs.y;
-    return *this;
-  }
-
-  Point operator-(const Point& rhs) {
-    return Point(x-rhs.x, y-rhs.y);
-  }
-
-  void rotate(const int& degree, const Point& offset = Point(0, 0)) {
-    *this -= offset;
-    Point temp = *this;
-    float rad = degree*3.14159265/180.0;
-    x = temp.x*cos(rad)-temp.y*sin(rad);
-    y = temp.x*sin(rad)+temp.y*cos(rad);
-    *this += offset;
-  }
-
-  int x, y;
-};
-
-class Frame {
-public:
-  virtual void set(int x, int y, Color c) = 0;
-  virtual void set(Point p, Color c) = 0;
-  virtual void set(int x, int y, char red, char green, char blue, char alpha = 0) = 0;
-  virtual Color get(Point p) = 0;
-  virtual Color get(int x, int y) = 0;
-  virtual int getXSize() = 0;
-  virtual int getYSize() = 0;
-};
+#include "color.h"
+#include "point.h"
+#include "frame.h"
 
 class FrameMatrix : public Frame {
 public:
@@ -187,6 +112,8 @@ private:
   std::map<int, std::map<int, Color> > matrix;
   int xres, yres;
 };
+
+
 /**
  * Helper class to access linux framebuffer.
  * Source: http://xathrya.web.id/blog/2012/10/26/graphic-programming-using-frame-buffer-on-linux/
@@ -337,6 +264,17 @@ public:
       set(p.x, p.y, Color::BLACK);
       visited[p.x][p.y] = 0;
       lastSet.pop_back();
+    }
+  }
+
+  void clear(std::vector<Point>& all) {
+    while(!all.empty()) {
+      Point &p = all.back();
+      set(p.x, p.y, Color::BLACK);
+      if (0 <= p.x && p.x < xres && 0 <= p.y && p.y < yres) {
+        visited[p.x][p.y] = 0;
+      }
+      all.pop_back();
     }
   }
 
