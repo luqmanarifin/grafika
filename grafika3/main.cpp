@@ -8,6 +8,13 @@ Polygon* printA(){
     pol->addPoint(Point(0, 600));
     pol->addPoint(Point(150, 600));
     pol->addPoint(Point(300, 370));
+    pol->addPoint(Point(400, 370));
+    pol->addPoint(Point(400, 270));
+    pol->addPoint(Point(330, 270));
+    pol->addPoint(Point(400, 140));
+    pol->addPoint(Point(470, 270));
+    pol->addPoint(Point(400, 270));
+    pol->addPoint(Point(400, 370));
     pol->addPoint(Point(500, 370));
     pol->addPoint(Point(650, 600));
     pol->addPoint(Point(800, 600));
@@ -46,6 +53,13 @@ Polygon* printD(){
     Polygon* pol = new Polygon();
     pol->addPoint(Point(200, 0));
     pol->addPoint(Point(300, 0));
+    pol->addPoint(Point(300, 500));
+    pol->addPoint(Point(450, 450));
+    pol->addPoint(Point(500, 425));
+    pol->addPoint(Point(500, 175));
+    pol->addPoint(Point(450, 150));
+    pol->addPoint(Point(300, 100));
+     pol->addPoint(Point(300, 0));
     pol->addPoint(Point(450, 50));
     pol->addPoint(Point(600, 175));
     pol->addPoint(Point(600, 425));
@@ -137,45 +151,56 @@ Polygon* printM(){
 }
 Polygon* printR(){
     Polygon* pol = new Polygon();
-    pol->addPoint(Point(200, 0));
-    pol->addPoint(Point(300, 0));
+    pol->addPoint(Point(100, 0));
+    pol->addPoint(Point(500, 0));
+    pol->addPoint(Point(700, 120));
+    pol->addPoint(Point(700, 240));
+    pol->addPoint(Point(500, 360));
+    pol->addPoint(Point(700, 480));
+    pol->addPoint(Point(700, 360));
+    pol->addPoint(Point(700, 600));
+    pol->addPoint(Point(500, 600));
+    pol->addPoint(Point(500, 480));
+    pol->addPoint(Point(301, 480));
+    pol->addPoint(Point(301, 240));
+    pol->addPoint(Point(500, 240));
+    pol->addPoint(Point(500, 120));
+    pol->addPoint(Point(301, 120));
+    pol->addPoint(Point(300, 480));
     pol->addPoint(Point(300, 600));
-    pol->addPoint(Point(200, 600));
-    pol->addPoint(Point(450, 50));
-    pol->addPoint(Point(600, 100));
-    pol->addPoint(Point(600, 225));
-    pol->addPoint(Point(450, 375));
-
-    pol->addPoint(Point(300, 375));
-    pol->addPoint(Point(400, 375));
-    pol->addPoint(Point(400, 600));
-    pol->addPoint(Point(600, 600));
+    pol->addPoint(Point(100, 600));
     return pol;
 }
 Polygon* printH(){
     Polygon* pol = new Polygon();
-    pol->addPoint(Point(150, 0));
-    pol->addPoint(Point(250, 0));
-    pol->addPoint(Point(250, 600));
-    pol->addPoint(Point(150, 600));
-    pol->addPoint(Point(150, 350));
-    pol->addPoint(Point(450, 350));
-    pol->addPoint(Point(350, 0));
-    pol->addPoint(Point(450, 0));
-    pol->addPoint(Point(450, 600));
-    pol->addPoint(Point(350, 600));
+    pol->addPoint(Point(100, 0));
+    pol->addPoint(Point(300, 0));
+    pol->addPoint(Point(300, 200));
+    pol->addPoint(Point(500, 200));
+    pol->addPoint(Point(500, 0));
+    pol->addPoint(Point(700, 0));
+    pol->addPoint(Point(700, 600));
+    pol->addPoint(Point(500, 600));
+    pol->addPoint(Point(500, 400));
+    pol->addPoint(Point(300, 400));
+    pol->addPoint(Point(300, 600));
+    pol->addPoint(Point(100, 600));
     return pol;
 }
 Polygon* printE(){
     Polygon* pol = new Polygon();
-    pol->addPoint(Point(200, 0));
-    pol->addPoint(Point(600, 0));
-    pol->addPoint(Point(600, 100));
-    pol->addPoint(Point(300, 100));
-    pol->addPoint(Point(300, 500));
-    pol->addPoint(Point(600, 500));
-    pol->addPoint(Point(600, 600));
-    pol->addPoint(Point(200, 600));
+    pol->addPoint(Point(100, 0));
+    pol->addPoint(Point(700, 0));
+    pol->addPoint(Point(700, 120));
+    pol->addPoint(Point(300, 120));
+    pol->addPoint(Point(300, 240));
+    pol->addPoint(Point(700, 240));
+    pol->addPoint(Point(700, 360));
+    pol->addPoint(Point(300, 360));
+    pol->addPoint(Point(300, 480));
+    pol->addPoint(Point(700, 480));
+    pol->addPoint(Point(700, 600));
+    pol->addPoint(Point(100, 600));
     return pol;
 }
 Polygon* proto[30];
@@ -239,6 +264,7 @@ void run(){
 }
 int main() {
   system("clear");
+  //printA()->print(fb);
   run();
   return 0;
 }
