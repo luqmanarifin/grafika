@@ -82,6 +82,20 @@ Polygon printL(){
     //printf("Masuk 1\n");
     return pol;
 }
+Polygon printU(){
+    Polygon pol;
+    pol.addPoint(Point(100, 0));
+    pol.addPoint(Point(200, 0));
+    pol.addPoint(Point(200, 500));
+    pol.addPoint(Point(600, 500));
+    pol.addPoint(Point(600, 0));
+    pol.addPoint(Point(700, 0));
+    pol.addPoint(Point(700, 600));
+    pol.addPoint(Point(100, 600));
+    
+    //printf("Masuk 1\n");
+    return pol;
+}
 Polygon printC(){
     Polygon pol;
     pol.addPoint(Point(100, 50));
@@ -139,7 +153,7 @@ Polygon printM(){
 int main() {
   system("clear");
   while(1) {
-    printL().print(fb);;
+    printU().print(fb);;
   }
   return 0;
 }
