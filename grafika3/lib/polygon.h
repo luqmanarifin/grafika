@@ -46,6 +46,9 @@ struct Polygon {
           } else {
             int d = abs(l - y)*abs(la - ra)/abs(l - r);
             a[sz++] = la + (la < ra? d : -d);
+
+            for (int k = sz; k && a[k] < a[k - 1]; --k) 
+              a[k] ^= a[k - 1] ^= a[k] ^= a[k - 1];
           }
         }
       }
