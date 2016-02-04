@@ -39,13 +39,16 @@ public:
     return Point(x-rhs.x, y-rhs.y);
   }
 
-  void rotate(const int& degree, const Point& offset = Point(0, 0)) {
-    *this -= offset;
+  Point rotate(int degree, const Point& center = Point(0, 0)) {
+    *this -= center;
     Point temp = *this;
+
     float rad = degree*3.14159265/180.0;
     x = temp.x*cos(rad)-temp.y*sin(rad);
     y = temp.x*sin(rad)+temp.y*cos(rad);
-    *this += offset;
+
+    *this += center;
+    return *this;
   }
 
   Point scale(const Point& center, double factor) {
@@ -69,7 +72,6 @@ public:
     stream << "<" << p.x << ", " << p.y << ">\n";
   }
 
-private:
   int x, y;
 };
 
