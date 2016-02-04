@@ -1,7 +1,8 @@
 #ifndef POINT_H__
 #define POINT_H__
 
-#include "bits/stdc++.h"
+#include <bits/stdc++.h>
+using namespace std;
 
 /**
  * Class that represents 2D point
@@ -47,6 +48,28 @@ public:
     *this += offset;
   }
 
+  Point scale(const Point& center, double factor) {
+    int dx = this->x - center.x;
+    int dy = this->y - center.y;
+    double _dx = dx*factor;
+    double _dy = dy*factor;
+
+    // rounding to nearest pixel
+    dx = (int)(2 * _dx - (int)_dx);   
+    dy = (int)(2 * _dy - (int)_dy);
+
+    // set position
+    this->x = center.x + dx;
+    this->y = center.y + dy;
+
+    return *this;
+  }
+
+  friend ostream& operator<< (ostream& stream, const Point& p) {
+    stream << "<" << p.x << ", " << p.y << ">\n";
+  }
+
+private:
   int x, y;
 };
 
