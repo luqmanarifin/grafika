@@ -10,12 +10,15 @@ using namespace std;
 struct Polygon {
   Polygon() {
     points = NULL;
+    size = 0;
   }
   Polygon(Point* _points, int _size) {
     points = _points;
     size = _size;
   }
-
+  ~Polygon() {
+    delete [] points;
+  }
   void addPoint(Point p) {
     Point* newPoints = new Point[size + 1];
     for(int i = 0; i < size; i++) {
@@ -47,6 +50,7 @@ struct Polygon {
         }
       }
       sort(a, a + sz);
+      /*
       if(sz) {
         printf("%d : ", y);
         for(int i = 0; i < sz; i++) {
@@ -54,7 +58,8 @@ struct Polygon {
         }
         printf("\n");
       }
-      for(int i = 0; i + 1 < sz; i++) {
+      */
+      for(int i = 0; i + 1 < sz; i += 2) {
         for(int j = a[i]; j <= a[i + 1]; j++) {
           fb.set(j, y, Color::WHITE);
         }
