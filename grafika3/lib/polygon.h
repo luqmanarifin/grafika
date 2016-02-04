@@ -52,7 +52,7 @@ struct Polygon {
           }
         }
       }
-      sort(a, a + sz);
+      // sort(a, a + sz);
       /*
       if(sz) {
         printf("%d : ", y);
