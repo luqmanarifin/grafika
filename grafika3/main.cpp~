@@ -135,10 +135,52 @@ Polygon* printM(){
     pol->addPoint(Point(0, 600));
     return pol;
 }
+Polygon* printR(){
+    Polygon* pol = new Polygon();
+    pol->addPoint(Point(200, 0));
+    pol->addPoint(Point(300, 0));
+    pol->addPoint(Point(300, 600));
+    pol->addPoint(Point(200, 600));
+    pol->addPoint(Point(450, 50));
+    pol->addPoint(Point(600, 100));
+    pol->addPoint(Point(600, 225));
+    pol->addPoint(Point(450, 375));
 
+    pol->addPoint(Point(300, 375));
+    pol->addPoint(Point(400, 375));
+    pol->addPoint(Point(400, 600));
+    pol->addPoint(Point(600, 600));
+    return pol;
+}
+Polygon* printH(){
+    Polygon* pol = new Polygon();
+    pol->addPoint(Point(150, 0));
+    pol->addPoint(Point(250, 0));
+    pol->addPoint(Point(250, 600));
+    pol->addPoint(Point(150, 600));
+    pol->addPoint(Point(150, 350));
+    pol->addPoint(Point(450, 350));
+    pol->addPoint(Point(350, 0));
+    pol->addPoint(Point(450, 0));
+    pol->addPoint(Point(450, 600));
+    pol->addPoint(Point(350, 600));
+    return pol;
+}
+Polygon* printE(){
+    Polygon* pol = new Polygon();
+    pol->addPoint(Point(200, 0));
+    pol->addPoint(Point(600, 0));
+    pol->addPoint(Point(600, 100));
+    pol->addPoint(Point(300, 100));
+    pol->addPoint(Point(300, 500));
+    pol->addPoint(Point(600, 500));
+    pol->addPoint(Point(600, 600));
+    pol->addPoint(Point(200, 600));
+    return pol;
+}
 Polygon* proto[30];
 Polygon* words[5][10];
-string names[] = {"ZANDI", "ICAL", "AZAM", "LUQMAN"};
+string names[] = {"ZANDI", "ICAL", "AZAM", "LUQMAN", "HERI"};
 
 void init() {
   proto['A' - 'A'] = printA();
@@ -151,41 +193,48 @@ void init() {
   proto['L' - 'A'] = printL();
   proto['U' - 'A'] = printU();
   proto['Q' - 'A'] = printQ();
-  for(int i = 0; i < 4; i++) {
+  proto['H' - 'A'] = printH();
+  proto['E' - 'A'] = printE();
+  proto['R' - 'A'] = printR();
+  for(int i = 0; i < 5; i++) {
     for(int j = 0; j < names[i].size(); j++) {
       words[i][j] = new Polygon(*proto[names[i][j] - 'A']);
       words[i][j]->resize(Point(300, 400), 0.1);
-      words[i][j]->move(-100+j*80, -200+(i*70));
+      words[i][j]->move(-100+j*80, -300+(i*70));
     }
   }
 }
 void print(){
-  for(int i = 0; i < 4; i++) {
+  for(int i = 0; i < 5; i++) {
     for(int j = 0; j < names[i].size(); j++) {
       words[i][j]->print(fb);
     }
   }
 }
-void resize_move(){
-  for(int i = 0; i < 4; i++) {
+void resize_move(float skala){
+  for(int i = 0; i < 5; i++) {
     for(int j = 0; j < names[i].size(); j++) {
-      words[i][j]->resize(Point(400, 200), 1.05);
+      words[i][j]->resize(Point(400, 200), skala);
     }
   }
 }
 void run(){
   init();
-  int hitung=0;
   float rasio=1;
   while(rasio<=3) {
     print();
-    hitung++;
-    if(hitung==100){
-      rasio+=0.1;
-      resize_move();
-      hitung=0;
-      fb.clear();
-    }
+    rasio+=0.1;
+    resize_move(1.05);
+    usleep(50000);
+    fb.clear();
+  }
+  rasio = 0;
+  while(rasio<=3) {
+    print();
+    rasio+=0.1;
+    resize_move(0.95);
+    usleep(50000);
+    fb.clear();
   }
 }
 int main() {
