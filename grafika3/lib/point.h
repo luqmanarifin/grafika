@@ -11,13 +11,6 @@ class Point {
 public:
   Point() : x(0), y(0) {}
   Point(int _x, int _y) : x(_x), y(_y) {}
-  
-  void resize(float size, const Point& center = Point()) {
-    *this -= center;
-    x *= size;
-    y *= size;
-    *this += center;
-  }
 
   Point operator+=(const Point& rhs) {
     x += rhs.x;
@@ -52,8 +45,8 @@ public:
   }
 
   Point scale(const Point& center, double factor) {
-    int dx = this->x - center.x;
     int dy = this->y - center.y;
+    int dx = this->x - center.x;
     double _dx = dx*factor;
     double _dy = dy*factor;
 
