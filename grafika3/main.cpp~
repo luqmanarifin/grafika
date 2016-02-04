@@ -139,7 +139,7 @@ Polygon printM(){
 int main() {
   system("clear");
   while(1) {
-    printL().print(fb);;
+    printQ().print(fb);;
   }
   return 0;
 }

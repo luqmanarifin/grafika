@@ -68,6 +68,8 @@ public:
   friend ostream& operator<< (ostream& stream, const Point& p) {
     stream << "<" << p.x << ", " << p.y << ">\n";
   }
+
+private:
   int x, y;
 };
 
