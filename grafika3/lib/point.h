@@ -11,13 +11,6 @@ class Point {
 public:
   Point() : x(0), y(0) {}
   Point(int _x, int _y) : x(_x), y(_y) {}
-  
-  void resize(float size, const Point& center = Point()) {
-    *this -= center;
-    x *= size;
-    y *= size;
-    *this += center;
-  }
 
   Point operator+=(const Point& rhs) {
     x += rhs.x;
@@ -39,18 +32,21 @@ public:
     return Point(x-rhs.x, y-rhs.y);
   }
 
-  void rotate(const int& degree, const Point& offset = Point(0, 0)) {
-    *this -= offset;
+  Point rotate(int degree, const Point& center = Point(0, 0)) {
+    *this -= center;
     Point temp = *this;
+
     float rad = degree*3.14159265/180.0;
     x = temp.x*cos(rad)-temp.y*sin(rad);
     y = temp.x*sin(rad)+temp.y*cos(rad);
-    *this += offset;
+
+    *this += center;
+    return *this;
   }
 
   Point scale(const Point& center, double factor) {
-    int dx = this->x - center.x;
     int dy = this->y - center.y;
+    int dx = this->x - center.x;
     double _dx = dx*factor;
     double _dy = dy*factor;
 
@@ -65,9 +61,16 @@ public:
     return *this;
   }
 
+  Point move(int x, int y) {
+    this->x += x;
+    this->y += y;
+    return *this;
+  }
+
   friend ostream& operator<< (ostream& stream, const Point& p) {
     stream << "<" << p.x << ", " << p.y << ">\n";
   }
+
   int x, y;
 };
 

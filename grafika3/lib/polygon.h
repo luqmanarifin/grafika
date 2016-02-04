@@ -67,6 +67,17 @@ struct Polygon {
       delete [] a;
     }
   }
+  void resize(const Point& center, double factor) {
+    for (int i = 0; i < size; ++i) {
+      points[i].scale(center, factor);
+    }
+  }
+  void move(int x, int y) {
+    for (int i = 0; i < size; ++i) {
+      points[i].move(x, y);
+    }
+  }
+
   Point* points;
   int size;
 };
