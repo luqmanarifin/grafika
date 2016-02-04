@@ -15,7 +15,7 @@ struct Polygon {
     points = _points;
     size = _size;
   }
-  
+
   void addPoint(Point p) {
     Point* newPoints = new Point[size + 1];
     for(int i = 0; i < size; i++) {
@@ -27,7 +27,6 @@ struct Polygon {
   }
   void print(FrameBuffer& fb) {
     for(int y = 0; y < 768; y++) {
-      printf("%d\n", y);
       int sz = 0;
       int* a = new int[size];
       for(int i = 0; i < size; i++) {
@@ -37,9 +36,16 @@ struct Polygon {
         if(l <= y && y <= r) {
           int la = min(points[i].x, points[j].x);
           int ra = max(points[i].x, points[j].x);
-          a[sz++] = la + (y - l)*(ra - la)/(r - l);
+          if(l == r) {
+            for(int k = la; k <= ra; k++) {
+              fb.set(k, y, Color::WHITE);
+            }
+          } else {
+            a[sz++] = la + (y - l)*(ra - la)/(r - l);
+          }
         }
       }
+      sort(a, a + sz);
       for(int i = 0; i + 1 < sz; i++) {
         for(int j = a[i]; j <= a[i + 1]; j++) {
           fb.set(j, y, Color::WHITE);
