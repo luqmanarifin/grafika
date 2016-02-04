@@ -38,8 +38,8 @@ struct Polygon {
   void print(FrameBuffer& fb) {
     int ymin = 1e9, ymak = -1e9;
     for(int i = 0; i < size; i++) {
-      ymin = min(ymin, points[i].y);
-      ymak = max(ymak, points[i].y);
+      ymin = min(ymin, a[i].y);
+      ymak = max(ymak, a[i].y);
     }
     for(int y = ymin; y <= ymak; y++) {
       int sz = 0;
