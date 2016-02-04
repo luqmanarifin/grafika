@@ -61,6 +61,12 @@ public:
     return *this;
   }
 
+  Point move(int x, int y) {
+    this->x += x;
+    this->y += y;
+    return *this;
+  }
+
   friend ostream& operator<< (ostream& stream, const Point& p) {
     stream << "<" << p.x << ", " << p.y << ">\n";
   }
