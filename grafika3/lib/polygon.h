@@ -31,21 +31,29 @@ struct Polygon {
       int* a = new int[size];
       for(int i = 0; i < size; i++) {
         int j = (i + 1) % size;
-        int l = min(points[i].y, points[j].y);
-        int r = max(points[i].y, points[j].y);
-        if(l <= y && y <= r) {
-          int la = min(points[i].x, points[j].x);
-          int ra = max(points[i].x, points[j].x);
+        int l = points[i].y;
+        int r = points[j].y;
+        if(min(l, r) <= y && y <= max(l, r)) {
+          int la = points[i].x;
+          int ra = points[j].x;
           if(l == r) {
             for(int k = la; k <= ra; k++) {
               fb.set(k, y, Color::WHITE);
             }
           } else {
-            a[sz++] = la + (y - l)*(ra - la)/(r - l);
+            int d = abs(l - y)*abs(la - ra)/abs(l - r);
+            a[sz++] = la + (la < ra? d : -d);
           }
         }
       }
       sort(a, a + sz);
+      if(sz) {
+        printf("%d : ", y);
+        for(int i = 0; i < sz; i++) {
+          printf("%d ", a[i]);
+        }
+        printf("\n");
+      }
       for(int i = 0; i + 1 < sz; i++) {
         for(int j = a[i]; j <= a[i + 1]; j++) {
           fb.set(j, y, Color::WHITE);
