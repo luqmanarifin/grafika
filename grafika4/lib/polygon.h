@@ -91,7 +91,7 @@ struct Polygon {
   }
   void rotate(double degree, const Point& center = Point()) {
     for (int i = 0; i < size; ++i) {
-      points[i].rotate(factor, center);
+      points[i].rotate(degree, center);
     }
   }
 
