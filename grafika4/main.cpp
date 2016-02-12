@@ -100,8 +100,31 @@ Polygon* printroda(){
     return pol;
 }
 
+Polygon* printparachute(){
+    Polygon* pol = new Polygon();
+    pol->addPoint(Point(75,350));
+    pol->addPoint(Point(25,400));
+    pol->addPoint(Point(0,200));
+    pol->addPoint(Point(50,150));
+    pol->addPoint(Point(200,100));
+    pol->addPoint(Point(600,100));
+    pol->addPoint(Point(750,150));
+    pol->addPoint(Point(800,200));
+    pol->addPoint(Point(775,400));
+    pol->addPoint(Point(725,350));
+    pol->addPoint(Point(575,300));
+    pol->addPoint(Point(550,600));
+    pol->addPoint(Point(525,600));
+    pol->addPoint(Point(550,300));
+    pol->addPoint(Point(250,300));
+    pol->addPoint(Point(275,600));
+    pol->addPoint(Point(250,600));
+    pol->addPoint(Point(225,300));
+    return pol;
+}
+
 int main() {
   system("clear");
-  printroda()->print(fb);
+  printparachute()->print(fb);
   return 0;
 }
