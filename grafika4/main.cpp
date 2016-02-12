@@ -164,8 +164,7 @@ int main() {
   }
   //printBaling()->print(fb);
   //run();
-=======
-
+}
 Polygon* printpeluru(){
     Polygon* pol = new Polygon();
     pol->addPoint(Point(300,600));
@@ -285,9 +284,3 @@ Polygon* printparachute(){
     return pol;
 }
 
-int main() {
-  system("clear");
-  printparachute()->print(fb);
->>>>>>> 4ffb9a4b102790784c9b5548c4eb17d74fcb4460
-  return 0;
-}
