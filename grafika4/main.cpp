@@ -3,7 +3,6 @@
 using namespace std;
 
 FrameBuffer fb;
-<<<<<<< HEAD
 Polygon* printBaling(){
     Polygon* pol = new Polygon();
     pol->addPoint(Point(400,350));
