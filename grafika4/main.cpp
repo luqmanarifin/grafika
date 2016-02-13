@@ -1,6 +1,7 @@
 #include "lib/polygon.h"
 #include <iostream>
 #include "lib/conio2.h"
+#include <unistd.h>
 using namespace std;
 int targetx, tembakanx;
 int boolrubah;
@@ -517,7 +518,6 @@ int main() {
 
   }
   while(true){
-    
     Polygon* p = printPesawat();
     Polygon* p2 = printBaling();
     Polygon* p3 = printBaling();
@@ -561,6 +561,7 @@ int main() {
       alpa +=5;
       //fb.clear();
     }
+    usleep(100000);
   }
   //printBaling()->print(fb);
   //run();
