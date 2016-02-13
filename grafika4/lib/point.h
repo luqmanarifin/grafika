@@ -44,8 +44,8 @@ public:
     Point temp = *this;
 
     double rad = degree * 3.14159265358979323846 / 180.0;
-    x = temp.x*cos(rad)-temp.y*sin(rad);
-    y = temp.x*sin(rad)+temp.y*cos(rad);
+    x = (int)round(temp.x*cos(rad)-temp.y*sin(rad));
+    y = (int)round(temp.x*sin(rad)+temp.y*cos(rad));
 
     *this += center;
     return *this;
@@ -58,8 +58,8 @@ public:
     double _dy = dy*factor;
 
     // rounding to nearest pixel
-    dx = (int)(2 * _dx - (int)_dx);   
-    dy = (int)(2 * _dy - (int)_dy);
+    dx = (int)round(2 * _dx - (int)_dx);   
+    dy = (int)round(2 * _dy - (int)_dy);
 
     // set position
     this->x = center.x + dx;
