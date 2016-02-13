@@ -521,6 +521,8 @@ int main() {
   int waktutembak=0;
   int x=0;
   int temp = tembakanx;
+  Polygon* p2 = printBaling();
+  Polygon* p3 = printBaling();
   pthread_t inc_x_thread;
   if(pthread_create(&inc_x_thread, NULL, inc_x, &x)) {
       fprintf(stderr, "Error creating thread\n");
@@ -529,8 +531,8 @@ int main() {
   }
   while(tertembak==0){
     p = printPesawat();
-    Polygon* p2 = printBaling();
-    Polygon* p3 = printBaling();
+    p2 = printBaling();
+    p3 = printBaling();
     float alpa = 1;
     p->resizes(0.25);
     p2->resizes(0.05);
@@ -572,6 +574,8 @@ int main() {
         if(waktutembak==2){
           booltembak=0;
           waktutembak=0;
+          if(tertembak==1)
+            break;
         }
       }
       else{
@@ -585,7 +589,36 @@ int main() {
       //fb.clear();
     }
   }
-  fb.clear();
+  Polygon* boom = printboom();
+  Polygon* boom2 = printboom();
+  boom->resizes(0.3);
+  boom->move(150,-140);
+  boom2->resizes(0.25);
+  boom2->move(150,-140);
+  printBelakang()->print(fb,0,174,239,0);
+  printTanahIjo()->print(fb,54,218,22,0);
+  boom->print(fb,190,26,31,0);
+  boom2->print(fb,235,215,0,0);
+  usleep(500000);
+  int g=10;
+  float mutar=10;
+  while(true){
+    printBelakang()->print(fb,0,174,239,0);
+    printTanahIjo()->print(fb,54,218,22,0);
+    if(p3->MaxY()<500 && mutar>0){
+      p3->move(0,g/10);
+      p3->rotates(mutar);
+      p3->resizes(1.05);
+      p2->move(0,g/10);
+      p2->rotates(mutar);
+      p2->resizes(1.05);
+      mutar-=0.1;
+      g+=10;
+    }
+    p2->print(fb,0,0,0,0);
+    p3->print(fb,0,0,0,0);
+    usleep(500000);
+  }
   return 0;
   //printBaling()->print(fb);
   //run();
