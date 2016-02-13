@@ -558,7 +558,6 @@ int main() {
       p2->rotates(10);
       p3->rotates(10);
       p->print(fb,252,222,138,alpa);
-      //p1->print(fb,0,0,0,0);
       p2->print(fb,0,0,0,alpa);
       p3->print(fb,0,0,0,alpa);
       if(booltembak==1){
@@ -567,7 +566,7 @@ int main() {
          for(int j=tembakanx-10;j<tembakanx+10;j++)
           line(j+54,700,targetx+j-tembakanx,0,235,215,0); 
         waktutembak++;
-        if(waktutembak==2){
+        if(waktutembak==6){
           booltembak=0;
           waktutembak=0;
           if(tertembak==1)
@@ -592,18 +591,18 @@ int main() {
   boom->resizes(0.3);
   boom->move(150,-140);
   parasut->resizes(0.1);
-  parasut->move(0,-200);
+  parasut->move(-30,-200);
   ban->resizes(0.1);
   ban->move(-100,-200);
   orang->resizes(0.2);
-  orang->move(0,-260);
+  orang->move(-30,-260);
   boom2->resizes(0.25);
   boom2->move(150,-140);
   printBelakang()->print(fb,0,174,239,0);
   printTanahIjo()->print(fb,54,218,22,0);
   boom->print(fb,190,26,31,0);
   boom2->print(fb,235,215,0,0);
-  usleep(20000);
+  usleep(1000000);
   int g=10;
   float mutar=70;
   int buatputar=0;
@@ -616,38 +615,37 @@ int main() {
     printTanahIjo()->print(fb,54,218,22,0);
     parasut->print(fb,255,255,255,0);
     orang->print(fb,220,20,60,0);
-    
-    if(ban->MaxY()<500&&tahap==1){
+    if(ban->MaxY()<575&&tahap==1){
+      if(tinggi<300)
+      ban->move(-3,g/10);
+      else
       ban->move(0,g/10);
       g+=10;
     }
-    else if(tahap==1&&ban->MaxY()>=500){
+    else if(tahap==1&&ban->MaxY()>=575){
       tahap++;
       tinggi=tinggi/1.5;
       if(tinggi<10){
+        tahap=0;
         break;
       }
     }
-    if(ban->MaxY()>525-tinggi&&tahap==2){
-      ban->move(0,-g/10);
+    if(ban->MaxY()>575-tinggi&&tahap==2){
+      ban->move(-3,-g/10);
       g-=10;
     }
-    else if(tahap==2&&ban->MaxY()<=525-tinggi){
+    else if(tahap==2&&ban->MaxY()<=575-tinggi){
       tahap--;
       
     }
-    if(orang->MaxY()<525){
+    if(orang->MaxY()<570){
       orang->move(0,5);
       parasut->move(0,5);
       if(buatputar==-5){
         kount=-1;
-        //orang->resizes(1.3);
-        //parasut->resizes(1.3);
       }
       else if(buatputar==5){
         kount=1;
-        //orang->resizes(1.3);
-        //parasut->resizes(1.3);
       }
       if(kount==-1){
          orang->rotate(-4,Point((parasut->MinX()+parasut->MaxX())/2,parasut->MinY()));
@@ -663,10 +661,8 @@ int main() {
     if(p3->MaxY()<525 && mutar>0){
       p3->move(0,g/10);
       p3->rotates(mutar);
-      //p3->resizes(1.05);
       p2->move(0,g/10);
       p2->rotates(mutar);
-      //p2->resizes(1.05);
       mutar-=2;
     }
     ban->print(fb,0,0,0,0);
@@ -676,7 +672,5 @@ int main() {
   }
   fb.clear();
   return 0;
-  //printBaling()->print(fb);
-  //run();
 }
 
