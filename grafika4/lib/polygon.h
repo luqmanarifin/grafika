@@ -44,6 +44,10 @@ struct Polygon {
     points = newPoints;
   }
   void print(FrameBuffer& fb) {
+    print(fb, 255, 255, 255, 0);
+  }
+  void print(FrameBuffer& fb,int red, int green, int blue, int alpha) {
+    Color warna =Color(  red, green, blue, alpha);
     int ymin = 1e9, ymak = -1e9;
     for(int i = 0; i < size; i++) {
       ymin = min(ymin, points[i].y);
@@ -60,9 +64,7 @@ struct Polygon {
           int la = points[i].x;
           int ra = points[j].x;
           if(l == r) {
-            for(int k = la; k <= ra; k++) {
-              fb.set(k, y, Color::WHITE);
-            }
+            a[sz++] = min(la, ra);
           } else {
             int d = abs(l - y)*abs(la - ra)/abs(l - r);
             a[sz++] = la + (la < ra? d : -d);
@@ -70,58 +72,46 @@ struct Polygon {
         }
       }
       sort(a, a + sz);
-      for(int i = 0; i + 1 < sz; i += 2) {
-        for(int j = a[i]; j <= a[i + 1]; j++) {
-          fb.set(j, y, Color::WHITE);
-        }
-      }
-    }
-    delete [] a;
-  }
-  void print(FrameBuffer& fb,int red, int green, int blue, int alpha) {
-    Color warna =Color(  red, green, blue, alpha);
-    int ymin = 1e9, ymak = -1e9;
-    for(int i = 0; i < size; i++) {
-      ymin = min(ymin, points[i].y);
-      ymak = max(ymak, points[i].y);
-    }
-    for(int y = ymin; y <= ymak; y++) {
-      int sz = 0;
-      int* a = new int[size];
-      for(int i = 0; i < size; i++) {
-        int j = (i + 1) % size;
-        int l = points[i].y;
-        int r = points[j].y;
-        if(min(l, r) <= y && y <= max(l, r)) {
-          int la = points[i].x;
-          int ra = points[j].x;
-          if(l == r) {
-            for(int k = la; k <= ra; k++) {
-              fb.set(k, y, warna);
-            }
-          } else {
-            int d = abs(l - y)*abs(la - ra)/abs(l - r);
-            a[sz++] = la + (la < ra? d : -d);
-          }
-        }
-      }
-      sort(a, a + sz);
-      /*
-      if(sz) {
-        printf("%d : ", y);
-        for(int i = 0; i < sz; i++) {
-          printf("%d ", a[i]);
-        }
-        printf("\n");
-      }
-      */
       for(int i = 0; i + 1 < sz; i += 2) {
         for(int j = a[i]; j <= a[i + 1]; j++) {
           fb.set(j, y, warna);
         }
       }
-      delete [] a;
     }
+    /*
+    int bmin = 1e9, bmak = -1e9;
+    for(int i = 0; i < size; i++) {
+      bmin = min(bmin, points[i].x);
+      bmak = max(bmak, points[i].x);
+    }
+    for(int b = bmin; b <= bmak; b++) {
+      int sz = 0;
+      for(int i = 0; i < size; i++) {
+        int j = (i + 1) % size;
+        int l = points[i].x;
+        int r = points[j].x;
+        if(min(l, r) <= b && b <= max(l, r)) {
+          int la = points[i].y;
+          int ra = points[j].y;
+          if(l == r) {
+            for(int k = la; k <= ra; k++) {
+              fb.set(b, k, warna);
+            }
+          } else {
+            int d = abs(l - b)*abs(la - ra)/abs(l - r);
+            a[sz++] = la + (la < ra? d : -d);
+          }
+        }
+      }
+      sort(a, a + sz);
+      for(int i = 0; i + 1 < sz; i += 2) {
+        for(int j = a[i]; j <= a[i + 1]; j++) {
+          fb.set(b, j, warna);
+        }
+      }
+    }
+    */
+    delete [] a;
   }
   int MaxX(){
     int Max=0;

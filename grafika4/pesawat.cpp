@@ -452,40 +452,40 @@ Polygon* printboom(){
     pol->addPoint(Point(666,270-54));
     pol->addPoint(Point(684,270-54));
     pol->addPoint(Point(684,306-54));//kiri pertama    
-	pol->addPoint(Point(666,306-54));
-	pol->addPoint(Point(666,324-54));
-	pol->addPoint(Point(684,324-54));
-	pol->addPoint(Point(684,360-54));
-	pol->addPoint(Point(666,360-54));
-	pol->addPoint(Point(666,378-54));
-	pol->addPoint(Point(684,378-54));
-	pol->addPoint(Point(684,396-54));
-	pol->addPoint(Point(666,396-54));
-	pol->addPoint(Point(666,414-54));
-	pol->addPoint(Point(648,414-54));
-	pol->addPoint(Point(648,468-54));
-	pol->addPoint(Point(666,468-54));
-	pol->addPoint(Point(666,486-54));
-	pol->addPoint(Point(684,486-54));
-	pol->addPoint(Point(684,522-54));
-	pol->addPoint(Point(666,522-54));
-	pol->addPoint(Point(666,540-54));
-	pol->addPoint(Point(648,540-54));
-	pol->addPoint(Point(648,558-54));
-	pol->addPoint(Point(666,558-54));
-	pol->addPoint(Point(666,594-54));
-	pol->addPoint(Point(684,594-54));
-	pol->addPoint(Point(684,612-54));//pojok kanan bawah
-	pol->addPoint(Point(666,558));
-	pol->addPoint(Point(666,540));
-	pol->addPoint(Point(630,540));
-	pol->addPoint(Point(630,558));
-	pol->addPoint(Point(450,558));
-	pol->addPoint(Point(450,540));
-	pol->addPoint(Point(432,540));
-	pol->addPoint(Point(432,558));
-	pol->addPoint(Point(252,558));
-	return pol;
+  pol->addPoint(Point(666,306-54));
+  pol->addPoint(Point(666,324-54));
+  pol->addPoint(Point(684,324-54));
+  pol->addPoint(Point(684,360-54));
+  pol->addPoint(Point(666,360-54));
+  pol->addPoint(Point(666,378-54));
+  pol->addPoint(Point(684,378-54));
+  pol->addPoint(Point(684,396-54));
+  pol->addPoint(Point(666,396-54));
+  pol->addPoint(Point(666,414-54));
+  pol->addPoint(Point(648,414-54));
+  pol->addPoint(Point(648,468-54));
+  pol->addPoint(Point(666,468-54));
+  pol->addPoint(Point(666,486-54));
+  pol->addPoint(Point(684,486-54));
+  pol->addPoint(Point(684,522-54));
+  pol->addPoint(Point(666,522-54));
+  pol->addPoint(Point(666,540-54));
+  pol->addPoint(Point(648,540-54));
+  pol->addPoint(Point(648,558-54));
+  pol->addPoint(Point(666,558-54));
+  pol->addPoint(Point(666,594-54));
+  pol->addPoint(Point(684,594-54));
+  pol->addPoint(Point(684,612-54));//pojok kanan bawah
+  pol->addPoint(Point(666,558));
+  pol->addPoint(Point(666,540));
+  pol->addPoint(Point(630,540));
+  pol->addPoint(Point(630,558));
+  pol->addPoint(Point(450,558));
+  pol->addPoint(Point(450,540));
+  pol->addPoint(Point(432,540));
+  pol->addPoint(Point(432,558));
+  pol->addPoint(Point(252,558));
+  return pol;
 }
 
 Polygon* printparachute(){
@@ -513,82 +513,8 @@ Polygon* printparachute(){
 
 int main() {
   system("clear");
-  Polygon* meriam = printsijagur();
-  meriam->resizes(0.25);
-  targetx = 340;
-  tembakanx = 340;
-  boolrubah=0;
-  meriam->move(0,250);
-  int waktutembak=0;
-  int x=0;
-  int temp = tembakanx;
-  pthread_t inc_x_thread;
-  if(pthread_create(&inc_x_thread, NULL, inc_x, &x)) {
-      fprintf(stderr, "Error creating thread\n");
-      return 1;
-
-  }
-  while(tertembak==0){
-    p = printPesawat();
-    Polygon* p2 = printBaling();
-    Polygon* p3 = printBaling();
-    float alpa = 1;
-    p->resizes(0.25);
-    p2->resizes(0.05);
-    p->move(150,-200);
-    p2->move(200,-215);
-    p3->resizes(0.05);
-    p3->move(100,-215);
-    int hitung = 1;
-    int selesai=0;
-    while(selesai<10){
-      if(boolrubah==1){
-        meriam->move(tembakanx-temp,0);
-        temp=tembakanx;
-        boolrubah=0;
-      }
-      printBelakang()->print(fb,0,174,239,alpa);
-      printTanahIjo()->print(fb,54,218,22,alpa);
-      if(hitung == 3){
-        p->resizes(1.1);
-        p2->resizes(1.15);
-        p2->move(6,1);    
-        p3->resizes(1.15);
-        p3->move(-6,1);
-        hitung=1;
-        selesai++;
-      }
-      p2->rotates(10);
-      p3->rotates(10);
-      p->print(fb,252,222,138,alpa);
-      //p1->print(fb,0,0,0,0);
-      p2->print(fb,0,0,0,alpa);
-      p3->print(fb,0,0,0,alpa);
-      if(booltembak==1){
-        for(int j=tembakanx-19;j<tembakanx+19;j++)
-          line(j+54,700,targetx+j-tembakanx,0,190,26,31); 
-         for(int j=tembakanx-10;j<tembakanx+10;j++)
-          line(j+54,700,targetx+j-tembakanx,0,235,215,0); 
-        waktutembak++;
-        if(waktutembak==2){
-          booltembak=0;
-          waktutembak=0;
-        }
-      }
-      else{
-        for(int j=tembakanx-3;j<tembakanx+3;j++)
-          line(targetx+j-tembakanx,70,targetx+j-tembakanx,77,173,26,31); 
-       }
-      meriam->print(fb,192,192,192,alpa);
-      usleep(100000);
-      hitung++;
-      alpa +=5;
-      //fb.clear();
-    }
-  }
-  fb.clear();
+  Polygon* p = printPesawat();
+  p->print(fb);
   return 0;
-  //printBaling()->print(fb);
-  //run();
 }
 
