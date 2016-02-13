@@ -593,8 +593,14 @@ int main() {
   }
   Polygon* boom = printboom();
   Polygon* boom2 = printboom();
+  Polygon* parasut = printparachute();
+  Polygon* orang = printOrang();
   boom->resizes(0.3);
   boom->move(150,-140);
+  parasut->resizes(0.1);
+  parasut->move(0,-200);
+  orang->resizes(0.2);
+  orang->move(0,-260);
   boom2->resizes(0.25);
   boom2->move(150,-140);
   printBelakang()->print(fb,0,174,239,0);
@@ -604,17 +610,46 @@ int main() {
   usleep(500000);
   int g=10;
   float mutar=10;
+  int buatputar=0;
+  int kount=1;
   while(true){
     printBelakang()->print(fb,0,174,239,0);
     printTanahIjo()->print(fb,54,218,22,0);
-    if(p3->MaxY()<500 && mutar>0){
-      p3->move(0,g/10);
+    parasut->print(fb,255,255,255,0);
+    orang->print(fb,220,20,60,0);
+    
+    if(orang->MaxY()<525){
+      orang->move(0,10);
+      parasut->move(0,10);
+      if(buatputar==-5){
+        kount=-1;
+        orang->resizes(1.3);
+        parasut->resizes(1.3);
+      }
+      else if(buatputar==5){
+        kount=1;
+        orang->resizes(1.3);
+        parasut->resizes(1.3);
+      }
+      if(kount==-1){
+         orang->rotate(-4,Point((parasut->MinX()+parasut->MaxX())/2,parasut->MinY()));
+         parasut->rotate(-4, Point((parasut->MinX()+parasut->MaxX())/2,parasut->MinY()));
+         buatputar++;
+      }
+      else if(kount==1){
+        orang->rotate(4,Point((parasut->MinX()+parasut->MaxX())/2,parasut->MinY()));
+        parasut->rotate(4,Point((parasut->MinX()+parasut->MaxX())/2,parasut->MinY()));
+        buatputar--;
+      }
+    }
+    if(p3->MaxY()<525 && mutar>0){
+      p3->move(0,g/4);
       p3->rotates(mutar);
       p3->resizes(1.05);
-      p2->move(0,g/10);
+      p2->move(0,g/4);
       p2->rotates(mutar);
       p2->resizes(1.05);
-      mutar-=0.1;
+      mutar-=0.25;
       g+=10;
     }
     p2->print(fb,0,0,0,0);
