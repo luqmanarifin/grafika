@@ -546,9 +546,11 @@ int main() {
       printTanahIjo()->print(fb,54,218,22,alpa);
       if(hitung == 3){
         p->resizes(1.1);
-        p2->resizes(1.15);
+        p2->resizes(1.03);
+        //p2->resizes(1.15);
         p2->move(6,1);    
-        p3->resizes(1.15);
+        p3->resizes(1.03);
+        //p3->resizes(1.15);
         p3->move(-6,1);
         hitung=1;
         selesai++;
@@ -603,7 +605,7 @@ int main() {
   boom2->print(fb,235,215,0,0);
   usleep(500000);
   int g=10;
-  float mutar=10;
+  float mutar=40;
   int buatputar=0;
   int kount=1;
   
@@ -615,37 +617,37 @@ int main() {
     parasut->print(fb,255,255,255,0);
     orang->print(fb,220,20,60,0);
     
-    if(ban->MaxY()<525&&tahap==1){
-      ban->move(0,g/10);
+    if(ban->MaxY()<500&&tahap==1){
+      ban->move(0,g/4);
       g+=10;
     }
-    else if(tahap==1&&ban->MaxY()>=525){
+    else if(tahap==1&&ban->MaxY()>=500){
       tahap++;
-      tinggi=tinggi/3;
+      tinggi=tinggi/2.5;
       if(tinggi<10){
         break;
       }
     }
     if(ban->MaxY()>525-tinggi&&tahap==2){
-      ban->move(0,-g/10);
+      ban->move(0,-g/4);
       g-=10;
     }
     else if(tahap==2&&ban->MaxY()<=525-tinggi){
       tahap--;
-      tinggi=tinggi/3;
+      
     }
     if(orang->MaxY()<525){
       orang->move(0,10);
       parasut->move(0,10);
       if(buatputar==-5){
         kount=-1;
-        orang->resizes(1.3);
-        parasut->resizes(1.3);
+        //orang->resizes(1.3);
+        //parasut->resizes(1.3);
       }
       else if(buatputar==5){
         kount=1;
-        orang->resizes(1.3);
-        parasut->resizes(1.3);
+        //orang->resizes(1.3);
+        //parasut->resizes(1.3);
       }
       if(kount==-1){
          orang->rotate(-4,Point((parasut->MinX()+parasut->MaxX())/2,parasut->MinY()));
@@ -661,11 +663,11 @@ int main() {
     if(p3->MaxY()<525 && mutar>0){
       p3->move(0,g/4);
       p3->rotates(mutar);
-      p3->resizes(1.05);
+      //p3->resizes(1.05);
       p2->move(0,g/4);
       p2->rotates(mutar);
-      p2->resizes(1.05);
-      mutar-=0.25;
+      //p2->resizes(1.05);
+      mutar-=2;
     }
     ban->print(fb,0,0,0,0);
     p2->print(fb,0,0,0,0);
