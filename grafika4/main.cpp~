@@ -518,7 +518,7 @@ int main() {
   targetx = 340;
   tembakanx = 340;
   boolrubah=0;
-  meriam->move(0,250);
+  meriam->move(0,225);
   int waktutembak=0;
   int x=0;
   int temp = tembakanx;
@@ -587,7 +587,6 @@ int main() {
       usleep(100000);
       hitung++;
       alpa +=5;
-      //fb.clear();
     }
     usleep(100000);
   }
@@ -595,10 +594,13 @@ int main() {
   Polygon* boom2 = printboom();
   Polygon* parasut = printparachute();
   Polygon* orang = printOrang();
+  Polygon* ban = printroda();
   boom->resizes(0.3);
   boom->move(150,-140);
   parasut->resizes(0.1);
   parasut->move(0,-200);
+  ban->resizes(0.1);
+  ban->move(-100,-200);
   orang->resizes(0.2);
   orang->move(0,-260);
   boom2->resizes(0.25);
@@ -612,12 +614,34 @@ int main() {
   float mutar=10;
   int buatputar=0;
   int kount=1;
+  
+  int tinggi=525-ban->MaxY();
+  int tahap=1;
   while(true){
     printBelakang()->print(fb,0,174,239,0);
     printTanahIjo()->print(fb,54,218,22,0);
     parasut->print(fb,255,255,255,0);
     orang->print(fb,220,20,60,0);
     
+    if(ban->MaxY()<525&&tahap==1){
+      ban->move(0,g/10);
+      g+=10;
+    }
+    else if(tahap==1&&ban->MaxY()>=525){
+      tahap++;
+      tinggi=tinggi/3;
+      if(tinggi<10){
+        break;
+      }
+    }
+    if(ban->MaxY()>525-tinggi&&tahap==2){
+      ban->move(0,-g/10);
+      g-=10;
+    }
+    else if(tahap==2&&ban->MaxY()<=525-tinggi){
+      tahap--;
+      tinggi=tinggi/3;
+    }
     if(orang->MaxY()<525){
       orang->move(0,10);
       parasut->move(0,10);
@@ -650,12 +674,13 @@ int main() {
       p2->rotates(mutar);
       p2->resizes(1.05);
       mutar-=0.25;
-      g+=10;
     }
+    ban->print(fb,0,0,0,0);
     p2->print(fb,0,0,0,0);
     p3->print(fb,0,0,0,0);
     usleep(500000);
   }
+  //fb.clear();
   return 0;
   //printBaling()->print(fb);
   //run();
