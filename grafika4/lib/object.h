@@ -55,12 +55,28 @@ private:
 Polygon& wheel::getStatusNow() 
 {
   int now = time() - then;
-  speed -= int(G * now);              // changed speed
-  if (pol->getLowest() > HEIGHT)      // bounced
+  speed -= int(G * now);         // changed speed
+  if (pol->MaxY() > HEIGHT)      // bounced
     speed *= -1;
   
   pol->rotate(20);         // rotate
   pol->move(0, speed);     // free-falls
+  return *pol;
+}
+
+// -----------------------------------------
+// Bullet
+
+class bullet : public object
+{
+public:
+  bullet(const Polygon& p, int speedX, int speedY) : object(p), sx(speedY), sx(speedX) {}
+private:
+  int sx, sy;
+};
+Polygon& bullet::getStatusNow()
+{
+  pol->move(sx, sy);
   return *pol;
 }
 
