@@ -3,7 +3,7 @@
 #include "lib/conio2.h"
 using namespace std;
 int targetx, tembakanx;
-int boolrubah;
+int boolrubah, booltembak=0,tertembak=0;
 FrameBuffer fb;
 Polygon* printBaling(){
     Polygon* pol = new Polygon();
@@ -182,8 +182,9 @@ Polygon* printOrang(){
     return pol;
 }
 inline int sign(int x) { return (x > 0) - (x < 0); }
-void line(int x0, int y0, int x1, int y1)
+void line(int x0, int y0, int x1, int y1,int red, int green, int blue )
 {
+  
   int deltax = x1 - x0;
   int adx = abs(deltax);
   int dx = sign(deltax);
@@ -191,7 +192,7 @@ void line(int x0, int y0, int x1, int y1)
   int deltay = y1 - y0;
   int ady = abs(deltay);
   int dy = sign(deltay);
-  fb.set(x0,y0,176,23,31,0);
+  fb.set(x0,y0,red,green,blue,0);
   if (adx < ady) {
     int D = 2 * adx - ady;
     int x = x0;
@@ -201,7 +202,7 @@ void line(int x0, int y0, int x1, int y1)
     }
 
     for (int y = y0 + dy; y != y1; y += dy) {
-      fb.set(x,y,176,23,31,0);
+      fb.set(x,y,red,green,blue,0);
       D += 2 * adx;
       while (D > 0) {
         x += dx;
@@ -218,7 +219,7 @@ void line(int x0, int y0, int x1, int y1)
     }
 
     for (int x = x0 + dx; x != x1; x += dx) {
-      fb.set(x,y,176,23,31,0);
+      fb.set(x,y,red,green,blue,0);
       D += 2 * ady;
       while (D > 0) {
         y += dy;
@@ -228,10 +229,13 @@ void line(int x0, int y0, int x1, int y1)
   }
 }
 
+
+Polygon* p = printPesawat();
 void *inc_x(void *x_void_ptr)
 {    
+  
   int cmd = ' ';
-  while(true){
+  while(tertembak==0){
    cmd = getch();
     if (cmd == 27) {
        cmd = getch();
@@ -268,6 +272,13 @@ void *inc_x(void *x_void_ptr)
         tembakanx+=10;
        }
        boolrubah=1;
+     }
+     else if (cmd == 's' || cmd == 'S' ) {
+       booltembak=1;
+       if(p->MinX()<targetx && targetx<p->MaxX()){
+            tertembak=1;
+            break;
+        }
      }
 
   }
@@ -403,18 +414,17 @@ int main() {
   tembakanx = 340;
   boolrubah=0;
   meriam->move(0,250);
+  int waktutembak=0;
   int x=0;
   int temp = tembakanx;
   pthread_t inc_x_thread;
   if(pthread_create(&inc_x_thread, NULL, inc_x, &x)) {
-
       fprintf(stderr, "Error creating thread\n");
       return 1;
 
   }
-  while(true){
-    
-    Polygon* p = printPesawat();
+  while(tertembak==0){
+    p = printPesawat();
     Polygon* p2 = printBaling();
     Polygon* p3 = printBaling();
     float alpa = 1;
@@ -449,8 +459,21 @@ int main() {
       //p1->print(fb,0,0,0,0);
       p2->print(fb,0,0,0,alpa);
       p3->print(fb,0,0,0,alpa);
-      for(int j=tembakanx-2;j<tembakanx+2;j++)
-        line(j+50,700,targetx+j-tembakanx,0);
+      if(booltembak==1){
+        for(int j=tembakanx-19;j<tembakanx+19;j++)
+          line(j+54,700,targetx+j-tembakanx,0,190,26,31); 
+         for(int j=tembakanx-10;j<tembakanx+10;j++)
+          line(j+54,700,targetx+j-tembakanx,0,235,215,0); 
+        waktutembak++;
+        if(waktutembak==2){
+          booltembak=0;
+          waktutembak=0;
+        }
+      }
+      else{
+        for(int j=tembakanx-3;j<tembakanx+3;j++)
+          line(targetx+j-tembakanx,70,targetx+j-tembakanx,77,173,26,31); 
+       }
       meriam->print(fb,192,192,192,alpa);
       usleep(100000);
       hitung++;
@@ -458,6 +481,8 @@ int main() {
       //fb.clear();
     }
   }
+  fb.clear();
+  return 0;
   //printBaling()->print(fb);
   //run();
 }
