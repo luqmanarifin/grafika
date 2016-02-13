@@ -1,6 +1,7 @@
 #include "lib/polygon.h"
 #include <iostream>
 #include "lib/conio2.h"
+#include <unistd.h>
 using namespace std;
 int targetx, tembakanx;
 int boolrubah, booltembak=0,tertembak=0;
@@ -588,6 +589,7 @@ int main() {
       alpa +=5;
       //fb.clear();
     }
+    usleep(100000);
   }
   Polygon* boom = printboom();
   Polygon* boom2 = printboom();
