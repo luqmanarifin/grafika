@@ -522,6 +522,8 @@ int main() {
   int waktutembak=0;
   int x=0;
   int temp = tembakanx;
+  Polygon* p2 = printBaling();
+  Polygon* p3 = printBaling();
   pthread_t inc_x_thread;
   if(pthread_create(&inc_x_thread, NULL, inc_x, &x)) {
       fprintf(stderr, "Error creating thread\n");
@@ -530,8 +532,8 @@ int main() {
   }
   while(tertembak==0){
     p = printPesawat();
-    Polygon* p2 = printBaling();
-    Polygon* p3 = printBaling();
+    p2 = printBaling();
+    p3 = printBaling();
     float alpa = 1;
     p->resizes(0.25);
     p2->resizes(0.05);
@@ -573,6 +575,8 @@ int main() {
         if(waktutembak==2){
           booltembak=0;
           waktutembak=0;
+          if(tertembak==1)
+            break;
         }
       }
       else{
@@ -586,7 +590,71 @@ int main() {
       //fb.clear();
     }
   }
-  fb.clear();
+  Polygon* boom = printboom();
+  Polygon* boom2 = printboom();
+  Polygon* parasut = printparachute();
+  Polygon* orang = printOrang();
+  boom->resizes(0.3);
+  boom->move(150,-140);
+  parasut->resizes(0.1);
+  parasut->move(0,-200);
+  orang->resizes(0.2);
+  orang->move(0,-260);
+  boom2->resizes(0.25);
+  boom2->move(150,-140);
+  printBelakang()->print(fb,0,174,239,0);
+  printTanahIjo()->print(fb,54,218,22,0);
+  boom->print(fb,190,26,31,0);
+  boom2->print(fb,235,215,0,0);
+  usleep(500000);
+  int g=10;
+  float mutar=10;
+  int buatputar=0;
+  int kount=1;
+  while(true){
+    printBelakang()->print(fb,0,174,239,0);
+    printTanahIjo()->print(fb,54,218,22,0);
+    parasut->print(fb,255,255,255,0);
+    orang->print(fb,220,20,60,0);
+    
+    if(orang->MaxY()<525){
+      orang->move(0,10);
+      parasut->move(0,10);
+      if(buatputar==-5){
+        kount=-1;
+        orang->resizes(1.3);
+        parasut->resizes(1.3);
+      }
+      else if(buatputar==5){
+        kount=1;
+        orang->resizes(1.3);
+        parasut->resizes(1.3);
+      }
+      if(kount==-1){
+         orang->rotate(-4,Point((parasut->MinX()+parasut->MaxX())/2,parasut->MinY()));
+         parasut->rotate(-4, Point((parasut->MinX()+parasut->MaxX())/2,parasut->MinY()));
+         buatputar++;
+      }
+      else if(kount==1){
+        orang->rotate(4,Point((parasut->MinX()+parasut->MaxX())/2,parasut->MinY()));
+        parasut->rotate(4,Point((parasut->MinX()+parasut->MaxX())/2,parasut->MinY()));
+        buatputar--;
+      }
+    }
+    if(p3->MaxY()<525 && mutar>0){
+      p3->move(0,g/4);
+      p3->rotates(mutar);
+      p3->resizes(1.05);
+      p2->move(0,g/4);
+      p2->rotates(mutar);
+      p2->resizes(1.05);
+      mutar-=0.25;
+      g+=10;
+    }
+    p2->print(fb,0,0,0,0);
+    p3->print(fb,0,0,0,0);
+    usleep(500000);
+  }
   return 0;
   //printBaling()->print(fb);
   //run();
