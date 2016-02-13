@@ -23,6 +23,14 @@ struct Polygon {
       points[i]=_polygon.points[i];
     }    
   }
+  void operator=(const Polygon& _polygon) {
+    size = _polygon.size;
+    delete[] points;
+    points = new Point[size];
+    for(int i=0;i<size;i++){
+      points[i]=_polygon.points[i];
+    }    
+  }
   ~Polygon() {
     delete [] points;
   }
@@ -34,6 +42,13 @@ struct Polygon {
     newPoints[size++] = p;
     delete[] points;
     points = newPoints;
+  }
+  Point& getLowest() {
+    int ymin = 0;
+    for(int i = 0; i < size; i++) {
+      if (points[i].y > ymin) ymin = points[i].y;
+    }
+    return ymin;
   }
   void print(FrameBuffer& fb) {
     int ymin = 1e9, ymak = -1e9;

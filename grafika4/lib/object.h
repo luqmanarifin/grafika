@@ -3,6 +3,8 @@
 
 #include <ctime>
 
+#define HEIGHT 800
+
 /* Object general prototype */
 
 class object
@@ -44,16 +46,21 @@ Polygon& propeller::getStatusNow()
 class wheel : public object
 {
 public:
-  wheel(const Polygon& p, double _speed) : object(p), speed(_speed) { then = time(); }
+  wheel(const Polygon& p, int _radius, double _speed = 0) : object(p), speed(_speed), radius(_radius) { then = time(); }
 private:
   double speed;
-  time_t then, now;
+  time_t then;
+  int radius;
 };
 Polygon& wheel::getStatusNow() 
 {
-  now = time();
-  pol->rotate(_speed);      // rotate
-  pol->move(0, int(_speed * G * 0.00001));     // free-falls
+  int now = time() - then;
+  speed -= int(G * now);              // changed speed
+  if (pol->getLowest() > HEIGHT)      // bounced
+    speed *= -1;
+  
+  pol->rotate(20);         // rotate
+  pol->move(0, speed);     // free-falls
   return *pol;
 }
 
