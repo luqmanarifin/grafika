@@ -23,6 +23,14 @@ struct Polygon {
       points[i]=_polygon.points[i];
     }    
   }
+  void operator=(const Polygon& _polygon) {
+    size = _polygon.size;
+    delete[] points;
+    points = new Point[size];
+    for(int i=0;i<size;i++){
+      points[i]=_polygon.points[i];
+    }    
+  }
   ~Polygon() {
     delete [] points;
   }
@@ -41,9 +49,9 @@ struct Polygon {
       ymin = min(ymin, points[i].y);
       ymak = max(ymak, points[i].y);
     }
+    int* a = new int[size];
     for(int y = ymin; y <= ymak; y++) {
       int sz = 0;
-      int* a = new int[size];
       for(int i = 0; i < size; i++) {
         int j = (i + 1) % size;
         int l = points[i].y;
@@ -62,22 +70,13 @@ struct Polygon {
         }
       }
       sort(a, a + sz);
-      /*
-      if(sz) {
-        printf("%d : ", y);
-        for(int i = 0; i < sz; i++) {
-          printf("%d ", a[i]);
-        }
-        printf("\n");
-      }
-      */
       for(int i = 0; i + 1 < sz; i += 2) {
         for(int j = a[i]; j <= a[i + 1]; j++) {
           fb.set(j, y, Color::WHITE);
         }
       }
-      delete [] a;
     }
+    delete [] a;
   }
   void print(FrameBuffer& fb,int red, int green, int blue, int alpha) {
     Color warna =Color(  red, green, blue, alpha);
