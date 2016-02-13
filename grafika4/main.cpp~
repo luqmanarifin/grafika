@@ -1,7 +1,9 @@
 #include "lib/polygon.h"
 #include <iostream>
+#include "lib/conio2.h"
 using namespace std;
-
+int targetx, tembakanx;
+int boolrubah;
 FrameBuffer fb;
 Polygon* printBaling(){
     Polygon* pol = new Polygon();
@@ -16,6 +18,33 @@ Polygon* printBaling(){
     pol->addPoint(Point(150,493));
     return pol;
 }
+Polygon* printBelakang(){
+    Polygon* pol = new Polygon();
+    pol->addPoint(Point(0,0));
+    pol->addPoint(Point(0,600));
+    pol->addPoint(Point(800,600));
+    pol->addPoint(Point(800,0));
+    return pol;
+}
+
+Polygon* printTanahIjo(){
+    Polygon* pol = new Polygon();
+    pol->addPoint(Point(0,500));
+    pol->addPoint(Point(0,600));
+    pol->addPoint(Point(800,600));
+    pol->addPoint(Point(800,500));
+    return pol;
+}
+
+Polygon* printJendela(){
+    Polygon* pol = new Polygon();
+    pol->addPoint(Point(350,280));
+    pol->addPoint(Point(450,280));
+    pol->addPoint(Point(450,320));
+    pol->addPoint(Point(350,320));
+    return pol;
+}
+
 Polygon* printPesawat(){
     Polygon* pol = new Polygon();
     pol->addPoint(Point(450,200));
@@ -152,18 +181,101 @@ Polygon* printOrang(){
     pol->addPoint(Point(374,300));
     return pol;
 }
-int main() {
-  system("clear");
-  Polygon* p = printBaling();
-  while(true){
-    p->rotate(5,Point(400,300));
-    p->print(fb);
-    usleep(50000);
-    fb.clear();
+inline int sign(int x) { return (x > 0) - (x < 0); }
+void line(int x0, int y0, int x1, int y1)
+{
+  int deltax = x1 - x0;
+  int adx = abs(deltax);
+  int dx = sign(deltax);
+
+  int deltay = y1 - y0;
+  int ady = abs(deltay);
+  int dy = sign(deltay);
+  fb.set(x0,y0,176,23,31,0);
+  if (adx < ady) {
+    int D = 2 * adx - ady;
+    int x = x0;
+    if (D > 0) {
+      x += dx;
+      D -= 2 * ady;
+    }
+
+    for (int y = y0 + dy; y != y1; y += dy) {
+      fb.set(x,y,176,23,31,0);
+      D += 2 * adx;
+      while (D > 0) {
+        x += dx;
+        D -= 2 * ady;
+      }
+    }
   }
-  //printBaling()->print(fb);
-  //run();
+  else {
+    int D = 2 * ady - adx;    
+    int y = y0;
+    if (D > 0) {
+      y += dy;
+      D -= 2 * adx;
+    }
+
+    for (int x = x0 + dx; x != x1; x += dx) {
+      fb.set(x,y,176,23,31,0);
+      D += 2 * ady;
+      while (D > 0) {
+        y += dy;
+        D -= 2 * adx;
+      }
+    }
+  }
 }
+
+void *inc_x(void *x_void_ptr)
+{    
+  int cmd = ' ';
+  while(true){
+   cmd = getch();
+    if (cmd == 27) {
+       cmd = getch();
+       if (cmd == 27) {
+         break;
+       }
+       else if (cmd == 91) {
+         cmd = getch();
+         cmd = 64 - cmd;
+       }
+     }
+     else if (cmd == 'a' || cmd == 'A' || cmd == -4) {
+       if(targetx>tembakanx-20)
+       targetx-=10;
+       boolrubah=1;
+     }
+     else if (cmd == 'd' || cmd == 'D' || cmd == -3) {
+       if(targetx<tembakanx+130)
+       targetx+=10;
+       boolrubah=1;
+     }
+     else if (cmd == 'q' || cmd == 'q' || cmd == -1) {
+       if(tembakanx>50){
+        tembakanx-=10;
+        if(targetx>50)
+          targetx-=10;
+       }
+       boolrubah=1;
+     }
+     else if (cmd == 'e' || cmd == 'E' || cmd == -2) {
+       if(tembakanx<650){
+        if(targetx<650)
+          targetx+=10;
+        tembakanx+=10;
+       }
+       boolrubah=1;
+     }
+
+  }
+  /* the function must return something - NULL will do */
+  return NULL;
+
+}
+
 Polygon* printpeluru(){
     Polygon* pol = new Polygon();
     pol->addPoint(Point(300,600));
@@ -281,5 +393,72 @@ Polygon* printparachute(){
     pol->addPoint(Point(250,600));
     pol->addPoint(Point(225,300));
     return pol;
+}
+
+int main() {
+  system("clear");
+  Polygon* meriam = printsijagur();
+  meriam->resizes(0.25);
+  targetx = 340;
+  tembakanx = 340;
+  boolrubah=0;
+  meriam->move(0,250);
+  int x=0;
+  int temp = tembakanx;
+  pthread_t inc_x_thread;
+  if(pthread_create(&inc_x_thread, NULL, inc_x, &x)) {
+
+      fprintf(stderr, "Error creating thread\n");
+      return 1;
+
+  }
+  while(true){
+    
+    Polygon* p = printPesawat();
+    Polygon* p2 = printBaling();
+    Polygon* p3 = printBaling();
+    float alpa = 1;
+    p->resizes(0.25);
+    p2->resizes(0.05);
+    p->move(150,-200);
+    p2->move(200,-215);
+    p3->resizes(0.05);
+    p3->move(100,-215);
+    int hitung = 1;
+    int selesai=0;
+    while(selesai<10){
+      if(boolrubah==1){
+        meriam->move(tembakanx-temp,0);
+        temp=tembakanx;
+        boolrubah=0;
+      }
+      printBelakang()->print(fb,0,174,239,alpa);
+      printTanahIjo()->print(fb,54,218,22,alpa);
+      if(hitung == 3){
+        p->resizes(1.1);
+        p2->resizes(1.15);
+        p2->move(6,1);    
+        p3->resizes(1.15);
+        p3->move(-6,1);
+        hitung=1;
+        selesai++;
+      }
+      p2->rotates(10);
+      p3->rotates(10);
+      p->print(fb,252,222,138,alpa);
+      //p1->print(fb,0,0,0,0);
+      p2->print(fb,0,0,0,alpa);
+      p3->print(fb,0,0,0,alpa);
+      for(int j=tembakanx-2;j<tembakanx+2;j++)
+        line(j+50,700,targetx+j-tembakanx,0);
+      meriam->print(fb,192,192,192,alpa);
+      usleep(100000);
+      hitung++;
+      alpa +=5;
+      //fb.clear();
+    }
+  }
+  //printBaling()->print(fb);
+  //run();
 }
 

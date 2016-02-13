@@ -38,7 +38,7 @@ public:
     this->y = p.y;
     return *this;
   }
-
+  
   Point rotate(double degree, const Point& center = Point(0, 0)) {
     *this -= center;
     Point temp = *this;
