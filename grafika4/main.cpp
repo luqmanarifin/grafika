@@ -58,14 +58,12 @@ Polygon* printPesawat(){
     pol->addPoint(Point(490,230));
     pol->addPoint(Point(490,240));
     pol->addPoint(Point(500,240));
-    pol->addPoint(Point(500,250));
     pol->addPoint(Point(500,290));
     pol->addPoint(Point(750,290));
     pol->addPoint(Point(750,300));
     pol->addPoint(Point(700,300));
     pol->addPoint(Point(700,310));
     pol->addPoint(Point(500,310));
-    pol->addPoint(Point(500,350));
     pol->addPoint(Point(500,360));
     pol->addPoint(Point(490,360));
     pol->addPoint(Point(490,370));
@@ -75,8 +73,6 @@ Polygon* printPesawat(){
     pol->addPoint(Point(470,390));
     pol->addPoint(Point(460,390));
     pol->addPoint(Point(460,400));
-    pol->addPoint(Point(450,400));
-    pol->addPoint(Point(350,400));
     pol->addPoint(Point(340,400));
     pol->addPoint(Point(340,390));
     pol->addPoint(Point(330,390));
@@ -86,14 +82,12 @@ Polygon* printPesawat(){
     pol->addPoint(Point(310,370));
     pol->addPoint(Point(310,360));
     pol->addPoint(Point(300,360));
-    pol->addPoint(Point(300,350));
     pol->addPoint(Point(300,310));
     pol->addPoint(Point(100,310));
     pol->addPoint(Point(100,300));
     pol->addPoint(Point(50,300));
     pol->addPoint(Point(50,290));
     pol->addPoint(Point(300,290));
-    pol->addPoint(Point(300,250));
     pol->addPoint(Point(300,240));
     pol->addPoint(Point(310,240));
     pol->addPoint(Point(310,230));
@@ -103,7 +97,6 @@ Polygon* printPesawat(){
     pol->addPoint(Point(330,210));
     pol->addPoint(Point(340,210));
     pol->addPoint(Point(340,200));
-    pol->addPoint(Point(350,200));
     pol->addPoint(Point(390,200));
     pol->addPoint(Point(390,140));
     pol->addPoint(Point(395,140));
