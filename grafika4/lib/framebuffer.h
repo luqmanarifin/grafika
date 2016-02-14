@@ -118,6 +118,7 @@ private:
  * Helper class to access linux framebuffer.
  * Source: http://xathrya.web.id/blog/2012/10/26/graphic-programming-using-frame-buffer-on-linux/
  * with refactoring and some modifications.
+ * Must be "print()" to be printed in monitor
  */
 class FrameBuffer : public Frame {
 public: 
@@ -170,6 +171,12 @@ public:
         visited[i].resize(yres);
       }
     }
+    if (color.empty()) {
+      color.resize(xres);
+      for (int i = 0; i < xres; ++i) {
+        color[i].resize(yres);
+      }
+    }
     // lastSet.clear();
   }
 
@@ -196,25 +203,36 @@ public:
     if (x < 0 || x >= xres || y < 0 || y >= yres) {
       return;
     }
-    int location = getLocation(x, y);
-    if (bits_per_pixel == 32) {
-      *(fbp + location + 0) = blue;
-      *(fbp + location + 1) = green;
-      *(fbp + location + 2) = red;
-      *(fbp + location + 3) = alpha;
-    }
-    else if (bits_per_pixel == 16) {
-      unsigned short int t = (red >> 3) << 11 | (green >> 2) << 5 | (blue >> 3);
-      *((unsigned short int*)(fbp + location)) = t;     
-    }
-    else {
-      printf("Unknown bpp format: %d bpp\n", vinfo.bits_per_pixel);
-    }
+    color[x][y] = Color(red, green, blue, alpha);
     /* adds to lastSet */
     if (!visited[x][y]) {
-      // printf("%d %d\n", x, y);
       visited[x][y] = 1;
       lastSet.push_back(Point(x, y));
+    }
+  }
+
+  void print() {
+    for(int i = 0; i < lastSet.size(); i++) {
+      int x = lastSet[i].x;
+      int y = lastSet[i].y;
+      int red = color[x][y].red;
+      int green = color[x][y].green;
+      int blue = color[x][y].blue;
+      int alpha = color[x][y].alpha;
+      int location = getLocation(x, y);
+      if (bits_per_pixel == 32) {
+        *(fbp + location + 0) = blue;
+        *(fbp + location + 1) = green;
+        *(fbp + location + 2) = red;
+        *(fbp + location + 3) = alpha;
+      }
+      else if (bits_per_pixel == 16) {
+        unsigned short int t = (red >> 3) << 11 | (green >> 2) << 5 | (blue >> 3);
+        *((unsigned short int*)(fbp + location)) = t;     
+      }
+      else {
+        printf("Unknown bpp format: %d bpp\n", vinfo.bits_per_pixel);
+      }
     }
   }
 
@@ -316,6 +334,7 @@ private:
   static char* fbp;   /* pointer to framebuffer */
   static std::vector<std::vector<int> > visited;
   static std::vector<Point> lastSet;
+  static std::vector<std::vector<Color> > color;
 };
 
 /* set default values for static variables */
@@ -335,5 +354,6 @@ int FrameBuffer::fbfd = 0;
 char* FrameBuffer::fbp = NULL;
 std::vector<std::vector<int> > FrameBuffer::visited;
 std::vector<Point> FrameBuffer::lastSet;
+std::vector<std::vector<Color> > FrameBuffer::color;
 
 #endif

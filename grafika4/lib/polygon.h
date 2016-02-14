@@ -65,6 +65,7 @@ struct Polygon {
           int ra = points[j].x;
           if(l == r) {
             a[sz++] = min(la, ra);
+            a[sz++] = max(la, ra);
           } else {
             int d = abs(l - y)*abs(la - ra)/abs(l - r);
             a[sz++] = la + (la < ra? d : -d);
@@ -78,7 +79,7 @@ struct Polygon {
         }
       }
     }
-    /*
+    
     int bmin = 1e9, bmak = -1e9;
     for(int i = 0; i < size; i++) {
       bmin = min(bmin, points[i].x);
@@ -94,9 +95,8 @@ struct Polygon {
           int la = points[i].y;
           int ra = points[j].y;
           if(l == r) {
-            for(int k = la; k <= ra; k++) {
-              fb.set(b, k, warna);
-            }
+            a[sz++] = min(la, ra);
+            a[sz++] = max(la, ra);
           } else {
             int d = abs(l - b)*abs(la - ra)/abs(l - r);
             a[sz++] = la + (la < ra? d : -d);
@@ -110,7 +110,6 @@ struct Polygon {
         }
       }
     }
-    */
     delete [] a;
   }
   int MaxX(){
