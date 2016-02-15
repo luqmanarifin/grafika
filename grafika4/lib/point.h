@@ -43,7 +43,7 @@ public:
     *this -= center;
     Point temp = *this;
 
-    double rad = degree * 3.14159265358979323846 / 180.0;
+    double rad = degree * 3.14159265358979323846 / 180.0 *0.99;
     x = (int)round(temp.x*cos(rad)-temp.y*sin(rad));
     y = (int)round(temp.x*sin(rad)+temp.y*cos(rad));
 

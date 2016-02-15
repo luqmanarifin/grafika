@@ -130,7 +130,7 @@ int main() {
   targetx = 340;
   tembakanx = 340;
   boolrubah=0;
-  meriam->move(0,225);
+  meriam->move(0,215);
   int waktutembak=0;
   int x=0;
   int temp = tembakanx;
@@ -140,7 +140,6 @@ int main() {
   if(pthread_create(&inc_x_thread, NULL, inc_x, &x)) {
       fprintf(stderr, "Error creating thread\n");
       return 1;
-
   }
   Belakang* bel = new Belakang();
   TanahIjo* ijo = new TanahIjo();
@@ -183,10 +182,11 @@ int main() {
       p3->print(fb,0,0,0,alpa);
       if(booltembak==1){
         for(int j=tembakanx-19;j<tembakanx+19;j++)
-          line(j+54,700,targetx+j-tembakanx,0,190,26,31); 
+          line(j+34,600,targetx+j-tembakanx,0,190,26,31); 
          for(int j=tembakanx-10;j<tembakanx+10;j++)
-          line(j+54,700,targetx+j-tembakanx,0,235,215,0); 
+          line(j+34,600,targetx+j-tembakanx,0,235,215,0); 
         waktutembak++;
+        meriam->print(fb,192,192,192,alpa);
         if(waktutembak==6){
           booltembak=0;
           waktutembak=0;
@@ -214,17 +214,18 @@ int main() {
   boom->resizes(0.3);
   boom->move(150,-140);
   parasut->resizes(0.1);
-  parasut->move(-30,-200);
+  parasut->move(-80,-200);
   ban->resizes(0.1);
   ban->move(-100,-200);
   orang->resizes(0.2);
-  orang->move(-30,-260);
+  orang->move(-80,-260);
   boom2->resizes(0.25);
   boom2->move(150,-140);
   bel->print(fb,0,174,239,0);
   ijo->print(fb,54,218,22,0);
   boom->print(fb,190,26,31,0);
   boom2->print(fb,235,215,0,0);
+  fb.print();
   usleep(1000000);
   int g=10;
   float mutar=70;
@@ -259,9 +260,8 @@ int main() {
     }
     else if(tahap==2&&ban->MaxY()<=575-tinggi){
       tahap--;
-      
     }
-    if(orang->MaxY()<570){
+    if(orang->MaxY()<590){
       orang->move(0,5);
       parasut->move(0,5);
       if(buatputar==-5){
