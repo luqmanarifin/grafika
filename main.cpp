@@ -7,13 +7,13 @@ int main () {
   myfile.open ("example.txt");
   int j = 0;
   myfile << "    //Kiri\n";
-  for(int i = 0;i < 5;i++) {
+  for(int i = 0;i < 14;i++) {
 	myfile << "    addPoint(Point(80, "<<j<<"));\n";
 	j = j + 30;
 	myfile << "    addPoint(Point(80, "<<j<<"));\n";
   }
   myfile << "    //Kanan\n";
-  for(int i = 0;i < 5;i++) {
+  for(int i = 0;i < 14;i++) {
 	myfile << "    addPoint(Point(540, "<<j<<"));\n";
 	j = j - 30;
 	myfile << "    addPoint(Point(540, "<<j<<"));\n";

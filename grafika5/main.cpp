@@ -16,11 +16,13 @@
 #include "objects/Sumatra.h"
 #include "objects/kalimantan.h"
 #include "objects/Jawa.h"
+#include "objects/Sulawesi.h"
+
 using namespace std;
 FrameBuffer fb;
 int main() {
   system("clear");
-  Jawa* sumatra = new Jawa();
+  Sulawesi* sumatra = new Sulawesi();
   sumatra->print(fb);
   fb.print();
   return 0;
