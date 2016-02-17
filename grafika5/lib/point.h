@@ -51,11 +51,14 @@ public:
     return *this;
   }
 
-  Point scale(double factor, const Point& center = Point(0,0)) {
+  Point scale(double factorx, const Point& center = Point(0,0), double factory = 0) 
+  {
+    if (!factory) factory = factorx;
+
     int dy = this->y - center.y;
     int dx = this->x - center.x;
-    double _dx = dx*factor;
-    double _dy = dy*factor;
+    double _dx = dx*factorx;
+    double _dy = dy*factory;
 
     // rounding to nearest pixel
     dx = (int)round(2 * _dx - (int)_dx);   
