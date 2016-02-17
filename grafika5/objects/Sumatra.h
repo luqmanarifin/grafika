@@ -1,0 +1,96 @@
+#ifndef __SUMATRA_H_
+#define __SUMATRA_H_
+
+#include "../lib/polygon.h" 
+
+struct Sumatra : public Polygon {
+  Sumatra() {
+    addPoint(Point(0, 0));
+	addPoint(Point(0, 30));
+	addPoint(Point(10, 30));
+	addPoint(Point(10, 60));
+	addPoint(Point(35, 60));
+	addPoint(Point(35, 90));
+	addPoint(Point(80, 90));
+	addPoint(Point(80, 120));
+	addPoint(Point(105, 120));
+	addPoint(Point(105, 150));
+	addPoint(Point(145, 150));
+	addPoint(Point(145, 180));
+	addPoint(Point(170, 180));
+	addPoint(Point(170, 210));
+	addPoint(Point(180, 210));
+	addPoint(Point(180, 240));
+	addPoint(Point(235, 240));
+	addPoint(Point(235, 270));
+	addPoint(Point(250, 270));
+	addPoint(Point(250, 300));
+	addPoint(Point(275, 300));
+	addPoint(Point(275, 330));
+	addPoint(Point(315, 330));
+	addPoint(Point(315, 360));
+	addPoint(Point(335, 360));
+	addPoint(Point(335, 390));
+	addPoint(Point(345, 390));
+	addPoint(Point(345, 420));
+	addPoint(Point(330, 420));
+	addPoint(Point(330, 450));
+	addPoint(Point(375, 450));
+	addPoint(Point(375, 480));
+	addPoint(Point(390, 480));
+	addPoint(Point(390, 510));	
+	addPoint(Point(435, 510));
+	addPoint(Point(435, 540));
+	addPoint(Point(460, 540));
+	addPoint(Point(460, 570));
+	addPoint(Point(500, 570));
+	addPoint(Point(500, 600));
+	addPoint(Point(525, 600));
+	addPoint(Point(525, 630));    
+	//Kanan
+	addPoint(Point(615, 630));
+	addPoint(Point(615, 600));
+	addPoint(Point(620, 600));
+	addPoint(Point(620, 570));
+	addPoint(Point(610, 570));
+	addPoint(Point(610, 540));
+	addPoint(Point(620, 540));
+	addPoint(Point(620, 510));
+	addPoint(Point(610, 510));
+	addPoint(Point(610, 480));
+	addPoint(Point(585, 480));
+	addPoint(Point(585, 450));
+	addPoint(Point(570, 450));
+	addPoint(Point(570, 420));
+	addPoint(Point(555, 420));
+	addPoint(Point(555, 390));
+	addPoint(Point(545, 390));
+	addPoint(Point(545, 360));
+	addPoint(Point(495, 360));
+	addPoint(Point(495, 330));
+	addPoint(Point(515, 330));
+	addPoint(Point(515, 300));
+	addPoint(Point(490, 300));
+	addPoint(Point(490, 270));
+	addPoint(Point(415, 270));
+	addPoint(Point(415, 240));
+	addPoint(Point(390, 240));
+	addPoint(Point(390, 210));
+	addPoint(Point(350, 210));
+	addPoint(Point(350, 180));
+	addPoint(Point(295, 180));
+	addPoint(Point(295, 150));
+	addPoint(Point(255, 150));
+	addPoint(Point(255, 120));
+	addPoint(Point(200, 120));
+	addPoint(Point(200, 90));
+	addPoint(Point(185, 90));
+	addPoint(Point(185, 60));
+	addPoint(Point(160, 60));
+	addPoint(Point(160, 30));
+	addPoint(Point(60, 30));
+	addPoint(Point(60, 0));
+  }
+};
+
+#endif
