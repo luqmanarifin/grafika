@@ -15,12 +15,12 @@
 #include "objects/parachute.h"
 #include "objects/Sumatra.h"
 #include "objects/kalimantan.h"
-
+#include "objects/Jawa.h"
 using namespace std;
 FrameBuffer fb;
 int main() {
   system("clear");
-  Kalimantan* sumatra = new Kalimantan();
+  Jawa* sumatra = new Jawa();
   sumatra->print(fb);
   fb.print();
   return 0;
