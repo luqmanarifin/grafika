@@ -17,12 +17,13 @@
 #include "objects/kalimantan.h"
 #include "objects/Jawa.h"
 #include "objects/Sulawesi.h"
+#include "objects/rumahgazandi.h"
 
 using namespace std;
 FrameBuffer fb;
 int main() {
   system("clear");
-  Sulawesi* sumatra = new Sulawesi();
+  RumahGazandi* sumatra = new RumahGazandi();
   sumatra->print(fb);
   fb.print();
   return 0;
