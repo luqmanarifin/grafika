@@ -184,6 +184,7 @@ struct Maluku{
     NTT* ntt;
     NTB* ntb;
     KepJawa* jawa;
+    Belakang* bel;
     Indonesia() {
       sumatra = new KepSumatra();
       maluku= new Maluku();
@@ -211,6 +212,8 @@ struct Maluku{
       jawa->move(-150,70);
     }
     void print(FrameBuffer fb){
+      bel = new Belakang();
+      bel->print(fb,0,174,239,0);
       sumatra->print(fb);
       maluku->print(fb);
       papua->print(fb);
@@ -219,6 +222,7 @@ struct Maluku{
       ntt->print(fb);
       ntb->print(fb);
       jawa->print(fb);
+      
     }
     void resize(float skala){
       sumatra->resize(skala);
