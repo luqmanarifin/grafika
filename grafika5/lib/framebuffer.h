@@ -90,8 +90,8 @@ public:
   }
 
   void clear(){
-    for(int i = 0; i <= 1366; i++){
-      for(int j = 0; j <= 768; j++){
+    for(int i = 0; i <= xres; i++){
+      for(int j = 0; j <= yres; j++){
         matrix[j][i]=Color::EMPTY;
       }
     }
@@ -100,8 +100,8 @@ public:
   FrameMatrix& operator=(FrameMatrix _fm){
     xres = _fm.xres;
     yres = _fm.yres;
-    for(int i = 0; i <= 1366; i++){
-      for(int j = 0; j <= 768; j++){
+    for(int i = 0; i <= xres; i++){
+      for(int j = 0; j <= yres; j++){
         if(_fm.get(Point(i,j))!=Color::EMPTY)
         matrix[j][i]=_fm.matrix[j][i];
       }

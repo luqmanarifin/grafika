@@ -46,13 +46,17 @@ struct Polygon {
   void print(FrameBuffer& fb) {
     print(fb, 255, 255, 255, 0);
   }
-  void print(FrameBuffer& fb,int red, int green, int blue, int alpha) {
-    Color warna =Color(  red, green, blue, alpha);
+  
+  void print(FrameBuffer& fb, int red, int green, int blue, int alpha) 
+  {
+    Color warna = Color(red, green, blue, alpha);
+
     int ymin = 1e9, ymak = -1e9;
     for(int i = 0; i < size; i++) {
       ymin = min(ymin, points[i].y);
       ymak = max(ymak, points[i].y);
     }
+
     int* a = new int[size];
     for(int y = ymin; y <= ymak; y++) {
       int sz = 0;
@@ -67,7 +71,7 @@ struct Polygon {
             a[sz++] = min(la, ra);
             a[sz++] = max(la, ra);
           } else {
-            int d = abs(l - y)*abs(la - ra)/abs(l - r);
+            int d = (int)round(abs(l - y)*abs(la - ra)/abs(l - r));
             a[sz++] = la + (la < ra? d : -d);
           }
         }
@@ -85,6 +89,7 @@ struct Polygon {
       bmin = min(bmin, points[i].x);
       bmak = max(bmak, points[i].x);
     }
+
     for(int b = bmin; b <= bmak; b++) {
       int sz = 0;
       for(int i = 0; i < size; i++) {
@@ -98,7 +103,7 @@ struct Polygon {
             a[sz++] = min(la, ra);
             a[sz++] = max(la, ra);
           } else {
-            int d = abs(l - b)*abs(la - ra)/abs(l - r);
+            int d = (int)round(abs(l - b)*abs(la - ra)/abs(l - r));
             a[sz++] = la + (la < ra? d : -d);
           }
         }
