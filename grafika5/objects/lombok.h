@@ -3,8 +3,8 @@
 
 #include "../lib/polygon.h" 
 
-struct Lombok : public Polygon {
-  Lombok() {
+struct Lombok2 : public Polygon {
+  Lombok2() {
     addPoint(Point(330,285));
     addPoint(Point(332,281));
     addPoint(Point(338,277));

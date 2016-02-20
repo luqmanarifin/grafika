@@ -139,12 +139,15 @@ struct Lombok : public Polygon {
     addPoint(Point(450, 590));
     addPoint(Point(300, 590));
     addPoint(Point(100, 580));
+    addPoint(Point(50, 580));
+    addPoint(Point(60, 540));
+    addPoint(Point(100, 400));
     addPoint(Point(110, 200));
     
   }
 };
-struct NTB : public Polygon {
-  NTB() {
+struct NTB1 : public Polygon {
+  NTB1() {
     //addPoint(Point(300, 200));
     addPoint(Point(300, 300));
     addPoint(Point(350, 270));
