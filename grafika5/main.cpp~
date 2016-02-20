@@ -1,0 +1,37 @@
+#include "lib/polygon.h"
+#include <iostream>
+#include <unistd.h>
+#include "lib/conio2.h"
+
+#include "objects/baling.h"
+#include "objects/belakang.h"
+#include "objects/tanahijo.h"
+#include "objects/jendela.h"
+#include "objects/pesawat.h"
+#include "objects/orang.h"
+#include "objects/sijagur.h"
+#include "objects/roda.h"
+#include "objects/boom.h"
+#include "objects/parachute.h"
+#include "objects/Halmahera.h"
+#include "objects/Kepulauan.h"
+
+using namespace std;
+FrameBuffer fb;
+int main() {
+  system("clear");
+  Sumbawa* sumatra = new Sumbawa();
+  NTT1* sumatras = new NTT1();
+  NTT2* sumat = new NTT2();
+  //Madura* maduras = new Madura();
+  NTB* bangke = new NTB();
+  bangke->resizes(0.5);
+  //maduras->resizes(2);
+  //sumat->print(fb);
+  //sumatra->print(fb);
+  //sumat->print(fb);
+  //sumatras->print(fb);
+  fb.print();
+  return 0;
+}
+
