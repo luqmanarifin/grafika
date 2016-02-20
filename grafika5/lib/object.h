@@ -19,7 +19,7 @@ private:
   const double G = 9.80665;
 };
 object::object(const Polygon& _pol) { pol = new Polygon(_pol); init(); }
-object::~object() { delete pol; }
+object::~object() { if (pol != NULL) delete pol; }
 void object::init() {}
 Polygon& object::getStatusNow() { return *pol; }
 

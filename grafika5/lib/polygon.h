@@ -25,14 +25,14 @@ struct Polygon {
   }
   void operator=(const Polygon& _polygon) {
     size = _polygon.size;
-    delete[] points;
+    if ( points != NULL) delete[] points;
     points = new Point[size];
     for(int i=0;i<size;i++){
       points[i]=_polygon.points[i];
     }    
   }
   ~Polygon() {
-    delete [] points;
+    if ( points != NULL) delete[] points;
   }
   void addPoint(Point p) {
     Point* newPoints = new Point[size + 1];
@@ -40,7 +40,7 @@ struct Polygon {
       newPoints[i] = points[i];
     }
     newPoints[size++] = p;
-    delete[] points;
+    if ( points != NULL) delete[] points;
     points = newPoints;
   }
   void print(FrameBuffer& fb) {
@@ -57,7 +57,7 @@ struct Polygon {
       ymak = max(ymak, points[i].y);
     }
 
-    int* a = new int[size];
+    int* a = new int[2 * size];
     for(int y = ymin; y <= ymak; y++) {
       int sz = 0;
       for(int i = 0; i < size; i++) {
@@ -69,10 +69,13 @@ struct Polygon {
           int ra = points[j].x;
           if(l == r) {
             a[sz++] = min(la, ra);
+            cout << sz  << ' ' << size << endl;
             a[sz++] = max(la, ra);
+            cout << sz  << ' ' << size << endl;
           } else {
             int d = (int)round(abs(l - y)*abs(la - ra)/abs(l - r));
             a[sz++] = la + (la < ra? d : -d);
+            cout << sz  << ' ' << size << endl;
           }
         }
       }
@@ -101,10 +104,13 @@ struct Polygon {
           int ra = points[j].y;
           if(l == r) {
             a[sz++] = min(la, ra);
+            cout << sz  << ' ' << size << endl;
             a[sz++] = max(la, ra);
+            cout << sz  << ' ' << size << endl;
           } else {
             int d = (int)round(abs(l - b)*abs(la - ra)/abs(l - r));
             a[sz++] = la + (la < ra? d : -d);
+            cout << sz  << ' ' << size << endl;
           }
         }
       }
@@ -115,7 +121,7 @@ struct Polygon {
         }
       }
     }
-    delete [] a;
+    if ( a != NULL) delete[] a;
   }
   int MaxX(){
     int Max=0;
