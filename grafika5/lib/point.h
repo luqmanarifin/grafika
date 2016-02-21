@@ -56,8 +56,8 @@ public:
   {
     if (!factory) factory = factorx;
 
-    int dy = this->y - center.y;
-    int dx = this->x - center.x;
+    double dy = this->y - center.y;
+    double dx = this->x - center.x;
     double _dx = dx*factorx;
     double _dy = dy*factory;
 

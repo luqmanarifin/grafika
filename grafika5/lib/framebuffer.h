@@ -297,7 +297,7 @@ protected:
   static int fbfd;    /* frame buffer file descriptor */
   static char* fbp;   /* pointer to framebuffer */
   static std::vector<std::vector<int> > visited;
-  static std::vector<Point<double>> lastSet;
+  static std::vector<Point<int>> lastSet;
   static std::vector<std::vector<Color> > color;
 };
 
@@ -317,7 +317,7 @@ const Color Color::EMPTY    = Color( -1,  -1,  -1);
 int FrameBuffer::fbfd = 0;
 char* FrameBuffer::fbp = NULL;
 std::vector<std::vector<int> > FrameBuffer::visited;
-std::vector<Point<double>> FrameBuffer::lastSet;
+std::vector<Point<int>> FrameBuffer::lastSet;
 std::vector<std::vector<Color> > FrameBuffer::color;
 
 #endif
