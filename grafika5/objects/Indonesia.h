@@ -210,6 +210,8 @@ struct Maluku{
       ntb->move(-50,100);
       jawa->resize(0.2);
       jawa->move(-150,70);
+      resize(1.5);
+      move(300, 75);
     }
     void print(FrameBuffer fb){
       bel = new Belakang();
@@ -222,7 +224,6 @@ struct Maluku{
       ntt->print(fb);
       ntb->print(fb);
       jawa->print(fb);
-      
     }
     void resize(float skala){
       sumatra->resize(skala);

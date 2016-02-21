@@ -108,7 +108,7 @@ public:
     }
     return *this;
   }
-private:
+protected:
   std::map<int, std::map<int, Color> > matrix;
   int xres, yres;
 };
@@ -237,7 +237,7 @@ public:
     //printf("%d ",lastSet.size());
   }
   
-  void print(int batasany, int batasanx) {
+  void print(int batasanx, int batasany) {
     for(int i = 0; i < lastSet.size(); i++) {
       int x = lastSet[i].x;
       int y = lastSet[i].y;
@@ -356,7 +356,7 @@ public:
   int getYSize() {
     return yres;
   }
-private:
+protected:
   /**
    * Get memory offset for pixel at (x, y).
    */

@@ -6,9 +6,9 @@
 struct Belakang : public Polygon {
   Belakang() {
     addPoint(Point(0,0));
-    addPoint(Point(0,600));
-    addPoint(Point(800,600));
-    addPoint(Point(800,0));
+    addPoint(Point(0,768));
+    addPoint(Point(1366,768));
+    addPoint(Point(1366,0));
   }
 };
 
