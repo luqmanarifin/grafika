@@ -5,26 +5,26 @@
 
 struct Halmahera : public Polygon {
   Halmahera() {
-    addPoint(Point(517,114));
-    addPoint(Point(523,109));
-    addPoint(Point(524,119));
-    addPoint(Point(520,120));
-    addPoint(Point(518,114));
-    addPoint(Point(515,120));
-    addPoint(Point(516,126));
-    addPoint(Point(511,135));
-    addPoint(Point(514,137));
-    addPoint(Point(525,126));
-    addPoint(Point(526,134));
-    addPoint(Point(519,138));
-    addPoint(Point(529,146));
-    addPoint(Point(513,143));
-    addPoint(Point(515,153));
-    addPoint(Point(521,165));
-    addPoint(Point(511,154));
-    addPoint(Point(508,141));
-    addPoint(Point(505,132));
-    addPoint(Point(512,118));
+    addPoint(Point<double>(517,114));
+    addPoint(Point<double>(523,109));
+    addPoint(Point<double>(524,119));
+    addPoint(Point<double>(520,120));
+    addPoint(Point<double>(518,114));
+    addPoint(Point<double>(515,120));
+    addPoint(Point<double>(516,126));
+    addPoint(Point<double>(511,135));
+    addPoint(Point<double>(514,137));
+    addPoint(Point<double>(525,126));
+    addPoint(Point<double>(526,134));
+    addPoint(Point<double>(519,138));
+    addPoint(Point<double>(529,146));
+    addPoint(Point<double>(513,143));
+    addPoint(Point<double>(515,153));
+    addPoint(Point<double>(521,165));
+    addPoint(Point<double>(511,154));
+    addPoint(Point<double>(508,141));
+    addPoint(Point<double>(505,132));
+    addPoint(Point<double>(512,118));
   }
 };
 

@@ -5,10 +5,10 @@
 
 struct Belakang : public Polygon {
   Belakang() {
-    addPoint(Point(0,0));
-    addPoint(Point(0,768));
-    addPoint(Point(1366,768));
-    addPoint(Point(1366,0));
+    addPoint(Point<double>(0,0));
+    addPoint(Point<double>(0,768));
+    addPoint(Point<double>(1366,768));
+    addPoint(Point<double>(1366,0));
   }
 };
 
