@@ -237,9 +237,8 @@ public:
     //printf("%d ",lastSet.size());
   }
   
-  void print(int ukurany, int batasanx) {
-    ukurany *= 800;
-    for(int i = 0; i < ukurany; i++) {
+  void print(int batasany, int batasanx) {
+    for(int i = 0; i < lastSet.size(); i++) {
       int x = lastSet[i].x;
       int y = lastSet[i].y;
       int red = color[x][y].red;
@@ -251,6 +250,12 @@ public:
       }
       if(x<400-(batasanx/2)){
         x=400-(batasanx/2);
+      }
+      if(y>300+(batasany/2)){
+        y=300+(batasany/2);
+      }
+      if(y<300-(batasany/2)){
+        y=300-(batasany/2);
       }
       int location = getLocation(x, y);
       if (bits_per_pixel == 32) {
