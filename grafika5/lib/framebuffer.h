@@ -245,11 +245,11 @@ public:
       int green = color[x][y].green;
       int blue = color[x][y].blue;
       int alpha = color[x][y].alpha;
-      if(x>600){
-        x =600;
+      if(x>400+(batasanx/2)){
+        x=400+(batasanx/2);
       }
-      if(x<200){
-        x=200;
+      if(x<400-(batasanx/2)){
+        x=400-(batasanx/2);
       }
       int location = getLocation(x, y+(ukurany/800)-100);
       if (bits_per_pixel == 32) {
