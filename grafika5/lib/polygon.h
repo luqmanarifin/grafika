@@ -7,18 +7,20 @@
 
 using namespace std;
 
+const double eps = 1e-13;
+
 struct Polygon {
   Polygon() {
     points = NULL;
     size = 0;
   }
-  Polygon(Point* _points, int _size) {
+  Polygon(Point<double>* _points, int _size) {
     points = _points;
     size = _size;
   }
   Polygon(const Polygon& _polygon) {   
     size = _polygon.size;
-    points = new Point[size];
+    points = new Point<double>[size];
     for(int i=0;i<size;i++){
       points[i]=_polygon.points[i];
     }    
@@ -26,7 +28,7 @@ struct Polygon {
   void operator=(const Polygon& _polygon) {
     size = _polygon.size;
     if ( points != NULL) delete[] points;
-    points = new Point[size];
+    points = new Point<double>[size];
     for(int i=0;i<size;i++){
       points[i]=_polygon.points[i];
     }    
@@ -34,8 +36,8 @@ struct Polygon {
   ~Polygon() {
     if ( points != NULL) delete[] points;
   }
-  void addPoint(Point p) {
-    Point* newPoints = new Point[size + 1];
+  void addPoint(Point<double> p) {
+    Point<double>* newPoints = new Point<double>[size + 1];
     for(int i = 0; i < size; i++) {
       newPoints[i] = points[i];
     }
@@ -46,34 +48,37 @@ struct Polygon {
   void print(FrameBuffer& fb) {
     print(fb, 255, 255, 255, 0);
   }
+  bool same(double a, double b) {
+    return fabs(a - b) < eps;
+  }
   
   void print(FrameBuffer& fb, int red, int green, int blue, int alpha) 
   {
     Color warna = Color(red, green, blue, alpha);
 
-    int ymin = 1e9, ymak = -1e9;
+    double ymin = 1e9, ymak = -1e9;
     for(int i = 0; i < size; i++) {
       ymin = min(ymin, points[i].y);
       ymak = max(ymak, points[i].y);
     }
 
-    int* a = new int[2 * size];
+    double* a = new double[2 * size];
     for(int y = ymin; y <= ymak; y++) {
       int sz = 0;
       for(int i = 0; i < size; i++) {
         int j = (i + 1) % size;
-        int l = points[i].y;
-        int r = points[j].y;
+        double l = points[i].y;
+        double r = points[j].y;
         if(min(l, r) <= y && y <= max(l, r)) {
-          int la = points[i].x;
-          int ra = points[j].x;
-          if(l == r) {
+          double la = points[i].x;
+          double ra = points[j].x;
+          if(same(l, r)) {
             a[sz++] = min(la, ra);
             //cout << sz  << ' ' << size << endl;
             a[sz++] = max(la, ra);
             //cout << sz  << ' ' << size << endl;
           } else {
-            int d = (int)round(abs(l - y)*abs(la - ra)/abs(l - r));
+            double d = fabs(l - y)*fabs(la - ra)/fabs(l - r);
             a[sz++] = la + (la < ra? d : -d);
             //cout << sz  << ' ' << size << endl;
           }
@@ -81,13 +86,13 @@ struct Polygon {
       }
       sort(a, a + sz);
       for(int i = 0; i + 1 < sz; i += 2) {
-        for(int j = a[i]; j <= a[i + 1]; j++) {
+        for(int j = (int) a[i]; j <= a[i + 1]; j++) {
           fb.set(j, y, warna);
         }
       }
     }
     
-    int bmin = 1e9, bmak = -1e9;
+    double bmin = 1e9, bmak = -1e9;
     for(int i = 0; i < size; i++) {
       bmin = min(bmin, points[i].x);
       bmak = max(bmak, points[i].x);
@@ -97,18 +102,18 @@ struct Polygon {
       int sz = 0;
       for(int i = 0; i < size; i++) {
         int j = (i + 1) % size;
-        int l = points[i].x;
-        int r = points[j].x;
+        double l = points[i].x;
+        double r = points[j].x;
         if(min(l, r) <= b && b <= max(l, r)) {
-          int la = points[i].y;
-          int ra = points[j].y;
-          if(l == r) {
+          double la = points[i].y;
+          double ra = points[j].y;
+          if(same(l, r)) {
             a[sz++] = min(la, ra);
             //cout << sz  << ' ' << size << endl;
             a[sz++] = max(la, ra);
             //cout << sz  << ' ' << size << endl;
           } else {
-            int d = (int)round(abs(l - b)*abs(la - ra)/abs(l - r));
+            double d = abs(l - b)*abs(la - ra)/abs(l - r);
             a[sz++] = la + (la < ra? d : -d);
             //cout << sz  << ' ' << size << endl;
           }
@@ -116,7 +121,7 @@ struct Polygon {
       }
       sort(a, a + sz);
       for(int i = 0; i + 1 < sz; i += 2) {
-        for(int j = a[i]; j <= a[i + 1]; j++) {
+        for(int j = (int) a[i]; j <= a[i + 1]; j++) {
           fb.set(b, j, warna);
         }
       }
@@ -143,7 +148,7 @@ struct Polygon {
   }
   
   int MinX(){
-    int Min=800;
+    int Min=1400;
     for(int  i=0;i <size;i++){
        if(points[i].x<Min){
           Min = points[i].x;
@@ -152,7 +157,7 @@ struct Polygon {
     return Min;
   }
   int MinY(){
-    int Min=600;
+    int Min=800;
     for(int  i=0;i <size;i++){
        if(points[i].y<Min){
           Min = points[i].y;
@@ -160,22 +165,22 @@ struct Polygon {
     } 
     return Min;
   }
-  Point getTengah(){
+  Point<double> getTengah(){
     int SumX=0, SumY=0;
     for(int i=0;i <size;i++){
        SumX+=points[i].x;
        SumY+=points[i].y;
     } 
-    return Point(SumX/size,SumY/size);
+    return Point<double>(SumX/size,SumY/size);
   }
   
-  void resize(double factor, const Point& center = Point()) {
+  void resize(double factor, const Point<double>& center = Point<double>()) {
     for (int i = 0; i < size; ++i) {
       points[i].scale(factor, center);
     }
   }
   void resizes(double factor) {
-    Point center = getTengah();
+    Point<double> center = getTengah();
     //printf("%d %d ",center.x,center.y);
     for (int i = 0; i < size; ++i) {
       points[i].scale(factor, center);
@@ -186,19 +191,19 @@ struct Polygon {
       points[i].move(x, y);
     }
   }
-  void rotate(double degree, const Point& center = Point()) {
+  void rotate(double degree, const Point<double>& center = Point<double>()) {
     for (int i = 0; i < size; ++i) {
       points[i].rotate(degree, center);
     }
   }
   void rotates(double degree) {
-    Point center = getTengah();
+    Point<double> center = getTengah();
     for (int i = 0; i < size; ++i) {
       points[i].rotate(degree, center);
     }
   }
 
-  Point* points;
+  Point<double>* points;
   int size;
 };
 

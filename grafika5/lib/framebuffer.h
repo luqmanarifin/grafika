@@ -23,96 +23,6 @@
 #include "point.h"
 #include "frame.h"
 
-class FrameMatrix : public Frame {
-public:
-  FrameMatrix() {
-    xres = yres = 0;
-  }
-
-  void set(int x, int y, Color c) {
-    matrix[y][x] = c;
-    xres = std::max(xres, x);
-    yres = std::max(yres, y);
-
-  };
-
-  void set(Point p, Color c) {
-    matrix[p.y][p.x] = c;
-    xres = std::max(xres, p.x);
-    yres = std::max(yres, p.y);
-
-  };
-  void set(int x, int y, char red, char green, char blue, char alpha = 0) {
-    matrix[y][x] = Color(red, green, blue, alpha);
-    xres = std::max(xres, x);
-    yres = std::max(yres, y);
-
-  };
-  
-  Color get(Point p) {
-    if (p.y > yres)
-      p.y %= yres+1;
-    while (p.y < 0)
-      p.y += yres+1;
-
-    if (p.x > xres)
-      p.x %= xres+1;
-    while (p.x < 0)
-      p.x += xres+1;
-
-    if ((matrix.count(p.y)) and (matrix[p.y].count(p.x)))
-      return matrix[p.y][p.x];
-    return Color::EMPTY;
-  };
-  
-  Color get(int x, int y) {
-    if (y > yres)
-      y %= yres+1;
-    while (y < 0)
-      y += yres+1;
-
-    if (x > xres)
-      x %= xres+1;
-    while (x < 0)
-      x += xres+1;
-
-    if ((matrix.count(y)) and (matrix[y].count(x)))
-      return matrix[y][x];
-    return Color::EMPTY;
-  };
-
-  int getXSize() {
-    return xres;
-  }
-
-  int getYSize() {
-    return yres;
-  }
-
-  void clear(){
-    for(int i = 0; i <= xres; i++){
-      for(int j = 0; j <= yres; j++){
-        matrix[j][i]=Color::EMPTY;
-      }
-    }
-  }
-
-  FrameMatrix& operator=(FrameMatrix _fm){
-    xres = _fm.xres;
-    yres = _fm.yres;
-    for(int i = 0; i <= xres; i++){
-      for(int j = 0; j <= yres; j++){
-        if(_fm.get(Point(i,j))!=Color::EMPTY)
-        matrix[j][i]=_fm.matrix[j][i];
-      }
-    }
-    return *this;
-  }
-protected:
-  std::map<int, std::map<int, Color> > matrix;
-  int xres, yres;
-};
-
 
 /**
  * Helper class to access linux framebuffer.
@@ -190,7 +100,7 @@ public:
   /**
    * Set pixel at p using color c.
    */
-  void set(Point p, Color c) {
+  void set(Point<double> p, Color c) {
     set(p.x, p.y, c.red, c.green, c.blue, c.alpha);
   }
 
@@ -207,7 +117,7 @@ public:
     /* adds to lastSet */
     if (!visited[x][y]) {
       visited[x][y] = 1;
-      lastSet.push_back(Point(x, y));
+      lastSet.push_back(Point<double>(x, y));
     }
   }
 
@@ -237,7 +147,7 @@ public:
     //printf("%d ",lastSet.size());
   }
   
-  void print_exclude(Point a, Point b) {
+  void print_exclude(Point<double> a, Point<double> b) {
     for(int i = 0; i < lastSet.size(); i++) {
       int x = lastSet[i].x;
       int y = lastSet[i].y;
@@ -263,7 +173,7 @@ public:
     }
   }
 
-  void print_include(Point a, Point b) {
+  void print_include(Point<double> a, Point<double> b) {
     for(int i = 0; i < lastSet.size(); i++) {
       int x = lastSet[i].x;
       int y = lastSet[i].y;
@@ -293,7 +203,7 @@ public:
   /**
    * Get color at p.
    */
-  Color get(Point p) {
+  Color get(Point<double> p) {
     return get(p.x, p.y);
   }
 
@@ -332,16 +242,16 @@ public:
    */
   void clear() {
     while (lastSet.size()) {
-      Point &p = lastSet.back();
+      Point<double> &p = lastSet.back();
       set(p.x, p.y, Color::BLACK);
       visited[p.x][p.y] = 0;
       lastSet.pop_back();
     }
   }
 
-  void clear(std::vector<Point>& all) {
+  void clear(std::vector<Point<double>>& all) {
     while(!all.empty()) {
-      Point &p = all.back();
+      Point<double> &p = all.back();
       set(p.x, p.y, Color::BLACK);
       if (0 <= p.x && p.x < xres && 0 <= p.y && p.y < yres) {
         visited[p.x][p.y] = 0;
@@ -387,7 +297,7 @@ protected:
   static int fbfd;    /* frame buffer file descriptor */
   static char* fbp;   /* pointer to framebuffer */
   static std::vector<std::vector<int> > visited;
-  static std::vector<Point> lastSet;
+  static std::vector<Point<double>> lastSet;
   static std::vector<std::vector<Color> > color;
 };
 
@@ -407,7 +317,7 @@ const Color Color::EMPTY    = Color( -1,  -1,  -1);
 int FrameBuffer::fbfd = 0;
 char* FrameBuffer::fbp = NULL;
 std::vector<std::vector<int> > FrameBuffer::visited;
-std::vector<Point> FrameBuffer::lastSet;
+std::vector<Point<double>> FrameBuffer::lastSet;
 std::vector<std::vector<Color> > FrameBuffer::color;
 
 #endif
