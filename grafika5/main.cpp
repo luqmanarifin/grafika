@@ -10,8 +10,8 @@
 
 const Point<int> window_corner_a = Point<int>(966, 518);
 const Point<int> window_corner_b = Point<int>(1400, 1000);
-const int MAKS_ZOOM = 5;
-const int MIN_ZOOM = -3;
+const int MAKS_ZOOM = 15;
+const int MIN_ZOOM = -10;
 
 using namespace std;
 
