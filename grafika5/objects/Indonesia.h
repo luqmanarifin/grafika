@@ -36,9 +36,9 @@ using namespace std;
       belitung->print(fb);
     }
     void resize(float skala){
-      sumatra->resize(skala,Point(400,300));
-      bangka->resize(skala,Point(400,300));
-      belitung->resize(skala,Point(400,300));
+      sumatra->resize(skala,Point<double>(400,300));
+      bangka->resize(skala,Point<double>(400,300));
+      belitung->resize(skala,Point<double>(400,300));
     }
     void move(int x, int y){
       sumatra->move(x,y);
@@ -64,8 +64,8 @@ using namespace std;
       madura->print(fb);
     }
     void resize(float skala){
-      jawa->resize(skala,Point(400,300));
-      madura->resize(skala,Point(400,300));
+      jawa->resize(skala,Point<double>(400,300));
+      madura->resize(skala,Point<double>(400,300));
     }
     void move(int x, int y){
       jawa->move(x,y);
@@ -90,9 +90,9 @@ using namespace std;
       ntt2->print(fb);
     }
     void resize(float skala){
-      sumbawa->resize(skala,Point(400,300));
-      ntt1->resize(skala,Point(400,300));
-      ntt2->resize(skala,Point(400,300));
+      sumbawa->resize(skala,Point<double>(400,300));
+      ntt1->resize(skala,Point<double>(400,300));
+      ntt2->resize(skala,Point<double>(400,300));
     }
     void move(int x, int y){
       sumbawa->move(x,y);
@@ -123,9 +123,9 @@ using namespace std;
       lombok->print(fb);
     }
     void resize(float skala){
-      ntb->resize(skala,Point(400,300));
-      bali->resize(skala,Point(400,300));
-      lombok->resize(skala,Point(400,300));
+      ntb->resize(skala,Point<double>(400,300));
+      bali->resize(skala,Point<double>(400,300));
+      lombok->resize(skala,Point<double>(400,300));
     }
     void move(int x, int y){
       ntb->move(x,y);
@@ -161,10 +161,10 @@ struct Maluku{
       buru->print(fb);
     }
     void resize(float skala){
-      halmahera->resize(skala,Point(400,300));
-      ambon->resize(skala,Point(400,300));
-      seram->resize(skala,Point(400,300));
-      buru->resize(skala,Point(400,300));
+      halmahera->resize(skala,Point<double>(400,300));
+      ambon->resize(skala,Point<double>(400,300));
+      seram->resize(skala,Point<double>(400,300));
+      buru->resize(skala,Point<double>(400,300));
     
     }
     void move(int x, int y){
@@ -227,9 +227,9 @@ struct Maluku{
     void resize(float skala){
       sumatra->resize(skala);
       maluku->resize(skala);
-      papua->resize(skala,Point(400,300));
-      sulawesi->resize(skala,Point(400,300));
-      kalimantan->resize(skala,Point(400,300));
+      papua->resize(skala,Point<double>(400,300));
+      sulawesi->resize(skala,Point<double>(400,300));
+      kalimantan->resize(skala,Point<double>(400,300));
       ntt->resize(skala);
       ntb->resize(skala);
       jawa->resize(skala);

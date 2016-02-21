@@ -5,10 +5,10 @@
 
 struct TanahIjo : public Polygon {
   TanahIjo() {
-    addPoint(Point(0,500));
-    addPoint(Point(0,600));
-    addPoint(Point(800,600));
-    addPoint(Point(800,500));
+    addPoint(Point<double>(0,500));
+    addPoint(Point<double>(0,600));
+    addPoint(Point<double>(800,600));
+    addPoint(Point<double>(800,500));
   }
 };
 

@@ -6,20 +6,20 @@
 struct Seram : public Polygon {
   Seram() {
 
-    addPoint(Point(518,194));
-    addPoint(Point(529,194));
-    addPoint(Point(533,195));
-    addPoint(Point(540,192));
-    addPoint(Point(547,196));
-    addPoint(Point(553,195));
-    addPoint(Point(556,197));
-    addPoint(Point(556,202));
-    addPoint(Point(560,205));
-    addPoint(Point(558,209));
-    addPoint(Point(539,200));
-    addPoint(Point(539,203));
-    addPoint(Point(532,203));
-    addPoint(Point(527,201));
+    addPoint(Point<double>(518,194));
+    addPoint(Point<double>(529,194));
+    addPoint(Point<double>(533,195));
+    addPoint(Point<double>(540,192));
+    addPoint(Point<double>(547,196));
+    addPoint(Point<double>(553,195));
+    addPoint(Point<double>(556,197));
+    addPoint(Point<double>(556,202));
+    addPoint(Point<double>(560,205));
+    addPoint(Point<double>(558,209));
+    addPoint(Point<double>(539,200));
+    addPoint(Point<double>(539,203));
+    addPoint(Point<double>(532,203));
+    addPoint(Point<double>(527,201));
   }
 };
 

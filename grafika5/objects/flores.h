@@ -5,21 +5,21 @@
 
 struct Flores : public Polygon {
   Flores() {
-    addPoint(Point(388,284));
-    addPoint(Point(391,279));
-    addPoint(Point(298,277));
-    addPoint(Point(419,281));
-    addPoint(Point(427,282));
-    addPoint(Point(436,274));
-    addPoint(Point(452,276));
-    addPoint(Point(472,276));
-    addPoint(Point(470,279));
-    addPoint(Point(455,282));
-    addPoint(Point(451,279));
-    addPoint(Point(446,283));
-    addPoint(Point(439,281));
-    addPoint(Point(417,288));
-    addPoint(Point(388,284));
+    addPoint(Point<double>(388,284));
+    addPoint(Point<double>(391,279));
+    addPoint(Point<double>(298,277));
+    addPoint(Point<double>(419,281));
+    addPoint(Point<double>(427,282));
+    addPoint(Point<double>(436,274));
+    addPoint(Point<double>(452,276));
+    addPoint(Point<double>(472,276));
+    addPoint(Point<double>(470,279));
+    addPoint(Point<double>(455,282));
+    addPoint(Point<double>(451,279));
+    addPoint(Point<double>(446,283));
+    addPoint(Point<double>(439,281));
+    addPoint(Point<double>(417,288));
+    addPoint(Point<double>(388,284));
 
   }
 };

@@ -5,13 +5,13 @@
 
 struct Lombok2 : public Polygon {
   Lombok2() {
-    addPoint(Point(330,285));
-    addPoint(Point(332,281));
-    addPoint(Point(338,277));
-    addPoint(Point(342,278));
-    addPoint(Point(341,282));
-    addPoint(Point(338,288));
-    addPoint(Point(330,285));
+    addPoint(Point<double>(330,285));
+    addPoint(Point<double>(332,281));
+    addPoint(Point<double>(338,277));
+    addPoint(Point<double>(342,278));
+    addPoint(Point<double>(341,282));
+    addPoint(Point<double>(338,288));
+    addPoint(Point<double>(330,285));
   }
 };
 

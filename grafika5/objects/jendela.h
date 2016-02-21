@@ -5,10 +5,10 @@
 
 struct Jendela : public Polygon {
   Jendela() {
-    addPoint(Point(350,280));
-    addPoint(Point(450,280));
-    addPoint(Point(450,320));
-    addPoint(Point(350,320));
+    addPoint(Point<double>(350,280));
+    addPoint(Point<double>(450,280));
+    addPoint(Point<double>(450,320));
+    addPoint(Point<double>(350,320));
   }
 };
 
