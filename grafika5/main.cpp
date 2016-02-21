@@ -8,9 +8,9 @@
 #include "objects/Indonesia.h"
 #include "objects/kotak.h"
 
-const Point<double> window_corner_a = Point<double>(966, 544);
+const Point<double> window_corner_a = Point<double>(955, 544);
 const Point<double> window_corner_b = Point<double>(1366, 768);
-const Point<int> window_a = Point<int>(966, 544);
+const Point<int> window_a = Point<int>(955, 544);
 const Point<int> window_b = Point<int>(1366, 768);
 const int MAKS_ZOOM = 15;
 const int MIN_ZOOM = -10;
@@ -37,7 +37,7 @@ int main() {
 
   Indonesia* small_indo = new Indonesia();
   small_indo->resize(0.3);
-  small_indo->move(475, 275);
+  small_indo->move(473, 273);
   small_indo->print(fb, window, 255, 0, 0, 0);
   kotak->print_frame(fb, 0, 0, 0, 0);
   fb.print_include(window_a, window_b);
@@ -77,7 +77,9 @@ int main() {
         indo->resize(ZOOM_IN);
         zoom++;
         kotak->resizes(1 / ZOOM_IN);
-        trans *= 1 / ZOOM_IN;
+        //if(trans>1.2){
+          trans *= 1 / ZOOM_IN;
+        //}
       }
     }
     else if (cmd == 'e' || cmd == 'E' ) {
@@ -85,7 +87,9 @@ int main() {
         indo->resize(ZOOM_OUT);
         zoom--;
         kotak->resizes(1/ZOOM_OUT);
-        trans *= 1 / ZOOM_OUT;
+        //if(trans>1.2){
+          trans *= 1 / ZOOM_OUT;
+        //}
       }
     }
     fb.clear();
@@ -95,6 +99,7 @@ int main() {
     small_indo->print(fb, window, 255, 0, 0, 0);
     kotak->print_frame(fb, 0, 0, 0, 0);
     fb.print_include(window_a, window_b);
+    //cout << trans << endl;
   }
   return 0;
 }

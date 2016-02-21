@@ -241,7 +241,7 @@ struct Polygon {
       points[i].scale(factor, center);
     }
   }
-  void move(int x, int y) {
+  void move(double x, double y) {
     for (int i = 0; i < size; ++i) {
       points[i].move(x, y);
     }
