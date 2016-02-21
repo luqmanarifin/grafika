@@ -2,21 +2,20 @@
 #include <iostream>
 #include <unistd.h>
 #include "lib/conio2.h"
-#include "lib/background.h"
 
 #include "objects/belakang.h"
 #include "objects/window.h"
 #include "objects/Indonesia.h"
 
 
-const Point window_corner_a = Point(966, 518);
-const Point window_corner_b = Point(1400, 1000);
+const Point<int> window_corner_a = Point<int>(966, 518);
+const Point<int> window_corner_b = Point<int>(1400, 1000);
 const int MAKS_ZOOM = 3;
 const int MIN_ZOOM = -1;
 
 using namespace std;
 
-Background fb;
+FrameBuffer fb;
 Window* window;
 
 int main() {  

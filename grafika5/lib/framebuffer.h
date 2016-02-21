@@ -100,7 +100,7 @@ public:
   /**
    * Set pixel at p using color c.
    */
-  void set(Point<double> p, Color c) {
+  void set(Point<int> p, Color c) {
     set(p.x, p.y, c.red, c.green, c.blue, c.alpha);
   }
 
@@ -117,7 +117,7 @@ public:
     /* adds to lastSet */
     if (!visited[x][y]) {
       visited[x][y] = 1;
-      lastSet.push_back(Point<double>(x, y));
+      lastSet.push_back(Point<int>(x, y));
     }
   }
 
@@ -147,7 +147,7 @@ public:
     //printf("%d ",lastSet.size());
   }
   
-  void print_exclude(Point<double> a, Point<double> b) {
+  void print_exclude(Point<int> a, Point<int> b) {
     for(int i = 0; i < lastSet.size(); i++) {
       int x = lastSet[i].x;
       int y = lastSet[i].y;
@@ -173,7 +173,7 @@ public:
     }
   }
 
-  void print_include(Point<double> a, Point<double> b) {
+  void print_include(Point<int> a, Point<int> b) {
     for(int i = 0; i < lastSet.size(); i++) {
       int x = lastSet[i].x;
       int y = lastSet[i].y;
@@ -203,7 +203,7 @@ public:
   /**
    * Get color at p.
    */
-  Color get(Point<double> p) {
+  Color get(Point<int> p) {
     return get(p.x, p.y);
   }
 
@@ -242,16 +242,16 @@ public:
    */
   void clear() {
     while (lastSet.size()) {
-      Point<double> &p = lastSet.back();
+      Point<int> &p = lastSet.back();
       set(p.x, p.y, Color::BLACK);
       visited[p.x][p.y] = 0;
       lastSet.pop_back();
     }
   }
 
-  void clear(std::vector<Point<double>>& all) {
+  void clear(std::vector<Point<int>>& all) {
     while(!all.empty()) {
-      Point<double> &p = all.back();
+      Point<int> &p = all.back();
       set(p.x, p.y, Color::BLACK);
       if (0 <= p.x && p.x < xres && 0 <= p.y && p.y < yres) {
         visited[p.x][p.y] = 0;
