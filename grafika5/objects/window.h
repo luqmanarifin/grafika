@@ -12,4 +12,5 @@ struct Window : public Polygon {
   }
 };
 
+
 #endif
