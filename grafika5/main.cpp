@@ -6,18 +6,24 @@
 
 #include "objects/Indonesia.h"
 
+const Point window_corner_a = Point(966, 518);
+const Point window_corner_b = Point(1400, 1000);
+const int MAKS_ZOOM = 3;
+const int MIN_ZOOM = -1;
+
 using namespace std;
 
 Background fb;
 
 int main() {  
   system("clear");
-  Point window_corner_a(966, 518);
   Point window_corner_b(1400, 1000);
   int cmd = ' ';
   Indonesia* indo = new Indonesia();
   indo->print(fb);
   fb.print_exclude(window_corner_a, window_corner_b);
+
+  int zoom = 0;
   while(true){ 
     cmd = getch();
     if (cmd == 27) {
@@ -44,10 +50,16 @@ int main() {
     }
 
     else if (cmd == 'q' || cmd == 'Q' ) {
-      indo->resize(1.1);
+      if(zoom < MAKS_ZOOM) {
+        indo->resize(1.1);
+        zoom++;
+      }
     }
     else if (cmd == 'e' || cmd == 'E' ) {
-      indo->resize(0.9);
+      if(zoom > MIN_ZOOM) { 
+        indo->resize(0.9);
+        zoom--;
+      }
     }
     indo->print(fb);
     fb.print_exclude(window_corner_a, window_corner_b);
