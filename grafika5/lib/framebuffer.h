@@ -238,6 +238,7 @@ public:
   }
   
   void print(int ukurany, int batasanx) {
+    ukurany *= 800;
     for(int i = 0; i < ukurany; i++) {
       int x = lastSet[i].x;
       int y = lastSet[i].y;
@@ -251,7 +252,7 @@ public:
       if(x<400-(batasanx/2)){
         x=400-(batasanx/2);
       }
-      int location = getLocation(x, y+(ukurany/800)-100);
+      int location = getLocation(x, y);
       if (bits_per_pixel == 32) {
         *(fbp + location + 0) = blue;
         *(fbp + location + 1) = green;
