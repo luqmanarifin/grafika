@@ -213,9 +213,8 @@ struct Maluku{
       resize(1.5);
       move(300, 75);
     }
-    void print(FrameBuffer fb){
-      bel = new Belakang();
-      bel->print(fb,0,174,239,0);
+    void print(FrameBuffer fb, Polygon* back, int red = 0, int green = 174, int blue = 239, int alpha = 0){
+      back->print(fb, red, green, blue, alpha);
       sumatra->print(fb);
       maluku->print(fb);
       papua->print(fb);

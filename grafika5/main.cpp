@@ -4,7 +4,10 @@
 #include "lib/conio2.h"
 #include "lib/background.h"
 
+#include "objects/belakang.h"
+#include "objects/window.h"
 #include "objects/Indonesia.h"
+
 
 const Point window_corner_a = Point(966, 518);
 const Point window_corner_b = Point(1400, 1000);
@@ -14,14 +17,21 @@ const int MIN_ZOOM = -1;
 using namespace std;
 
 Background fb;
+Window* window;
 
 int main() {  
   system("clear");
-  Point window_corner_b(1400, 1000);
   int cmd = ' ';
+  window = new Window(window_corner_a.x, window_corner_a.y);
   Indonesia* indo = new Indonesia();
-  indo->print(fb);
+  indo->print(fb, new Belakang());
   fb.print_exclude(window_corner_a, window_corner_b);
+  
+  Indonesia* small_indo = new Indonesia();
+  small_indo->resize(0.3);
+  small_indo->move(675, 300);
+  small_indo->print(fb, window, 255, 0, 0, 0);
+  fb.print_include(window_corner_a, window_corner_b);
 
   int zoom = 0;
   while(true){ 
@@ -61,8 +71,11 @@ int main() {
         zoom--;
       }
     }
-    indo->print(fb);
+    fb.clear();
+    indo->print(fb, new Belakang());
     fb.print_exclude(window_corner_a, window_corner_b);
+    small_indo->print(fb, window, 255, 0, 0, 0);
+    fb.print_include(window_corner_a, window_corner_b);
   }
   return 0;
 }
