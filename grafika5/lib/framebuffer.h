@@ -234,6 +234,38 @@ public:
         printf("Unknown bpp format: %d bpp\n", vinfo.bits_per_pixel);
       }
     }
+    //printf("%d ",lastSet.size());
+  }
+  
+  void print(int ukurany, int batasanx) {
+    for(int i = 0; i < ukurany; i++) {
+      int x = lastSet[i].x;
+      int y = lastSet[i].y;
+      int red = color[x][y].red;
+      int green = color[x][y].green;
+      int blue = color[x][y].blue;
+      int alpha = color[x][y].alpha;
+      if(x>600){
+        x =600;
+      }
+      if(x<200){
+        x=200;
+      }
+      int location = getLocation(x, y+(ukurany/800)-100);
+      if (bits_per_pixel == 32) {
+        *(fbp + location + 0) = blue;
+        *(fbp + location + 1) = green;
+        *(fbp + location + 2) = red;
+        *(fbp + location + 3) = alpha;
+      }
+      else if (bits_per_pixel == 16) {
+        unsigned short int t = (red >> 3) << 11 | (green >> 2) << 5 | (blue >> 3);
+        *((unsigned short int*)(fbp + location)) = t;     
+      }
+      else {
+        printf("Unknown bpp format: %d bpp\n", vinfo.bits_per_pixel);
+      }
+    }
   }
 
   /**

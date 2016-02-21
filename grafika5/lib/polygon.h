@@ -69,13 +69,13 @@ struct Polygon {
           int ra = points[j].x;
           if(l == r) {
             a[sz++] = min(la, ra);
-            cout << sz  << ' ' << size << endl;
+            //cout << sz  << ' ' << size << endl;
             a[sz++] = max(la, ra);
-            cout << sz  << ' ' << size << endl;
+            //cout << sz  << ' ' << size << endl;
           } else {
             int d = (int)round(abs(l - y)*abs(la - ra)/abs(l - r));
             a[sz++] = la + (la < ra? d : -d);
-            cout << sz  << ' ' << size << endl;
+            //cout << sz  << ' ' << size << endl;
           }
         }
       }
@@ -104,13 +104,13 @@ struct Polygon {
           int ra = points[j].y;
           if(l == r) {
             a[sz++] = min(la, ra);
-            cout << sz  << ' ' << size << endl;
+            //cout << sz  << ' ' << size << endl;
             a[sz++] = max(la, ra);
-            cout << sz  << ' ' << size << endl;
+            //cout << sz  << ' ' << size << endl;
           } else {
             int d = (int)round(abs(l - b)*abs(la - ra)/abs(l - r));
             a[sz++] = la + (la < ra? d : -d);
-            cout << sz  << ' ' << size << endl;
+            //cout << sz  << ' ' << size << endl;
           }
         }
       }

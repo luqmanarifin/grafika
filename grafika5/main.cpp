@@ -14,7 +14,7 @@ int main() {
   int cmd = ' ';
   Indonesia* indo = new Indonesia();
   indo->print(fb);
-  fb.print();
+  fb.print(250000);
   while(true){ 
      cmd = getch();
      if (cmd == 27) {
@@ -39,6 +39,7 @@ int main() {
      else if (cmd == 's' || cmd == 'S' || cmd == -2) {
         indo->move(0,10);
      }
+     
      else if (cmd == 'q' || cmd == 'Q' ) {
         indo->resize(1.1);
      }
@@ -47,8 +48,8 @@ int main() {
      }
      indo->print(fb);
     //Halmahera2* ambon = new Halmahera2();
-    fb.print();
-    usleep(50000);
+    fb.print(250000);
+    //usleep(50000);
   }
   return 0;
 }
