@@ -12,6 +12,8 @@
 #include "Sulawesi.h"
 #include "Papua.h"
 
+#define tengah_A 683
+#define tengah_B 384
 
 using namespace std;
 
@@ -36,9 +38,9 @@ using namespace std;
       belitung->print(fb);
     }
     void resize(float skala){
-      sumatra->resize(skala,Point<double>(400,300));
-      bangka->resize(skala,Point<double>(400,300));
-      belitung->resize(skala,Point<double>(400,300));
+      sumatra->resize(skala,Point<double>(tengah_A,tengah_B));
+      bangka->resize(skala,Point<double>(tengah_A,tengah_B));
+      belitung->resize(skala,Point<double>(tengah_A,tengah_B));
     }
     void move(int x, int y){
       sumatra->move(x,y);
@@ -64,8 +66,8 @@ using namespace std;
       madura->print(fb);
     }
     void resize(float skala){
-      jawa->resize(skala,Point<double>(400,300));
-      madura->resize(skala,Point<double>(400,300));
+      jawa->resize(skala,Point<double>(tengah_A,tengah_B));
+      madura->resize(skala,Point<double>(tengah_A,tengah_B));
     }
     void move(int x, int y){
       jawa->move(x,y);
@@ -90,9 +92,9 @@ using namespace std;
       ntt2->print(fb);
     }
     void resize(float skala){
-      sumbawa->resize(skala,Point<double>(400,300));
-      ntt1->resize(skala,Point<double>(400,300));
-      ntt2->resize(skala,Point<double>(400,300));
+      sumbawa->resize(skala,Point<double>(tengah_A,tengah_B));
+      ntt1->resize(skala,Point<double>(tengah_A,tengah_B));
+      ntt2->resize(skala,Point<double>(tengah_A,tengah_B));
     }
     void move(int x, int y){
       sumbawa->move(x,y);
@@ -123,9 +125,9 @@ using namespace std;
       lombok->print(fb);
     }
     void resize(float skala){
-      ntb->resize(skala,Point<double>(400,300));
-      bali->resize(skala,Point<double>(400,300));
-      lombok->resize(skala,Point<double>(400,300));
+      ntb->resize(skala,Point<double>(tengah_A,tengah_B));
+      bali->resize(skala,Point<double>(tengah_A,tengah_B));
+      lombok->resize(skala,Point<double>(tengah_A,tengah_B));
     }
     void move(int x, int y){
       ntb->move(x,y);
@@ -161,10 +163,10 @@ struct Maluku{
       buru->print(fb);
     }
     void resize(float skala){
-      halmahera->resize(skala,Point<double>(400,300));
-      ambon->resize(skala,Point<double>(400,300));
-      seram->resize(skala,Point<double>(400,300));
-      buru->resize(skala,Point<double>(400,300));
+      halmahera->resize(skala,Point<double>(tengah_A,tengah_B));
+      ambon->resize(skala,Point<double>(tengah_A,tengah_B));
+      seram->resize(skala,Point<double>(tengah_A,tengah_B));
+      buru->resize(skala,Point<double>(tengah_A,tengah_B));
     
     }
     void move(int x, int y){
@@ -195,15 +197,15 @@ struct Maluku{
       ntb= new NTB();
       jawa= new KepJawa();
       sumatra->resize(0.3);
-      sumatra->move(-250,0);
+      sumatra->move(-230,0);
       maluku->resize(0.13);
-      maluku->move(90,-40);
+      maluku->move(30,-70);
       papua->resizes(0.3);
-      papua->move(300,150);
+      papua->move(500,200);
       sulawesi->resizes(0.27);
-      sulawesi->move(150,50);
+      sulawesi->move(350,90);
       kalimantan->resizes(0.27);
-      kalimantan->move(-120,30);
+      kalimantan->move(90,80);
       ntt->resize(0.2);
       ntt->move(30,100);
       ntb->resize(0.2);
@@ -211,7 +213,8 @@ struct Maluku{
       jawa->resize(0.2);
       jawa->move(-150,70);
       resize(1.5);
-      move(300, 75);
+      move(200, 35);
+      
     }
     void print(FrameBuffer fb, Polygon* back, int red = 0, int green = 174, int blue = 239, int alpha = 0){
       back->print(fb, red, green, blue, alpha);
@@ -227,9 +230,9 @@ struct Maluku{
     void resize(float skala){
       sumatra->resize(skala);
       maluku->resize(skala);
-      papua->resize(skala,Point<double>(400,300));
-      sulawesi->resize(skala,Point<double>(400,300));
-      kalimantan->resize(skala,Point<double>(400,300));
+      papua->resize(skala,Point<double>(tengah_A,tengah_B));
+      sulawesi->resize(skala,Point<double>(tengah_A,tengah_B));
+      kalimantan->resize(skala,Point<double>(tengah_A,tengah_B));
       ntt->resize(skala);
       ntb->resize(skala);
       jawa->resize(skala);

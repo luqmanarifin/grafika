@@ -9,6 +9,55 @@ using namespace std;
 
 const double eps = 1e-13;
 
+inline int sign(int x) { return (x > 0) - (x < 0); }
+
+void line(FrameBuffer fb, int x0, int y0, int x1, int y1, Color color)
+{
+  int deltax = x1 - x0;
+  int adx = abs(deltax);
+  int dx = sign(deltax);
+
+  int deltay = y1 - y0;
+  int ady = abs(deltay);
+  int dy = sign(deltay);
+
+  fb.set(x0, y0, color);
+  if (adx < ady) {
+    int D = 2 * adx - ady;
+    int x = x0;
+    if (D > 0) {
+      x += dx;
+      D -= 2 * ady;
+    }
+
+    for (int y = y0 + dy; y != y1; y += dy) {
+      fb.set(x, y, color);
+      D += 2 * adx;
+      while (D > 0) {
+        x += dx;
+        D -= 2 * ady;
+      }
+    }
+  }
+  else {
+    int D = 2 * ady - adx;    
+    int y = y0;
+    if (D > 0) {
+      y += dy;
+      D -= 2 * adx;
+    }
+
+    for (int x = x0 + dx; x != x1; x += dx) {
+      fb.set(x, y, color);
+      D += 2 * ady;
+      while (D > 0) {
+        y += dy;
+        D -= 2 * adx;
+      }
+    }
+  }
+}
+
 struct Polygon {
   Polygon() {
     points = NULL;
@@ -50,6 +99,12 @@ struct Polygon {
   }
   bool same(double a, double b) {
     return fabs(a - b) < eps;
+  }
+  void print_frame(FrameBuffer& fb, int red, int green, int blue, int alpha) {
+    for(int i = 0; i < size; i++) {
+      int j = (i + 1) % size;
+      line(fb, (int) points[i].x, (int) points[i].y, (int) points[j].x, (int) points[j].y, Color(red, green, blue, alpha));
+    }
   }
   
   void print(FrameBuffer& fb, int red, int green, int blue, int alpha) 
@@ -186,7 +241,7 @@ struct Polygon {
       points[i].scale(factor, center);
     }
   }
-  void move(int x, int y) {
+  void move(double x, double y) {
     for (int i = 0; i < size; ++i) {
       points[i].move(x, y);
     }
