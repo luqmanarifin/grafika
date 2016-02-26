@@ -59,15 +59,15 @@ public:
     if (degreeZ) {
       x = temp.x*cos(radZ)-temp.y*sin(radZ);
       y = temp.x*sin(radZ)+temp.y*cos(radZ);
-      cout << "masukZ"<< endl;
+      //cout << "masukZ"<< endl;
     } else if (degreeY) {
       x = temp.z*sin(radY)+temp.x*cos(radY);
       z = temp.z*cos(radY)-temp.x*sin(radY);
-      cout << "masukY" <<endl;
+      //cout << "masukY" <<endl;
     } else {
       y = temp.y*cos(radX)-temp.z*sin(radX);
       z = temp.y*sin(radX)+temp.z*cos(radX);
-      cout << "masukX" <<endl;
+      //cout << "masukX" <<endl;
     }
 
     *this += center;

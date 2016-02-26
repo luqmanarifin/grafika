@@ -28,10 +28,10 @@ struct Kubus : public Polygon {
     }
   }
   void rotate3d(double degreeZ, const Point<double>& center = Point<double>(), double degreeX =0 , double degreeY=0) {
-    Point<double> e = Point<double>(center.x,center.y,center.z);
+   // Point<double> e = Point<double>(center.x,center.y,center.z);
     for (int i = 0; i < size; ++i) {
-      e.z = points[i].z;
-      points[i].rotate(degreeZ, e,degreeX,degreeY);
+      //e.z = points[i].z;
+      points[i].rotate(degreeZ, center,degreeX,degreeY);
     }
   }
   void print3d(FrameBuffer& fb, int red, int green, int blue, int alpha) {
