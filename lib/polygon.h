@@ -82,13 +82,10 @@ struct Polygon {
           double ra = points[j].x;
           if(same(l, r)) {
             a[sz++] = min(la, ra);
-            //cout << sz  << ' ' << size << endl;
             a[sz++] = max(la, ra);
-            //cout << sz  << ' ' << size << endl;
           } else {
             double d = fabs(l - y)*fabs(la - ra)/fabs(l - r);
             a[sz++] = la + (la < ra? d : -d);
-            //cout << sz  << ' ' << size << endl;
           }
         }
       }
@@ -117,13 +114,10 @@ struct Polygon {
           double ra = points[j].y;
           if(same(l, r)) {
             a[sz++] = min(la, ra);
-            //cout << sz  << ' ' << size << endl;
             a[sz++] = max(la, ra);
-            //cout << sz  << ' ' << size << endl;
           } else {
             double d = abs(l - b)*abs(la - ra)/abs(l - r);
             a[sz++] = la + (la < ra? d : -d);
-            //cout << sz  << ' ' << size << endl;
           }
         }
       }
