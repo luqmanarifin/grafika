@@ -1,7 +1,7 @@
 #ifndef __JENDELA_H_
 #define __JENDELA_H_
 
-#include "../lib/polygon.h" 
+#include "../../lib/polygon.h" 
 
 struct Jendela : public Polygon {
   Jendela() {

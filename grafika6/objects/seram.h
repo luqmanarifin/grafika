@@ -1,7 +1,7 @@
 #ifndef __SERAM_H_
 #define __SERAM_H_
 
-#include "../lib/polygon.h" 
+#include "../../lib/polygon.h" 
 
 struct Seram : public Polygon {
   Seram() {

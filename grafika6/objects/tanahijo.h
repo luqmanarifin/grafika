@@ -1,7 +1,7 @@
 #ifndef __TANAHIJO_H_
 #define __TANAHIJO_H_
 
-#include "../lib/polygon.h" 
+#include "../../lib/polygon.h" 
 
 struct TanahIjo : public Polygon {
   TanahIjo() {

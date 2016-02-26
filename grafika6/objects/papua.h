@@ -1,7 +1,7 @@
 #ifndef __RUMAHGAZANDI_H_
 #define __RUMAHGAZANDI_H_
 
-#include "../lib/polygon.h" 
+#include "../../lib/polygon.h" 
 
 struct RumahGazandi : public Polygon {
   RumahGazandi() {

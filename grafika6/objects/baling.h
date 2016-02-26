@@ -1,7 +1,7 @@
 #ifndef __BALING_H_
 #define __BALING_H_
 
-#include "../lib/polygon.h" 
+#include "../../lib/polygon.h" 
 using namespace std;
 
 struct Baling : public Polygon {
