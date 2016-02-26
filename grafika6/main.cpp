@@ -3,10 +3,11 @@
 #include <unistd.h>
 #include "../lib/conio2.h"
 
-#include "objects/belakang.h"
-#include "objects/window.h"
-#include "objects/Indonesia.h"
-#include "objects/kotak.h"
+//#include "objects/belakang.h"
+//#include "objects/window.h"
+//#include "objects/Indonesia.h"
+//#include "objects/kotak.h"
+#include "objects/Kubus.h"
 
 const Point<double> window_corner_a = Point<double>(966, 544);
 const Point<double> window_corner_b = Point<double>(1366, 768);
@@ -19,13 +20,16 @@ const int MIN_ZOOM = -10;
 using namespace std;
 
 FrameBuffer fb;
-Window* window;
-Kotak* kotak = new Kotak(window_corner_a, window_corner_b);
+//Window* window;
+//Kotak* kotak = new Kotak(window_corner_a, window_corner_b);
 
 int main() {  
+   system("clear");
+  //window = new Window(window_corner_a.x, window_corner_a.y);
+  /*
   system("clear");
   int cmd = ' ';
-  window = new Window(window_corner_a.x, window_corner_a.y);
+  
   Indonesia* indo = new Indonesia();
   indo->print(fb, new Belakang());
   
@@ -77,6 +81,19 @@ int main() {
     indo->print(fb, new Belakang());
     small_indo->print(fb, window, 255, 0, 0, 0);
     fb.print();
+  }*/
+  Kubus* kubus = new Kubus(400,300,50);
+  while(true){
+    //system("clear");
+    system("clear");
+    kubus->printpoint();
+    kubus->rotate(0,Point<double>(425,275,0),0,1);
+    //kubus->rotateCenter(1.1);
+    kubus->printpoint();
+    kubus->print3d(fb,123,12,12,0);
+    fb.print();   
+    fb.clear();
+    usleep(40000);
   }
   return 0;
 }

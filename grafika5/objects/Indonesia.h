@@ -219,13 +219,13 @@ struct Maluku{
     void print(FrameBuffer fb, Polygon* back, int red = 0, int green = 174, int blue = 239, int alpha = 0){
       back->print(fb, red, green, blue, alpha);
       sumatra->print(fb);
-      maluku->print(fb);
+      /*maluku->print(fb);
       papua->print(fb);
       sulawesi->print(fb);
       kalimantan->print(fb);
       ntt->print(fb);
       ntb->print(fb);
-      jawa->print(fb);
+      jawa->print(fb);*/
     }
     void resize(float skala){
       sumatra->resize(skala);
