@@ -36,7 +36,7 @@ struct Polygon {
   ~Polygon() {
     if ( points != NULL) delete[] points;
   }
-  void addPoint(Point<double> p) {
+  void addPoint(Point<double>& p) {
     Point<double>* newPoints = new Point<double>[size + 1];
     for(int i = 0; i < size; i++) {
       newPoints[i] = points[i];
@@ -44,6 +44,14 @@ struct Polygon {
     newPoints[size++] = p;
     if ( points != NULL) delete[] points;
     points = newPoints;
+
+    // update center
+    center.x *= (size - 1);
+    center.x += p.x;
+    center.x /= size;
+    center.y *= (size - 1);
+    center.y += p.y;
+    center.y /= size;
   }
   void print(FrameBuffer& fb) {
     print(fb, 255, 255, 255, 0);
@@ -165,46 +173,35 @@ struct Polygon {
     } 
     return Min;
   }
-  Point<double> getTengah(){
-    int SumX=0, SumY=0;
-    for(int i=0;i <size;i++){
-       SumX+=points[i].x;
-       SumY+=points[i].y;
-    } 
-    return Point<double>(SumX/size,SumY/size);
-  }
   
   void resize(double factor, const Point<double>& center = Point<double>()) {
     for (int i = 0; i < size; ++i) {
       points[i].scale(factor, center);
     }
+    this->center().scale(factor, center);
   }
-  void resizes(double factor) {
-    Point<double> center = getTengah();
-    //printf("%d %d ",center.x,center.y);
-    for (int i = 0; i < size; ++i) {
-      points[i].scale(factor, center);
-    }
+  void resizeCenter(double factor) {
+    rotate(factor, this->center);
   }
   void move(int x, int y) {
     for (int i = 0; i < size; ++i) {
       points[i].move(x, y);
     }
+    center.move(x, y);
   }
-  void rotate(double degree, const Point<double>& center = Point<double>()) {
+  void rotate(double degreeZ, const Point<T>& center = Point<T>(0, 0), double degreeX = 0, double degreeY = 0) {
     for (int i = 0; i < size; ++i) {
-      points[i].rotate(degree, center);
+      points[i].rotate(degreeZ, center, degreeX, degreeY);
     }
+    this->center.rotate(degreeZ, center, degreeX, degreeY);
   }
-  void rotates(double degree) {
-    Point<double> center = getTengah();
-    for (int i = 0; i < size; ++i) {
-      points[i].rotate(degree, center);
-    }
+  void rotateCenter(double degreeZ, double degreeX = 0, double degreeY = 0) {
+    rotate(degreeZ, this->center, degreeX, degreeY);
   }
 
   Point<double>* points;
   int size;
+  Point<double> center;
 };
 
 #endif
