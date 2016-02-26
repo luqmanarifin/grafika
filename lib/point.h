@@ -51,12 +51,21 @@ public:
     double radY = degreeY * 3.14159265358979323846 / 180.0 *0.9999;
     double radZ = degreeZ * 3.14159265358979323846 / 180.0 *0.9999;
 
-    // composition transform rotateX.rotateY.rotateZ
-    // BELUM KELAR
-    // MAU PAKEK QUATERNION
-    x = temp.x*cos(radXY)-temp.y*sin(radXY);
-    y = temp.x*sin(radXY)+temp.y*cos(radXY);
-    // BELUM KELAR
+    // depend on which axis
+    // versi cacat
+    // ga pake komposisi
+    // mlz
+    // @icalF 
+    if (degreeZ) {
+      x = temp.x*cos(radZ)-temp.y*sin(radZ);
+      y = temp.x*sin(radZ)+temp.y*cos(radZ);
+    } else if (degreeY) {
+      z = temp.z*sin(radY)+temp.x*cos(radY);
+      x = temp.z*cos(radY)-temp.x*sin(radY);
+    } else {
+      y = temp.y*cos(radZ)-temp.z*sin(radZ);
+      z = temp.y*sin(radZ)+temp.z*cos(radZ);
+    }
 
     *this += center;
     return *this;
