@@ -11,7 +11,7 @@ template<class T>
 class Point {
 public:
   Point<T>() : x(0), y(0), z(0) {}
-  Point<T>(T _x, T _y, T, _z) : x(_x), y(_y), z(_z) {}
+  Point<T>(T _x, T _y, T _z = 0) : x(_x), y(_y), z(_z) {}
   Point<T>(const Point<T>& p) : x(p.x), y(p.y), z(p.z) {}
 
   Point<T> operator+=(const Point<T>& rhs) {
