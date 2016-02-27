@@ -6,6 +6,7 @@
 #include "point.h"
 #include "framebuffer.h"
 #include "color.h"
+#include "vector.h"
 
 using namespace std;
 
@@ -25,7 +26,7 @@ struct Polygon {
     size = _polygon.size;
     points = new Point<double>[size];
     for(int i=0;i<size;i++){
-      points[i]=Point(_polygon.points[i]);
+      points[i]=Point<double>(_polygon.points[i]);
     }    
     if (size > 2) generateNormal();
   }
@@ -34,7 +35,7 @@ struct Polygon {
     if ( points != NULL) delete[] points;
     points = new Point<double>[size];
     for(int i=0;i<size;i++){
-      points[i]=Point(_polygon.points[i]);
+      points[i]=Point<double>(_polygon.points[i]);
     }    
     if (size > 2) generateNormal();
     return *this;
@@ -207,15 +208,15 @@ struct Polygon {
   }
   Polygon& generateNormal() {
     assert(this->size > 2);
-    norm = Vector::cross(Vector(points[0],points[1]), Vector(points[0], points[2]));
-    norm *= -Vector::dot(norm, Vector(points[0], center));
+    norm = Vector<double>::cross(Vector<double>(points[0],points[1]), Vector<double>(points[0], points[2]));
+    norm *= -Vector<double>::dot(norm, Vector<double>(points[0], center));
     return *this;
   }
 
   Point<double>* points;
   int size;
   Point<double> center;
-  Vector<double>* norm;
+  Vector<double> norm;
 };
 
 #endif

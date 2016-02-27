@@ -55,8 +55,11 @@ struct Shape {
   }  
   Shape& print(FrameBuffer& fb, int red, int green, int blue, int alpha) {
     for (int i = 0; i < size; ++i) {
-      if (polygons[i].norm.z < 0)
+            cout << polygons[i].norm << endl;
+      if (polygons[i].norm.z < 0) {
+
         polygons[i].print(fb, red, green, blue, alpha);
+      }
     }
     return *this;
   }
@@ -89,9 +92,9 @@ struct Shape {
     return rotate(degreeZ, this->center, degreeX, degreeY);
   }
 
-  Shape* polygons;
+  Polygon* polygons;
   int size;
-  Point center;
+  Point<double> center;
 };
 
 #endif

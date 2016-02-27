@@ -101,7 +101,7 @@ public:
     stream << "(" << p.x << ", " << p.y << ", " << p.z << ")";
   }
 
-  double x, y, z;
+  T x, y, z;
 };
 
 #endif

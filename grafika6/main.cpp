@@ -1,4 +1,5 @@
 #include "../lib/polygon.h"
+#include "../lib/shape.h"
 #include <iostream>
 #include <unistd.h>
 #include "../lib/conio2.h"
@@ -24,8 +25,52 @@ FrameBuffer fb;
 //Kotak* kotak = new Kotak(window_corner_a, window_corner_b);
 
 int main() {  
+    int x = 400,y=300,s=50;
+    Shape* kubus2 = new Shape();
+    
+    kubus2->addPolygon(Polygon()
+      .addPoint(Point<double>(x,y,0))
+      .addPoint(Point<double>(x+s,y,0))
+      .addPoint(Point<double>(x+s,y-s,0))
+      .addPoint(Point<double>(x,y-s,0))
+    )
+    .addPolygon(Polygon()
+      .addPoint(Point<double>(x,y,0))
+      .addPoint(Point<double>(x+s,y,0))
+      .addPoint(Point<double>(x+s,y,s))   
+      .addPoint(Point<double>(x,y,s))
+    )
+    .addPolygon( Polygon()
+      .addPoint(Point<double>(x+s,y,0))
+      .addPoint(Point<double>(x+s,y,s))
+      .addPoint(Point<double>(x+s,y-s,s))  
+      .addPoint(Point<double>(x+s,y-s,0))
+    )
+    .addPolygon( Polygon()
+      .addPoint(Point<double>(x,y,s))
+      .addPoint(Point<double>(x+s,y,s))
+      .addPoint(Point<double>(x+s,y-s,s))
+      .addPoint(Point<double>(x,y-s,s))
+    )
+    
+    .addPolygon( Polygon()
+      .addPoint(Point<double>(x,y-s,0))
+      .addPoint(Point<double>(x+s,y-s,0))
+      .addPoint(Point<double>(x+s,y-s,s))   
+      .addPoint(Point<double>(x,y-s,s))
+    )
+    
+    .addPolygon( Polygon()
+      .addPoint(Point<double>(x,y,0))
+      .addPoint(Point<double>(x,y,s))
+      .addPoint(Point<double>(x,y-s,s))  
+      .addPoint(Point<double>(x,y-s,0))
+    );
+    
     system("clear");
     int cmd = ' ';
+    kubus2->print(fb);
+    /*
     Kubus* kubus = new Kubus(400,300,50);
     while(true){
       //system("clear");
@@ -68,6 +113,8 @@ int main() {
       fb.clear();
       usleep(40000);
     }
+    */
+  fb.print();
   return 0;
 }
 
