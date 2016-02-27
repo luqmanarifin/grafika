@@ -29,7 +29,7 @@ struct Polygon {
     }    
     if (size > 2) generateNormal();
   }
-  void operator=(const Polygon& _polygon) {
+  Polygon& operator=(const Polygon& _polygon) {
     size = _polygon.size;
     if ( points != NULL) delete[] points;
     points = new Point<double>[size];
@@ -37,6 +37,7 @@ struct Polygon {
       points[i]=Point(_polygon.points[i]);
     }    
     if (size > 2) generateNormal();
+    return *this;
   }
   ~Polygon() {
     if ( points != NULL) delete[] points;
@@ -207,6 +208,7 @@ struct Polygon {
   Polygon& generateNormal() {
     assert(this->size > 2);
     norm = Vector::cross(Vector(points[0],points[1]), Vector(points[0], points[2]));
+    norm *= -Vector::dot(norm, Vector(points[0], center));
     return *this;
   }
 

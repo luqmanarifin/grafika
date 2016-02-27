@@ -30,7 +30,7 @@ struct Shape {
   ~Shape() {
     if ( polygons != NULL) delete[] polygons;
   }
-  Shape& addPoint(const Polygon& p) {
+  Shape& addPolygon(const Polygon& p) {
     Polygon* newPolygons = new Polygon[size + 1];
     for(int i = 0; i < size; i++) {
       newPolygons[i] = polygons[i];
@@ -55,13 +55,41 @@ struct Shape {
   }  
   Shape& print(FrameBuffer& fb, int red, int green, int blue, int alpha) {
     for (int i = 0; i < size; ++i) {
-      if (polygons[i].norm.z > 0)
+      if (polygons[i].norm.z < 0)
         polygons[i].print(fb, red, green, blue, alpha);
     }
     return *this;
   }
 
-  Polygon* polygons;
+  Shape& resize(double factor, const Point<double>& center = Point<double>()) {
+    for (int i = 0; i < size; ++i) {
+      polygons[i].resize(factor, center);
+    }
+    this->center.scale(factor, center);
+    return *this;
+  }
+  Shape& resizeCenter(double factor) {
+    return resize(factor, this->center);
+  }
+  Shape& move(int x, int y) {
+    for (int i = 0; i < size; ++i) {
+      polygons[i].move(x, y);
+    }
+    center.move(x, y);
+    return *this;
+  }
+  Shape& rotate(double degreeZ, const Point<double>& center = Point<double>(0, 0), double degreeX = 0, double degreeY = 0) {
+    for (int i = 0; i < size; ++i) {
+      polygons[i].rotate(degreeZ, center, degreeX, degreeY);
+    }
+    this->center.rotate(degreeZ, center, degreeX, degreeY);
+    return *this;
+  }
+  Shape& rotateCenter(double degreeZ, double degreeX = 0, double degreeY = 0) {
+    return rotate(degreeZ, this->center, degreeX, degreeY);
+  }
+
+  Shape* polygons;
   int size;
   Point center;
 };

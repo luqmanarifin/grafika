@@ -39,13 +39,24 @@ public:
     return *this;
   }
 
+  Vector<T>& operator*=(const double factor) {
+    this->x = this->x * factor;
+    this->y = this->y * factor;
+    this->z = this->z * factor;
+    return *this;
+  }
+
+  Vector<T>& operator*(const double factor) {
+    return Vector (this->x * factor, this->y * factor, this->z * factor);
+  }
+
   /* analytic geometry methods */
   static Vector<T>& cross(const Vector<T>& a, const Vector<T>& b) {
     return Vector(a.y*b.z - b.y*a.z, a.z*b.x - b.z*a.x, a.x*b.y - b.x*a.y);
   }
   static T dot(const Vector<T>& a, const Vector<T>& b) { return a.x*b.x + a.y*b.y + a.z*b.z; }
 
-  friend ostream& operator<< (ostream& stream, const Point<T>& p) {
+  friend ostream& operator<< (ostream& stream, const Vector<T>& p) {
     stream << "<" p.x << ", " << p.y << ">";
   }
 };
