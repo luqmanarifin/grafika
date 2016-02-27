@@ -40,36 +40,32 @@ int main() {
       .addPoint(Point<double>(x+s,y,s))   
       .addPoint(Point<double>(x,y,s))
     )
-    .addPolygon( Polygon()
+    .addPolygon(Polygon()
       .addPoint(Point<double>(x+s,y,0))
       .addPoint(Point<double>(x+s,y,s))
       .addPoint(Point<double>(x+s,y-s,s))  
       .addPoint(Point<double>(x+s,y-s,0))
     )
-    .addPolygon( Polygon()
+    .addPolygon(Polygon()
       .addPoint(Point<double>(x,y,s))
       .addPoint(Point<double>(x+s,y,s))
       .addPoint(Point<double>(x+s,y-s,s))
       .addPoint(Point<double>(x,y-s,s))
     )
-    
-    .addPolygon( Polygon()
+    .addPolygon(Polygon()
       .addPoint(Point<double>(x,y-s,0))
       .addPoint(Point<double>(x+s,y-s,0))
       .addPoint(Point<double>(x+s,y-s,s))   
       .addPoint(Point<double>(x,y-s,s))
     )
-    
-    .addPolygon( Polygon()
+    .addPolygon(Polygon()
       .addPoint(Point<double>(x,y,0))
       .addPoint(Point<double>(x,y,s))
       .addPoint(Point<double>(x,y-s,s))  
       .addPoint(Point<double>(x,y-s,0))
     );
     
-    system("clear");
     int cmd = ' ';
-    kubus2->print(fb);
     /*
     Kubus* kubus = new Kubus(400,300,50);
     while(true){
@@ -111,10 +107,16 @@ int main() {
       kubus->print3d(fb,123,12,12,0);
       fb.print();   
       fb.clear();
-      usleep(40000);
     }
     */
-  fb.print();
+  while (1) {
+    fb.clear();
+    system("clear");
+    kubus2->rotate(0,Point<double>(425,275,25),0,1);
+    kubus2->print(fb);
+    fb.print();
+    usleep(40000);
+  }
   return 0;
 }
 

@@ -59,6 +59,10 @@ struct Polygon {
     center.y *= (size - 1);
     center.y += p.y;
     center.y /= size;
+    center.z *= (size - 1);
+    center.z += p.z;
+    center.z /= size;
+    // cout << center << endl;
 
     if (size > 2) generateNormal();
     return *this;
@@ -209,7 +213,6 @@ struct Polygon {
   Polygon& generateNormal() {
     assert(this->size > 2);
     norm = Vector<double>::cross(Vector<double>(points[0],points[1]), Vector<double>(points[0], points[2]));
-    norm *= -Vector<double>::dot(norm, Vector<double>(points[0], center));
     return *this;
   }
 

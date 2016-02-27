@@ -47,6 +47,9 @@ struct Shape {
     center.y *= (size - 1);
     center.y += p.center.y;
     center.y /= size;
+    center.z *= (size - 1);
+    center.z += p.center.z;
+    center.z /= size;
 
     return *this;
   }
@@ -55,9 +58,10 @@ struct Shape {
   }  
   Shape& print(FrameBuffer& fb, int red, int green, int blue, int alpha) {
     for (int i = 0; i < size; ++i) {
-            cout << polygons[i].norm << endl;
-      if (polygons[i].norm.z < 0) {
-
+      Vector<double> norm = polygons[i].norm;
+      // cout << norm << ' ' << 
+      //   Vector<double>::dot(norm, Vector<double>(polygons[i].points[0], center)) << endl;
+      if (norm.z * Vector<double>::dot(norm, Vector<double>(polygons[i].points[0], center)) < 0) {
         polygons[i].print(fb, red, green, blue, alpha);
       }
     }
