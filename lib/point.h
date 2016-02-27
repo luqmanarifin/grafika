@@ -98,7 +98,7 @@ public:
   }
 
   friend ostream& operator<< (ostream& stream, const Point<T>& p) {
-    stream << "<" << p.x << ", " << p.y << ", " << p.z << ">\n";
+    stream << "(" << p.x << ", " << p.y << ", " << p.z << ")";
   }
 
   double x, y, z;
