@@ -1,6 +1,8 @@
 #ifndef __POLYGON_H
 #define __POLYGON_H
 
+#include <cassert>
+
 #include "point.h"
 #include "framebuffer.h"
 #include "color.h"
@@ -17,26 +19,29 @@ struct Polygon {
   Polygon(Point<double>* _points, int _size) {
     points = _points;
     size = _size;
+    if (size > 2) generateNormal();
   }
   Polygon(const Polygon& _polygon) {   
     size = _polygon.size;
     points = new Point<double>[size];
     for(int i=0;i<size;i++){
-      points[i]=_polygon.points[i];
+      points[i]=Point(_polygon.points[i]);
     }    
+    if (size > 2) generateNormal();
   }
   void operator=(const Polygon& _polygon) {
     size = _polygon.size;
     if ( points != NULL) delete[] points;
     points = new Point<double>[size];
     for(int i=0;i<size;i++){
-      points[i]=_polygon.points[i];
+      points[i]=Point(_polygon.points[i]);
     }    
+    if (size > 2) generateNormal();
   }
   ~Polygon() {
     if ( points != NULL) delete[] points;
   }
-  void addPoint(const Point<double>& p) {
+  Polygon& addPoint(const Point<double>& p) {
     Point<double>* newPoints = new Point<double>[size + 1];
     for(int i = 0; i < size; i++) {
       newPoints[i] = points[i];
@@ -52,15 +57,18 @@ struct Polygon {
     center.y *= (size - 1);
     center.y += p.y;
     center.y /= size;
+
+    if (size > 2) generateNormal();
+    return *this;
   }
-  void print(FrameBuffer& fb) {
-    print(fb, 255, 255, 255, 0);
+  Polygon& print(FrameBuffer& fb) {
+    return print(fb, 255, 255, 255, 0);
   }
-  bool same(double a, double b) {
+  static bool same(double a, double b) {
     return fabs(a - b) < eps;
   }
   
-  void print(FrameBuffer& fb, int red, int green, int blue, int alpha) 
+  Polygon& print(FrameBuffer& fb, int red, int green, int blue, int alpha) 
   {
     Color warna = Color(red, green, blue, alpha);
 
@@ -129,6 +137,7 @@ struct Polygon {
       }
     }
     if ( a != NULL) delete[] a;
+    return *this;
   }
   int MaxX(){
     int Max=0;
@@ -168,34 +177,43 @@ struct Polygon {
     return Min;
   }
   
-  void resize(double factor, const Point<double>& center = Point<double>()) {
+  Polygon& resize(double factor, const Point<double>& center = Point<double>()) {
     for (int i = 0; i < size; ++i) {
       points[i].scale(factor, center);
     }
     this->center.scale(factor, center);
+    return *this;
   }
-  void resizeCenter(double factor) {
-    resize(factor, this->center);
+  Polygon& resizeCenter(double factor) {
+    return resize(factor, this->center);
   }
-  void move(int x, int y) {
+  Polygon& move(int x, int y) {
     for (int i = 0; i < size; ++i) {
       points[i].move(x, y);
     }
     center.move(x, y);
+    return *this;
   }
-  void rotate(double degreeZ, const Point<double>& center = Point<double>(0, 0), double degreeX = 0, double degreeY = 0) {
+  Polygon& rotate(double degreeZ, const Point<double>& center = Point<double>(0, 0), double degreeX = 0, double degreeY = 0) {
     for (int i = 0; i < size; ++i) {
       points[i].rotate(degreeZ, center, degreeX, degreeY);
     }
     this->center.rotate(degreeZ, center, degreeX, degreeY);
+    return *this;
   }
-  void rotateCenter(double degreeZ, double degreeX = 0, double degreeY = 0) {
-    rotate(degreeZ, this->center, degreeX, degreeY);
+  Polygon& rotateCenter(double degreeZ, double degreeX = 0, double degreeY = 0) {
+    return rotate(degreeZ, this->center, degreeX, degreeY);
+  }
+  Polygon& generateNormal() {
+    assert(this->size > 2);
+    norm = Vector::cross(Vector(points[0],points[1]), Vector(points[0], points[2]));
+    return *this;
   }
 
   Point<double>* points;
   int size;
   Point<double> center;
+  Vector<double>* norm;
 };
 
 #endif
