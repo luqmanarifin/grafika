@@ -110,7 +110,7 @@ struct Polygon {
   void print(FrameBuffer& fb, int red, int green, int blue, int alpha) 
   {
     Color warna = Color(red, green, blue, alpha);
-
+    
     double ymin = 1e9, ymak = -1e9;
     for(int i = 0; i < size; i++) {
       ymin = min(ymin, points[i].y);

@@ -26,6 +26,12 @@ FrameBuffer fb;
 
 int main() {  
     int x = 400,y=300,s=50;
+    Polygon* belakang = new Polygon()  ;        // sisi depan
+      belakang->addPoint(Point<double>(0,0,0))
+      .addPoint(Point<double>(0,768,0))
+      .addPoint(Point<double>(1366,768,0))
+      .addPoint(Point<double>(1366,0,0))
+      .setColor(Color::BLACK);
     Shape* kubus2 = new Shape();
     
     kubus2->addPolygon(Polygon()          // sisi depan
@@ -115,12 +121,15 @@ int main() {
       fb.clear();
     }
     */
+  system("clear");
   while (1) {
     fb.clear();
     system("clear");
+    //belakang->print(fb);
     kubus2->rotate(0,Point<double>(425,275,25),1,0);
     kubus2->rotate(0,Point<double>(425,275,25),0,1);
     kubus2->print(fb);
+    //kubus2->printframe(fb);
     fb.print();
     usleep(40000);
   }

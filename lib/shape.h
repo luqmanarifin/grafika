@@ -62,6 +62,15 @@ struct Shape {
     }
     return *this;
   }
+  Shape& printframe(FrameBuffer& fb) {
+    for (int i = 0; i < size; ++i) {
+      Vector<double> norm = polygons[i].norm;
+      //if (norm.z * Vector<double>::dot(norm, Vector<double>(polygons[i].points[0], center)) < 0) {
+        polygons[i].print_frame(fb,255,255,255,0);
+      //}
+    }
+    return *this;
+  }
 
   Shape& resize(double factor, const Point<double>& center = Point<double>()) {
     for (int i = 0; i < size; ++i) {
