@@ -28,41 +28,47 @@ int main() {
     int x = 400,y=300,s=50;
     Shape* kubus2 = new Shape();
     
-    kubus2->addPolygon(Polygon()
+    kubus2->addPolygon(Polygon()          // sisi depan
       .addPoint(Point<double>(x,y,0))
       .addPoint(Point<double>(x+s,y,0))
       .addPoint(Point<double>(x+s,y-s,0))
       .addPoint(Point<double>(x,y-s,0))
+      .setColor(Color::RED)
     )
-    .addPolygon(Polygon()
+    .addPolygon(Polygon()                 // sisi bawah
       .addPoint(Point<double>(x,y,0))
       .addPoint(Point<double>(x+s,y,0))
       .addPoint(Point<double>(x+s,y,s))   
       .addPoint(Point<double>(x,y,s))
+      .setColor(Color::BLUE)
     )
-    .addPolygon(Polygon()
+    .addPolygon(Polygon()                 // sisi kanan
       .addPoint(Point<double>(x+s,y,0))
       .addPoint(Point<double>(x+s,y,s))
       .addPoint(Point<double>(x+s,y-s,s))  
       .addPoint(Point<double>(x+s,y-s,0))
+      .setColor(Color::GREEN)
     )
-    .addPolygon(Polygon()
+    .addPolygon(Polygon()                 // sisi belakang
       .addPoint(Point<double>(x,y,s))
       .addPoint(Point<double>(x+s,y,s))
       .addPoint(Point<double>(x+s,y-s,s))
       .addPoint(Point<double>(x,y-s,s))
+      .setColor(Color::YELLOW)
     )
-    .addPolygon(Polygon()
+    .addPolygon(Polygon()                 // sisi atas
       .addPoint(Point<double>(x,y-s,0))
       .addPoint(Point<double>(x+s,y-s,0))
       .addPoint(Point<double>(x+s,y-s,s))   
       .addPoint(Point<double>(x,y-s,s))
+      .setColor(Color::CYAN)
     )
-    .addPolygon(Polygon()
+    .addPolygon(Polygon()                 // sisi kiri
       .addPoint(Point<double>(x,y,0))
       .addPoint(Point<double>(x,y,s))
       .addPoint(Point<double>(x,y-s,s))  
       .addPoint(Point<double>(x,y-s,0))
+      .setColor(Color::PURPLE)
     );
     
     int cmd = ' ';
@@ -112,6 +118,7 @@ int main() {
   while (1) {
     fb.clear();
     system("clear");
+    kubus2->rotate(0,Point<double>(425,275,25),1,0);
     kubus2->rotate(0,Point<double>(425,275,25),0,1);
     kubus2->print(fb);
     fb.print();

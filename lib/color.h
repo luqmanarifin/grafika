@@ -11,6 +11,11 @@ public:
     red(_red), green(_green), blue(_blue), alpha(_alpha) {}
   char red, green, blue, alpha;
 
+  Color& operator= (const Color& _color) { 
+    red = _color.red, green = _color.green, blue = _color.blue, alpha = _color.alpha; 
+    return *this;
+  }
+
   bool operator== (const Color &rhs) const {
     return ((red == rhs.red) and (green == rhs.green) and (blue == rhs.blue) and (alpha == rhs.alpha));
   }

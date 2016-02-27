@@ -14,15 +14,18 @@ const double eps = 1e-13;
 
 struct Polygon {
   Polygon() {
+    warna = Color::WHITE;
     points = NULL;
     size = 0;
   }
   Polygon(Point<double>* _points, int _size) {
+    warna = Color::WHITE;
     points = _points;
     size = _size;
     if (size > 2) generateNormal();
   }
   Polygon(const Polygon& _polygon) {   
+    warna = _polygon.warna;
     size = _polygon.size;
     points = new Point<double>[size];
     for(int i=0;i<size;i++){
@@ -31,6 +34,7 @@ struct Polygon {
     if (size > 2) generateNormal();
   }
   Polygon& operator=(const Polygon& _polygon) {
+    warna = _polygon.warna;
     size = _polygon.size;
     if ( points != NULL) delete[] points;
     points = new Point<double>[size];
@@ -67,17 +71,16 @@ struct Polygon {
     if (size > 2) generateNormal();
     return *this;
   }
-  Polygon& print(FrameBuffer& fb) {
-    return print(fb, 255, 255, 255, 0);
-  }
+
+  // Set Color
+  Polygon& setColor(int red, int green, int blue, int alpha) { warna = Color(red, green, blue, alpha); return *this; }
+  Polygon& setColor(const Color& color) { warna = color; return *this; }
+
   static bool same(double a, double b) {
     return fabs(a - b) < eps;
   }
   
-  Polygon& print(FrameBuffer& fb, int red, int green, int blue, int alpha) 
-  {
-    Color warna = Color(red, green, blue, alpha);
-
+  Polygon& print(FrameBuffer& fb) {
     double ymin = 1e9, ymak = -1e9;
     for(int i = 0; i < size; i++) {
       ymin = min(ymin, points[i].y);
@@ -205,6 +208,8 @@ struct Polygon {
       points[i].rotate(degreeZ, center, degreeX, degreeY);
     }
     this->center.rotate(degreeZ, center, degreeX, degreeY);
+
+    if (size > 2) norm.rotate(degreeZ, degreeX, degreeY);
     return *this;
   }
   Polygon& rotateCenter(double degreeZ, double degreeX = 0, double degreeY = 0) {
@@ -220,6 +225,7 @@ struct Polygon {
   int size;
   Point<double> center;
   Vector<double> norm;
+  Color warna;
 };
 
 #endif

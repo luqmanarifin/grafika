@@ -51,6 +51,25 @@ public:
     return Vector (this->x * factor, this->y * factor, this->z * factor);
   }
 
+  Vector<T>& rotate(double degreeZ, double degreeX = 0, double degreeY = 0) {
+    double radX = degreeX * 3.14159265358979323846 / 180.0 *0.9999;
+    double radY = degreeY * 3.14159265358979323846 / 180.0 *0.9999;
+    double radZ = degreeZ * 3.14159265358979323846 / 180.0 *0.9999;
+
+    if (degreeZ) {
+      x = x*cos(radZ)-y*sin(radZ);
+      y = x*sin(radZ)+y*cos(radZ);
+    } else if (degreeY) {
+      x = z*sin(radY)+x*cos(radY);
+      z = z*cos(radY)-x*sin(radY);
+    } else {
+      y = y*cos(radX)-z*sin(radX);
+      z = y*sin(radX)+z*cos(radX);
+    }
+
+    return *this;
+  }
+
   /* analytic geometry methods */
   static Vector<T> cross(const Vector<T>& a, const Vector<T>& b) {
     return Vector<T>(a.y*b.z - b.y*a.z, a.z*b.x - b.z*a.x, a.x*b.y - b.x*a.y);

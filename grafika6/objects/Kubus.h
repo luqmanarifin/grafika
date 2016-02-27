@@ -36,11 +36,12 @@ struct Kubus : public Polygon {
   }
   void print3d(FrameBuffer& fb, int red, int green, int blue, int alpha) {
     move3d();
-    print(fb,red,green,blue,alpha);
+    setColor(red, green, blue, alpha);
+    print(fb);
     bmove3d();
   }
   void print3d(FrameBuffer& fb) {
-    print3d(fb, 255, 255, 255, 0);
+    print3d(fb);
   }
   void printpoint() {
     for (int i = 0; i < size; ++i) {

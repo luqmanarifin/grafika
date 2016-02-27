@@ -54,15 +54,10 @@ struct Shape {
     return *this;
   }
   Shape& print(FrameBuffer& fb) {
-    return print(fb, 255, 255, 255, 0);
-  }  
-  Shape& print(FrameBuffer& fb, int red, int green, int blue, int alpha) {
     for (int i = 0; i < size; ++i) {
       Vector<double> norm = polygons[i].norm;
-      // cout << norm << ' ' << 
-      //   Vector<double>::dot(norm, Vector<double>(polygons[i].points[0], center)) << endl;
       if (norm.z * Vector<double>::dot(norm, Vector<double>(polygons[i].points[0], center)) < 0) {
-        polygons[i].print(fb, red, green, blue, alpha);
+        polygons[i].print(fb);
       }
     }
     return *this;
