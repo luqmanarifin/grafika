@@ -25,7 +25,7 @@ FrameBuffer fb;
 //Kotak* kotak = new Kotak(window_corner_a, window_corner_b);
 
 int main() {  
-    int x = 400,y=300,s=50;
+    int x = 600,y=400,s=200;
     Polygon* belakang = new Polygon()  ;        // sisi depan
       belakang->addPoint(Point<double>(0,0,0))
       .addPoint(Point<double>(0,768,0))
@@ -76,7 +76,7 @@ int main() {
       .addPoint(Point<double>(x,y-s,0))
       .setColor(Color::PURPLE)
     );
-    kubus2->resize(3, Point<double>(x+s/2, y-s/2, s/2));
+    //kubus2->resize(3, Point<double>(x+s/2, y-s/2, s/2));
     
     int cmd = ' ';
     /*
@@ -132,7 +132,7 @@ int main() {
     kubus2->print(fb);
     //kubus2->printframe(fb);
     fb.print();
-    usleep(40000);
+    usleep(75000);
   }
   return 0;
 }
