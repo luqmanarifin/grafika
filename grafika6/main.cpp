@@ -76,6 +76,7 @@ int main() {
       .addPoint(Point<double>(x,y-s,0))
       .setColor(Color::PURPLE)
     );
+    kubus2->resize(3, Point<double>(x+s/2, y-s/2, s/2));
     
     int cmd = ' ';
     /*
