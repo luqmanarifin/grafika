@@ -1,0 +1,6 @@
+main.o
+main
+out
+/objects/*.gch
+driver.cpp
+e
