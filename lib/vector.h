@@ -1,42 +1,48 @@
 #ifndef _VECTOR_H
 #define _VECTOR_H 1
 
+#include <cmath>
 #include "point.h"
 using namespace std;
 
 template<class T>
 class Vector : public Point<T> {
 public:
-  Vector<T>() : x(0), y(0), z(0) {}
-  Vector<T>(T _x, T _y, T _z = 0) : x(_x), y(_y), z(_z) {}
-  Vector<T>(const Point<T>& u, const Point<T>& v) : x(v.x - u.x), y(v.y - u.y), z(v.z - u.z) {}
-  Vector<T>(const Vector<T>& p) : x(p.x), y(p.y), z(p.z) {}
+  Vector<T>() : x(0), y(0), z(0) { setMagnitude(); }
+  Vector<T>(T _x, T _y, T _z = 0) : x(_x), y(_y), z(_z) { setMagnitude(); }
+  Vector<T>(const Point<T>& u, const Point<T>& v) : x(v.x - u.x), y(v.y - u.y), z(v.z - u.z) { setMagnitude(); }
+  Vector<T>(const Vector<T>& p) : x(p.x), y(p.y), z(p.z) { setMagnitude(); }
   Vector<T>& operator+=(const Vector<T>& rhs) {
     x += rhs.x;
     y += rhs.y;
     z += rhs.z;
+    setMagnitude();
     return *this;
   }
 
   Vector<T>& operator+(const Vector<T>& rhs) {
-    return Vector<T>(x+rhs.x, y+rhs.y, z+rhs.z);
+    Vector<T> tmpres(x+rhs.x, y+rhs.y, z+rhs.z);
+    return tmpres;
   }
 
   Vector<T>& operator-=(const Vector<T>& rhs) {
     x -= rhs.x;
     y -= rhs.y;
     z -= rhs.z;
+    setMagnitude();
     return *this;
   }
 
   Vector<T>& operator-(const Vector<T>& rhs) {
-    return Vector<T>(x-rhs.x, y-rhs.y, z-rhs.z);
+    Vector<T> tmpres(x-rhs.x, y-rhs.y, z-rhs.z);
+    return tmpres;
   }
 
   Vector<T>& operator=(const Vector<T>& p) {
     this->x = p.x;
     this->y = p.y;
     this->z = p.z;
+    setMagnitude();
     return *this;
   }
 
@@ -44,11 +50,13 @@ public:
     this->x = this->x * factor;
     this->y = this->y * factor;
     this->z = this->z * factor;
+    setMagnitude();
     return *this;
   }
 
   Vector<T>& operator*(const double factor) {
-    return Vector (this->x * factor, this->y * factor, this->z * factor);
+    Vector<T> tmpres(this->x * factor, this->y * factor, this->z * factor);
+    return tmpres;
   }
 
   Vector<T>& rotate(double degreeZ, double degreeX = 0, double degreeY = 0) {
@@ -70,7 +78,24 @@ public:
     return *this;
   }
 
-  /* analytic geometry methods */
+  void setMagnitude() { 
+    sqrMagnitude = x*x + y*y + z*z;
+    magnitude = sqrt(sqrMagnitude); 
+  }
+
+
+  /////////////////////////////////
+  /** analytic geometry methods **/
+  /////////////////////////////////
+
+  Vector<T>& normalized() {
+    Vector res(*this);
+    double len = res.length();
+    res.x /= len;
+    res.y /= len;
+    res.z /= len;
+    return res;
+  }
   static Vector<T> cross(const Vector<T>& a, const Vector<T>& b) {
     return Vector<T>(a.y*b.z - b.y*a.z, a.z*b.x - b.z*a.x, a.x*b.y - b.x*a.y);
   }
@@ -79,7 +104,9 @@ public:
   friend ostream& operator<< (ostream& stream, const Vector<T>& p) {
     stream << "<" << p.x << ", " << p.y << ", " << p.z << ">";
   }
+
   T x, y, z;
+  double magnitude, sqrMagnitude;
 };
 
 #endif

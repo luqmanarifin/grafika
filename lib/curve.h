@@ -1,117 +1,71 @@
-/* Source : http://www.antigrain.com/research/adaptive_bezier/index.html */
+#ifndef CURVE_H_
+#define CURVE_H_ 1
 
-#ifndef CURVE__H
-#define CURVE__H 1
-
+#include <cmath>
+#include <cstdlib>
 #include "point.h"
+#include "line.h"
+#include "vector.h"
+#include "framebuffer.h"
 
 class curve
 {
 public:
-  curve(const Point& p1, const Point& p2, const Point& p3);
-  void init(double, double, double, double, double, double);
-  void recursive_bezier(double, double, double, double, double, double, unsigned);
-  void bezier(double, double, double, double, double, double);
+  curve(const Point<double>& a, const Point<double>& b, const Point<double>& c, const Point<double>& d, Color _color);
+  ~curve();
+  curve& setColor(Color _color);
+  void print(FrameBuffer& fb);
+private:
+  double errorRatio(double a, double b);
+  curve* leftChild;
+  curve* rightChild;
+  line* straightLine;
+  Color color;
 };
 
-curve::curve(const Point& p1, const Point& p2, const Point& p3) 
-{
-  init(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
+curve::~curve() {
+  if (leftChild != NULL) delete(leftChild);
+  if (rightChild != NULL) delete(rightChild);
+  if (straightLine != NULL) delete(straightLine);
 }
 
-//------------------------------------------------------------------------
-void curve::init(double x1, double y1, 
-                double x2, double y2, 
-                double x3, double y3)
+curve& curve::setColor(Color _color) { color = _color; return *this; }
+
+double curve::errorRatio(double a, double b) { return abs(a-b) / b; }
+
+curve::curve(const Point<double>& a, const Point<double>& b, const Point<double>& c, const Point<double>& d, Color _color = Color::WHITE) 
 {
-  m_points.remove_all();
-  m_distance_tolerance = 0.5 / m_approximation_scale;
-  m_distance_tolerance *= m_distance_tolerance;
-  bezier(x1, y1, x2, y2, x3, y3);
-  m_count = 0;
+  Vector<double> ab(a, b); 
+  Vector<double> bc(b, c); 
+  Vector<double> cd(c, d);
+  Vector<double> va(a.x, a.y);
+  Vector<double> vb(b.x, b.y);
+  Vector<double> vc(c.x, c.y);
+  Vector<double> vd(d.x, d.y);
+  double magn1 = ab.magnitude * bc.magnitude;
+  double magn2 = bc.magnitude * cd.magnitude;
+
+  if (errorRatio( Vector<double>::dot( ab, bc ), magn1 ) < 0.1 &&
+      errorRatio( Vector<double>::dot( bc, cd ), magn2 ) < 0.1 ) {
+    straightLine = new line(a, d, color);
+  }
+
+  Vector<double> d1 = (va + vb) * 0.5;
+  Vector<double> d2 = (vb*2 + va + vc) * 0.25;
+  Vector<double> d3 = (va + vb*3 + vc*3 + vd) * 0.125;
+  Vector<double> d4 = (vc*2 + vb + vd) * 0.25;
+  Vector<double> d5 = (vc + vd) * 0.5;
+
+  leftChild = new curve(a, d1, d2, d3);
+  rightChild = new curve(d3, d4, d5, d);
 }
 
-
-//------------------------------------------------------------------------
-void curve::recursive_bezier(double x1, double y1, 
-                            double x2, double y2, 
-                            double x3, double y3,
-                            unsigned level)
-{
-  if(level > curve_recursion_limit) 
-  {
-    return;
+void curve::print(FrameBuffer& fb) {
+  if (straightLine != NULL) straightLine->print(fb);
+  else {
+    leftChild->print(fb);
+    rightChild->print(fb);
   }
-
-  // Calculate all the mid-points of the line segments
-  //----------------------
-  double x12   = (x1 + x2) / 2;                
-  double y12   = (y1 + y2) / 2;
-  double x23   = (x2 + x3) / 2;
-  double y23   = (y2 + y3) / 2;
-  double x123  = (x12 + x23) / 2;
-  double y123  = (y12 + y23) / 2;
-
-  double dx = x3-x1;
-  double dy = y3-y1;
-  double d = fabs(((x2 - x3) * dy - (y2 - y3) * dx));
-
-  if(d > curve_collinearity_epsilon)
-  { 
-    // Regular care
-    //-----------------
-    if(d * d <= m_distance_tolerance * (dx*dx + dy*dy))
-    {
-      // If the curvature doesn't exceed the distance_tolerance value
-      // we tend to finish subdivisions.
-      //----------------------
-      if(m_angle_tolerance < curve_angle_tolerance_epsilon)
-      {
-        m_points.add(point_type(x123, y123));
-        return;
-      }
-
-      // Angle & Cusp Condition
-      //----------------------
-      double da = fabs(atan2(y3 - y2, x3 - x2) - atan2(y2 - y1, x2 - x1));
-      if(da >= pi) da = 2*pi - da;
-
-      if(da < m_angle_tolerance)
-      {
-        // Finally we can stop the recursion
-        //----------------------
-        m_points.add(point_type(x123, y123));
-        return;                 
-      }
-    }
-  }
-  else
-  {
-    // Collinear case
-    //-----------------
-    dx = x123 - (x1 + x3) / 2;
-    dy = y123 - (y1 + y3) / 2;
-    if(dx*dx + dy*dy <= m_distance_tolerance)
-    {
-      m_points.add(point_type(x123, y123));
-      return;
-    }
-  }
-
-  // Continue subdivision
-  //----------------------
-  recursive_bezier(x1, y1, x12, y12, x123, y123, level + 1); 
-  recursive_bezier(x123, y123, x23, y23, x3, y3, level + 1); 
-}
-
-//------------------------------------------------------------------------
-void curve::bezier(double x1, double y1, 
-                  double x2, double y2, 
-                  double x3, double y3)
-{
-  m_points.add(point_type(x1, y1));
-  recursive_bezier(x1, y1, x2, y2, x3, y3, 0);
-  m_points.add(point_type(x3, y3));
 }
 
 #endif

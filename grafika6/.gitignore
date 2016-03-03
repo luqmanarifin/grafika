@@ -2,5 +2,5 @@ main.o
 main
 out
 /objects/*.gch
-driver.cpp
+driver*
 e
