@@ -14,36 +14,50 @@ public:
   Point<T>(T _x, T _y, T _z = 0) : x(_x), y(_y), z(_z) {}
   Point<T>(const Point<T>& p) : x(p.x), y(p.y), z(p.z) {}
 
-  Point<T> operator+=(const Point<T>& rhs) {
+  Point<T>& operator+=(const Point<T>& rhs) {
     x += rhs.x;
     y += rhs.y;
     z += rhs.z;
     return *this;
   }
 
-  Point<T> operator+(const Point<T>& rhs) {
-    return Point<T>(x+rhs.x, y+rhs.y, z+rhs.z);
+  Point<T>& operator+(const Point<T>& rhs) {
+    Point<T>* tmpres = new Point<T>(x+rhs.x, y+rhs.y, z+rhs.z);
+    return *tmpres;
   }
 
-  Point<T> operator-=(const Point<T>& rhs) {
+  Point<T>& operator-=(const Point<T>& rhs) {
     x -= rhs.x;
     y -= rhs.y;
     z -= rhs.z;
     return *this;
   }
 
-  Point<T> operator-(const Point<T>& rhs) {
-    return Point<T>(x-rhs.x, y-rhs.y, z-rhs.z);
+  Point<T>& operator-(const Point<T>& rhs) {
+    Point<T>* tmpres = new Point<T>(x-rhs.x, y-rhs.y, z-rhs.z);
+    return *tmpres;
   }
 
-  Point<T> operator=(const Point<T>& p) {
+  Point<T>& operator*=(const double factor) {
+    this->x = this->x * factor;
+    this->y = this->y * factor;
+    this->z = this->z * factor;
+    return *this;
+  }
+
+  Point<T>& operator*(const double factor) {
+    Point<T>* tmpres = new Point<T>(this->x * factor, this->y * factor, this->z * factor);
+    return *tmpres;
+  }
+
+  Point<T>& operator=(const Point<T>& p) {
     this->x = p.x;
     this->y = p.y;
     this->z = p.z;
     return *this;
   }
   
-  Point<T> rotate(double degreeZ, const Point<T>& center = Point<T>(0, 0), double degreeX = 0, double degreeY = 0) {
+  Point<T>& rotate(double degreeZ, const Point<T>& center = Point<T>(0, 0), double degreeX = 0, double degreeY = 0) {
     *this -= center;
     Point<T> temp = *this;
 
@@ -71,7 +85,7 @@ public:
     return *this;
   }
 
-  Point<T> scale(double factorx, const Point<T>& center = Point<T>(0,0), double factory = 1.0, double factorz = 1.0) 
+  Point<T>& scale(double factorx, const Point<T>& center = Point<T>(0,0), double factory = 1.0, double factorz = 1.0) 
   {
     if (!factory) factory = factorx;
 
@@ -90,7 +104,7 @@ public:
     return *this;
   }
 
-  Point<T> move(T x, T y = 0, T z = 0) {
+  Point<T>& move(T x, T y = 0, T z = 0) {
     this->x += x;
     this->y += y;
     this->z += z;

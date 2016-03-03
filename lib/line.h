@@ -6,7 +6,7 @@
 class line
 {
 public:
-  line(const Point<double>& p0, const Point<double>& p1, Color _color);
+  line(const Point<int>& p0, const Point<int>& p1, Color _color);
   line(int _x0, int _y0, int _x1, int _y1, Color _color);
   ~line() {}
   inline int sign(int x) { return (x > 0) - (x < 0); }
@@ -16,7 +16,7 @@ private:
   Color color;
 };
 
-line::line(const Point<double>& p0, const Point<double>& p1, Color _color) : x0(p0.x), y0(p0.y), x1(p1.x), y1(p1.y), color(_color) {}
+line::line(const Point<int>& p0, const Point<int>& p1, Color _color = Color::WHITE) : x0(p0.x), y0(p0.y), x1(p1.x), y1(p1.y), color(_color) {}
 line::line(int _x0, int _y0, int _x1, int _y1, Color _color = Color::WHITE) : x0(_x0), y0(_y0), x1(_x1), y1(_y1), color(_color) {}
 
 void line::print(FrameBuffer& fb)

@@ -21,8 +21,8 @@ public:
   }
 
   Vector<T>& operator+(const Vector<T>& rhs) {
-    Vector<T> tmpres(x+rhs.x, y+rhs.y, z+rhs.z);
-    return tmpres;
+    Vector<T>* tmpres = new Vector<T>(x+rhs.x, y+rhs.y, z+rhs.z);
+    return *tmpres;
   }
 
   Vector<T>& operator-=(const Vector<T>& rhs) {
@@ -34,8 +34,8 @@ public:
   }
 
   Vector<T>& operator-(const Vector<T>& rhs) {
-    Vector<T> tmpres(x-rhs.x, y-rhs.y, z-rhs.z);
-    return tmpres;
+    Vector<T>* tmpres = new Vector<T>(x-rhs.x, y-rhs.y, z-rhs.z);
+    return *tmpres;
   }
 
   Vector<T>& operator=(const Vector<T>& p) {
@@ -55,8 +55,8 @@ public:
   }
 
   Vector<T>& operator*(const double factor) {
-    Vector<T> tmpres(this->x * factor, this->y * factor, this->z * factor);
-    return tmpres;
+    Vector<T>* tmpres = new Vector<T>(this->x * factor, this->y * factor, this->z * factor);
+    return *tmpres;
   }
 
   Vector<T>& rotate(double degreeZ, double degreeX = 0, double degreeY = 0) {
