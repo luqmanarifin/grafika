@@ -11,7 +11,7 @@ public:
   ~line() {}
   inline int sign(int x) { return (x > 0) - (x < 0); }
   void print(FrameBuffer& fb);
-private:
+//private:
   int x0, y0, x1, y1;
   Color color;
 };
