@@ -3,6 +3,7 @@
 
 #include <cassert>
 
+#include <bits/stdc++.h>
 #include "point.h"
 #include "framebuffer.h"
 #include "line.h"
@@ -47,6 +48,30 @@ struct Polygon {
   }
   ~Polygon() {
     if ( points != NULL) delete[] points;
+  }
+  double ratio(double a, double b) { return abs(a / b); }
+  void addCurve(Point<double> a, Point<double> b, Point<double> c, Point<double> d) 
+  {
+    Vector<double> ab(a, b); 
+    Vector<double> bc(b, c); 
+    Vector<double> cd(c, d);
+    double magn1 = ab.magnitude * bc.magnitude;
+    double magn2 = bc.magnitude * cd.magnitude;
+    //warna = _color;
+    if (ratio( Vector<double>::dot( ab, bc ), magn1 ) > 0.995 &&
+        ratio( Vector<double>::dot( bc, cd ), magn2 ) > 0.995 ) {
+        //straightLine = new line((int)round(a.x), (int)round(a.y), (int)round(d.x), (int)round(d.y), color);
+        addPoint(a);
+        addPoint(d);
+    } else {
+      Point<double> d1 = (a + b) * 0.5;
+      Point<double> d2 = (b*2 + a + c) * 0.25;
+      Point<double> d3 = (a + b*3 + c*3 + d) * 0.125;
+      Point<double> d4 = (c*2 + b + d) * 0.25;
+      Point<double> d5 = (c + d) * 0.5;
+      addCurve(a, d1, d2, d3);
+      addCurve(d3, d4, d5, d);
+    }
   }
   Polygon& addPoint(const Point<double>& p) {
     Point<double>* newPoints = new Point<double>[size + 1];
