@@ -178,7 +178,7 @@ struct Polygon {
       }
     }
     if ( a != NULL) delete[] a;
-    print_frame(fb,255,255,255,0);
+    //print_frame(fb,255,255,255,0);
     return *this;
   }
   int MaxX(){

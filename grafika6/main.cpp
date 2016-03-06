@@ -83,26 +83,7 @@ int main() {
     Kubus* kubus = new Kubus(400,300,50);
     while(true){
       //system("clear");
-      cmd = getch();
-      if (cmd == 27) {
-       cmd = getch();
-       if (cmd == 27) {
-         break;
-       }
-       else if (cmd == 91) {
-         cmd = getch();
-         cmd = 64 - cmd;
-       }
-      }
-      else if (cmd == 'a' || cmd == 'A' || cmd == -4) {
-        kubus->rotate(0,Point<double>(425,275,25),0,-1);
-      }
-      else if (cmd == 'd' || cmd == 'D' || cmd == -3) {
-        kubus->rotate(0,Point<double>(425,275,25),0,1);
-      }
-      else if (cmd == 'w' || cmd == 'W' || cmd == -1) {        
-        kubus->rotate(0,Point<double>(425,275,25),1,0);
-      }
+      
       else if (cmd == 's' || cmd == 'S' || cmd == -2) {
         kubus->rotate(0,Point<double>(425,275,25),-1,0);
       }
