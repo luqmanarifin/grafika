@@ -71,7 +71,6 @@ struct Wajah {
     //hidung->print(fb);
     aliskiri->print(fb);
     aliskanan->print(fb);
-    puts("print common");
     if(mode==1){
       mulut->print(fb);
       matakanan->print(fb);
@@ -92,11 +91,9 @@ struct Wajah {
       tangisankiri->print(fb);
       tangisankanan->print(fb);
     }
-    puts("print common");
     bolakanan->print(fb);
     bolakiri->print(fb);
     rambut->print(fb);
-    puts("print all");
   }
   void jadibiasa(){
     if(mode==3){

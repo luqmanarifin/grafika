@@ -112,19 +112,59 @@ struct Polygon {
       line((int) points[i].x, (int) points[i].y, (int) points[j].x, (int) points[j].y, Color(red, green, blue, alpha)).print(fb);
     }
   }
+
+  void dfs(FrameBuffer& fb, int a, int b) {
+    if(done[a][b]) return;
+    done[a][b] = 1;
+    printf("%d %d\n", a, b);
+    fb.set(a, b, warna);
+    dfs(fb, a, b + 1);
+    dfs(fb, a, b - 1);
+    dfs(fb, a + 1, b);
+    dfs(fb, a - 1, b);
+  }
+
   // normalize the point to be printed
   // this method does not change the properties of polygon
   // parameter : the new normalized point that will be printed
   // return the new size of point
   int normalize(Point<int>* p) {
     int sz = 0;
+    Point<int>* tmp = new Point<int>[size];
     for(int i = 0; i < size; i++) {
       Point<int> temp = Point<int>((int)(points[i].x + 0.5), (int)(points[i].y + 0.5), (int)(points[i].z + 0.5));
-      if(sz >= 2 && temp == p[sz - 1] && temp == p[sz - 2]) continue;
-      p[sz++] = temp;
+      tmp[sz++] = temp;
+    }
+    sz = 0;
+    for(int i = 0; i < size; i++) {
+      if(sz >= 2) {
+        if(tmp[i].y == p[sz-1].y && tmp[i].y == p[sz-2].y) {
+          if(p[sz-2].x <= p[sz-1].x && p[sz-1].x <= tmp[i].x) {
+            p[sz-1] = tmp[i];
+            continue;
+          }
+          if(p[sz-2].x >= p[sz-1].x && p[sz-1].x >= tmp[i].x) {
+            p[sz-1] = tmp[i];
+            continue;
+          }
+        }
+        if(tmp[i].x == p[sz-1].x && tmp[i].x == p[sz-2].x) {
+          if(p[sz-2].y <= p[sz-1].y && p[sz-1].y <= tmp[i].y) {
+            p[sz-1] = tmp[i];
+            continue;
+          }
+          if(p[sz-2].y >= p[sz-1].y && p[sz-1].y >= tmp[i].y) {
+            p[sz-1] = tmp[i];
+            continue;
+          }
+        }
+      }
+      p[sz++] = tmp[i];
     }
     return sz;
   }
+
+  // normalize polygon and print. normalize : removing redundant point
   Polygon& normalize_and_print(FrameBuffer& fb) {
     Point<int>* points = new Point<int>[size];
     int size = normalize(points);
@@ -197,6 +237,8 @@ struct Polygon {
     //print_frame(fb,255,255,255,0);
     return *this;
   }
+
+  // the casual method of print polygon. working nice in moving object 
   Polygon& print(FrameBuffer& fb) {
     double ymin = 1e9, ymak = -1e9;
     for(int i = 0; i < size; i++) {
