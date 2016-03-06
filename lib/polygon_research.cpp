@@ -266,6 +266,66 @@ struct Polygon {
     print_frame(fb,255,255,255,0);
     return *this;
   }
+  void print_dfs(FrameBuffer& fb) {
+    printf("%d\n", this->size);
+    Point<int>* p = new Point<int>[this->size];
+    int size = normalize(p);
+    int a_min = 1e9, a_mak = -1e9, b_min = 1e9, b_mak = -1e9;
+    for(int i = 0; i < size; i++) {
+      a_min = min(a_min, p[i].x);
+      a_mak = max(a_mak, p[i].x);
+      b_min = min(b_min, p[i].y);
+      b_mak = max(b_mak, p[i].y);
+    }
+    for(int i = a_min; i <= a_mak; i++) {
+      for(int j = b_min; j <= b_mak; j++) {
+        done[i][j] = 0;
+      }
+    }
+    int* up = new int[768];
+    int* down = new int[768];
+    int* lef = new int[1366];
+    int* rig = new int[1366];
+    fill(up, up + 768, 1e9);
+    fill(down, down + 768, -1e9);
+    fill(lef, lef + 1366, 1e9);
+    fill(rig, rig + 1366, -1e9);
+    for(int i = 0; i < size; i++) {
+      int j = (i + 1) % size;
+      // printf("aku suka asi %d from %d\n", i, size);
+
+      line* garis = new line(p[i], p[j], warna);
+      int size_line;
+      Point<int>* tmp = garis->generate(size_line);
+      //printf("%d\n", tmp);
+      // printf("size line jadi %d : %d %d to %d %d\n", size_line, p[i].x, p[i].y, p[j].x, p[j].y);
+      // for(int k = 0; k < size_line; k++) printf("%d %d\n", tmp[k].x, tmp[k].y);
+      for(int k = 0; k < size_line; k++) {
+        int a = tmp[k].x, b = tmp[k].y;
+        done[a][b] = 1;
+        up[a] = min(up[a], b);
+        down[a] = max(down[a], b);
+        lef[b] = min(lef[b], a);
+        rig[b] = max(rig[b], a);
+        fb.set(a, b, warna);
+      }
+      delete[] tmp;
+      delete garis;
+    }
+    printf("done print tepi %d-%d %d-%d\n", a_min, a_mak, b_min, b_mak);
+    bool found = 0;
+    for(int i = a_min; i <= a_mak && !found; i++) {
+      for(int j = b_min; j <= b_mak & !found; j++) {
+        if(up[i] < i && i < down[i] && lef[j] < j && j < rig[j] && !done[i][j]) {
+          dfs(fb, i, j);
+          found = 1;
+        }
+      }
+    }
+    printf("dfs done\n");
+    puts("done print polygon");
+    return *this;
+  }
   int MaxX(){
     int Max=0;
     for(int  i=0;i <size;i++){

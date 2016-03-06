@@ -64,7 +64,7 @@ struct Polygon {
     double magn1 = ab.magnitude * bc.magnitude;
     double magn2 = bc.magnitude * cd.magnitude;
     //warna = _color;
-    cout << a << ' ' << b << ' ' << c << ' ' << d << endl;
+    //cout << a << ' ' << b << ' ' << c << ' ' << d << endl;
     if (ratio( Vector<double>::dot( ab, bc ), magn1 ) > 0.995 &&
         ratio( Vector<double>::dot( bc, cd ), magn2 ) > 0.995 ) {
         //straightLine = new line((int)round(a.x), (int)round(a.y), (int)round(d.x), (int)round(d.y), color);
@@ -136,6 +136,7 @@ struct Polygon {
   void dfs(FrameBuffer& fb, int a, int b) {
     if(done[a][b]) return;
     done[a][b] = 1;
+    printf("%d %d\n", a, b);
     fb.set(a, b, warna);
     dfs(fb, a, b + 1);
     dfs(fb, a, b - 1);
@@ -144,60 +145,72 @@ struct Polygon {
   }
 
   Polygon& print(FrameBuffer& fb) {
-    Point<int>* points = new Point<int>[this->size];
-    int size = normalize(points);
-    int a_min = 1e9, a_mak = -1e9, b_min = 1e9, b_mak = -1e9;
+    double ymin = 1e9, ymak = -1e9;
     for(int i = 0; i < size; i++) {
-      a_min = min(a_min, points[i].x);
-      a_mak = max(a_mak, points[i].x);
-      b_min = min(b_min, points[i].y);
-      b_mak = max(b_mak, points[i].y);
+      ymin = min(ymin, points[i].y);
+      ymak = max(ymak, points[i].y);
     }
-    for(int i = a_min; i <= a_mak; i++) {
-      for(int j = b_min; j <= b_mak; j++) {
-        done[i][j] = 0;
-      }
-    }
-    int* up = new int[768];
-    int* down = new int[768];
-    int* lef = new int[1366];
-    int* rig = new int[1366];
-    fill(up, up + 768, 1e9);
-    fill(down, down + 768, -1e9);
-    fill(lef, lef + 1366, 1e9);
-    fill(rig, rig + 1366, -1e9);
-    for(int i = 0; i < size; i++) {
-      int j = (i + 1) % size;
-      printf("aku suka asi %d from %d\n", i, size);
 
-      line* garis = new line(points[i], points[j], warna);
-      int size_line;
-      Point<int>* tmp = garis->generate(size_line);
-      //printf("%d\n", tmp);
-      printf("size line jadi %d : %d %d to %d %d\n", size_line, points[i].x, points[i].y, points[j].x, points[j].y);
-      for(int k = 0; k < size_line; k++) printf("%d %d\n", tmp[k].x, tmp[k].y);
-      for(int k = 0; k < size_line; k++) {
-        int a = tmp[k].x, b = tmp[k].y;
-        done[a][b] = 1;
-        up[a] = min(up[a], b);
-        down[a] = max(down[a], b);
-        lef[b] = min(lef[b], a);
-        rig[b] = max(rig[b], a);
-        fb.set(a, b, warna);
+    double* a = new double[2 * size];
+    for(int y = ymin; y <= ymak; y++) {
+      int sz = 0;
+      for(int i = 0; i < size; i++) {
+        int j = (i + 1) % size;
+        double l = points[i].y;
+        double r = points[j].y;
+        if(min(l, r) <= y && y <= max(l, r)) {
+          double la = points[i].x;
+          double ra = points[j].x;
+          if(same(l, r)) {
+            a[sz++] = min(la, ra);
+            a[sz++] = max(la, ra);
+          } else {
+            double d = fabs(l - y)*fabs(la - ra)/fabs(l - r);
+            a[sz++] = la + (la < ra? d : -d);
+          }
+        }
       }
-      delete[] tmp;
-      delete garis;
-    }
-    puts("done print tepi");
-    bool found = 0;
-    for(int i = a_min; i <= a_mak && !found; i++) {
-      for(int j = b_min; j <= b_mak & !found; j++) {
-        if(up[i] < i && i < down[i] && lef[j] < j && j < rig[j]) {
-          dfs(fb, i, j);
-          found = 1;
+      sort(a, a + sz);
+      for(int i = 0; i + 1 < sz; i += 2) {
+        for(int j = (int) a[i]; j <= a[i + 1]; j++) {
+          fb.set(j, y, warna);
         }
       }
     }
+    
+    double bmin = 1e9, bmak = -1e9;
+    for(int i = 0; i < size; i++) {
+      bmin = min(bmin, points[i].x);
+      bmak = max(bmak, points[i].x);
+    }
+
+    for(int b = bmin; b <= bmak; b++) {
+      int sz = 0;
+      for(int i = 0; i < size; i++) {
+        int j = (i + 1) % size;
+        double l = points[i].x;
+        double r = points[j].x;
+        if(min(l, r) <= b && b <= max(l, r)) {
+          double la = points[i].y;
+          double ra = points[j].y;
+          if(same(l, r)) {
+            a[sz++] = min(la, ra);
+            a[sz++] = max(la, ra);
+          } else {
+            double d = abs(l - b)*abs(la - ra)/abs(l - r);
+            a[sz++] = la + (la < ra? d : -d);
+          }
+        }
+      }
+      sort(a, a + sz);
+      for(int i = 0; i + 1 < sz; i += 2) {
+        for(int j = (int) a[i]; j <= a[i + 1]; j++) {
+          fb.set(b, j, warna);
+        }
+      }
+    }
+    if ( a != NULL) delete[] a;
+    print_frame(fb,255,255,255,0);
     return *this;
   }
   int MaxX(){
