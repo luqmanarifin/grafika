@@ -135,29 +135,6 @@ struct Polygon {
       line((int) points[i].x, (int) points[i].y, (int) points[j].x, (int) points[j].y, Color(red, green, blue, alpha)).print(fb);
     }
   }
-  // normalize the point to be printed
-  // this method does not change the properties of polygon
-  // parameter : the new normalized point that will be printed
-  // return the new size of point
-  int normalize(Point<int>* p) {
-    int sz = 0;
-    for(int i = 0; i < size; i++) {
-      Point<int> temp = Point<int>((int)(points[i].x + 0.5), (int)(points[i].y + 0.5), (int)(points[i].z + 0.5));
-      if(sz >= 1 && temp == p[sz - 1]) continue;
-      p[sz++] = temp;
-    }
-    return sz;
-  }
-
-  void dfs(FrameBuffer& fb, int a, int b) {
-    if(done[a][b]) return;
-    done[a][b] = 1;
-    fb.set(a, b, warna);
-    dfs(fb, a, b + 1);
-    dfs(fb, a, b - 1);
-    dfs(fb, a + 1, b);
-    dfs(fb, a - 1, b);
-  }
 
   Polygon& print(FrameBuffer& fb) {
     double ymin = 1e9, ymak = -1e9;
@@ -177,7 +154,7 @@ struct Polygon {
           double la = points[i].x;
           double ra = points[j].x;
           if(same(l, r)) {
-            a[sz++] = min(la, ra);
+            //a[sz++] = min(la, ra);
             a[sz++] = max(la, ra);
           } else {
             double d = fabs(l - y)*fabs(la - ra)/fabs(l - r);
@@ -209,7 +186,7 @@ struct Polygon {
           double la = points[i].y;
           double ra = points[j].y;
           if(same(l, r)) {
-            a[sz++] = min(la, ra);
+            //a[sz++] = min(la, ra);
             a[sz++] = max(la, ra);
           } else {
             double d = abs(l - b)*abs(la - ra)/abs(l - r);
@@ -229,6 +206,7 @@ struct Polygon {
     return *this;
 
   }
+
   int MaxX(){
     int Max=0;
     for(int  i=0;i <size;i++){

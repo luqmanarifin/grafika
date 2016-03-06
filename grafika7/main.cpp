@@ -55,5 +55,32 @@ int main(int argc, char const *argv[])
        fb.clear();
   
    }
+      cmd = getch();
+      if (cmd == 27) {
+       cmd = getch();
+       if (cmd == 27) {
+         break;
+       }
+       else  {
+         cmd = getch();
+         cmd = 64 - cmd;
+       }
+      }
+      if (cmd == 'a' || cmd == 'A' || cmd == -4) {
+        erz->jadibiasa();
+      }
+      else if (cmd == 's' || cmd == 'S' || cmd == -3) {
+        erz->jadisenyum();
+      }
+      else if (cmd == 'd' || cmd == 'D' || cmd == -1) {        
+        erz->jadisedih();
+      }
+      erz->print(fb);
+      hid->print(fb);
+      system("clear");
+      fb.print();
+      fb.clear();
+  
+  }
   return 0;
 }

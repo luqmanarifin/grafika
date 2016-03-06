@@ -11,11 +11,11 @@ using namespace std;
 
 int main(int argc, char const *argv[])
 {
-  // fb.clear();
-  system("clear");
-  //Alis* alis = new Alis();
+  Alis* alis = new Alis();
   puts("jancok");
   FrameBuffer fb;
-  // alis->print(fb);
+  alis->print(fb);
+  system("clear");
+  fb.print();
   return 0;
 }
