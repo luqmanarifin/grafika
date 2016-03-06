@@ -28,6 +28,13 @@ struct Mata : public Polygon {
     setColor(255,255,255,0);
   }
 };
+struct MataMerem : public Polygon {
+  MataMerem() {
+    addCurve(Point<double>(290, 335), Point<double>(310, 330), Point<double>(360, 330), Point<double>(380, 335));
+    addCurve(Point<double>(380, 335), Point<double>(360, 330), Point<double>(310, 330), Point<double>(290, 335));
+    setColor(0,0,0,0);
+  }
+};
 struct MataSedih : public Polygon {
   MataSedih() {
     addCurve(Point<double>(290, 335), Point<double>(310, 310), Point<double>(360, 310), Point<double>(380, 335));
@@ -48,7 +55,7 @@ struct Tangisan : public Polygon {
   Tangisan() {
     addCurve(Point<double>(290, 335), Point<double>(310, 365), Point<double>(360, 365), Point<double>(380, 335));
     addCurve(Point<double>(380, 335), Point<double>(360, 355), Point<double>(310, 355), Point<double>(290, 335));
-    setColor(205,192,176,0);
+    setColor(176,224,230,0);
   }
 };
 

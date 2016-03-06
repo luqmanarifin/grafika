@@ -1,9 +1,11 @@
 #include "../lib/curve.h"
 #include "../lib/line.h"
 #include "../lib/conio2.h"
+
+#include "../lib/framebuffer.h"
 #include <bits/stdc++.h>
 #include <unistd.h>
-#include "objects/mata.h"
+//#include "objects/mata.h"
 
 using namespace std;
 

@@ -42,6 +42,25 @@ struct MulutSenyum : public Polygon {
   }
 };
 
+struct MulutTertawa : public Polygon {
+  MulutTertawa() {
+    //baw
+    addCurve(Point<double>(210, 500), Point<double>(240, 520), Point<double>(300, 520), Point<double>(330, 500));
+    //addCurve(Point<double>(330, 500), Point<double>(300, 515), Point<double>(240, 515), Point<double>(210, 500));
+    setColor(160,82,45,0);
+  }
+};
+
+struct GigiTertawa : public Polygon {
+  GigiTertawa() {
+    //baw
+    addCurve(Point<double>(210, 500), Point<double>(220, 508), Point<double>(320, 508), Point<double>(330, 500));
+    //addCurve(Point<double>(330, 500), Point<double>(300, 515), Point<double>(240, 515), Point<double>(210, 500));
+    setColor(255,255,255,0);
+  }
+};
+
+
 struct MulutSedih : public Polygon {
   MulutSedih() {
     //baw
