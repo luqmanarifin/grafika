@@ -49,5 +49,26 @@ struct HidungKiri : public Polygon {
     setColor(255,227,190,0);
     move(-5,0);
   }
+struct Hidung1 : public Polygon {
+  Hidung1() {
+    //hidung
+//left
+  addPoint(Point<double>(265,370));
+  addCurve(Point<double>(257.5, 400), Point<double>(256, 410), Point<double>(255, 411), Point<double>(250, 415));
+  addCurve(Point<double>(250, 415), Point<double>(248, 420), Point<double>(247, 421), Point<double>(245, 425));
+  addCurve(Point<double>(245, 425), Point<double>(247, 430), Point<double>(248, 431), Point<double>(250, 435));
+  addCurve(Point<double>(250, 435), Point<double>(257, 437), Point<double>(258, 438), Point<double>(265, 440));
+//bottom
+  addPoint(Point<double>(265,440));
+  addPoint(Point<double>(275,440));
+//right
+  addCurve(Point<double>(275, 440), Point<double>(282,437), Point<double>(283, 438), Point<double>(290, 435));
+  addCurve(Point<double>(290, 435), Point<double>(294, 431), Point<double>(293, 430), Point<double>(295, 425));
+  addCurve(Point<double>(295, 425), Point<double>(293,421), Point<double>(292, 420), Point<double>(290, 415));
+  addCurve(Point<double>(290, 415), Point<double>(285, 411), Point<double>(284, 410), Point<double>(282.5,400));
+  addPoint(Point<double>(275,370));
+    setColor(255,227,190,0);
+  }
+
 };
 #endif
