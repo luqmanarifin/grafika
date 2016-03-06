@@ -64,6 +64,7 @@ public:
       printf("Error reading variable information.\n");
       exit(3);
     }
+    printf("done\n");
 
     /* store important information */
     xres = vinfo.xres;
