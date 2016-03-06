@@ -26,7 +26,7 @@ struct HidungKanan : public Polygon {
   HidungKanan() {
     addCurve(Point<double>(280, 450), Point<double>(287, 440), Point<double>(294, 440), Point<double>(300, 450));
     addCurve(Point<double>(300, 450), Point<double>(263, 340), Point<double>(287, 330), Point<double>(290, 300));
-    move(-5,0);
+    move(-5,0);//move(-20,0);
     //rotateCenter(-5);
     setColor(255,227,190,0);
   }
@@ -49,6 +49,7 @@ struct HidungKiri : public Polygon {
     setColor(255,227,190,0);
     move(-5,0);
   }
+};
 struct Hidung1 : public Polygon {
   Hidung1() {
     //hidung

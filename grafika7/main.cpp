@@ -15,9 +15,11 @@ int main(int argc, char const *argv[])
   // fb.clear();
   system("clear");
   Wajah* erz = new Wajah();
-  
+  Hidung1* hid = new Hidung1();
+  hid->move(400,0);
   erz->move(400,0);
   erz->print(fb);
+  hid->print(fb);
   fb.print();
   while (true) { 
       cmd = getch();
@@ -41,6 +43,7 @@ int main(int argc, char const *argv[])
         erz->jadisedih();
       }
       erz->print(fb);
+      hid->print(fb);
       system("clear");
       fb.print();
       fb.clear();

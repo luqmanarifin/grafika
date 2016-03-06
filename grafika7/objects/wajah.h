@@ -66,9 +66,9 @@ struct Wajah {
   }
   void print(FrameBuffer& fb){
     kepala->print(fb);
-    hidKanan->print(fb);
-    hidKiri->print(fb);
-    hidung->print(fb);
+    //hidKanan->print(fb);
+    //hidKiri->print(fb);
+    //hidung->print(fb);
     aliskiri->print(fb);
     aliskanan->print(fb);
     if(mode==1){
