@@ -24,26 +24,30 @@ struct Kepala : public Polygon {
 
 struct HidungKanan : public Polygon {
   HidungKanan() {
-    addCurve(Point<double>(280, 450), Point<double>(285, 440), Point<double>(290, 440), Point<double>(295, 450));
-    addCurve(Point<double>(295, 450), Point<double>(285, 400), Point<double>(283, 350), Point<double>(280, 330));
-    move(-20,0);
-    setColor(255,232,180,0);
+    addCurve(Point<double>(280, 450), Point<double>(287, 440), Point<double>(294, 440), Point<double>(300, 450));
+    addCurve(Point<double>(300, 450), Point<double>(263, 340), Point<double>(287, 330), Point<double>(290, 300));
+    move(-5,0);
+    //rotateCenter(-5);
+    setColor(255,227,190,0);
   }
 };
 struct Hidung : public Polygon {
   Hidung() {
-    addCurve(Point<double>(250, 450), Point<double>(260, 460), Point<double>(270, 460), Point<double>(280, 450));
+    addCurve(Point<double>(250, 450), Point<double>(260, 465), Point<double>(270, 465), Point<double>(280, 450));
     addCurve(Point<double>(280, 450), Point<double>(270, 457), Point<double>(260, 457), Point<double>(250, 450));
-    setColor(255,227,177,0);
+    setColor(255,227,190,0);
+    move(-5,0);
   }
 };
 
 struct HidungKiri : public Polygon {
   HidungKiri() {
-    addCurve(Point<double>(250, 450), Point<double>(247, 440), Point<double>(243, 440), Point<double>(240, 450));
-    addCurve(Point<double>(240, 450), Point<double>(247, 400), Point<double>(257, 350), Point<double>(250, 330));
+    addCurve(Point<double>(250, 450), Point<double>(245, 440), Point<double>(240, 440), Point<double>(235, 450));
+    addCurve(Point<double>(235, 450), Point<double>(267, 340), Point<double>(243, 330), Point<double>(240, 300));
     //move(-20,0);
-    setColor(255,222,173,0);
+    //rotateCenter(5);
+    setColor(255,227,190,0);
+    move(-5,0);
   }
 };
 #endif

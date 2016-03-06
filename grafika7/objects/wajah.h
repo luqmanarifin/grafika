@@ -67,8 +67,8 @@ struct Wajah {
   void print(FrameBuffer& fb){
     kepala->print(fb);
     hidKanan->print(fb);
-    //hidKiri->print(fb);
-    //hidung->print(fb);
+    hidKiri->print(fb);
+    hidung->print(fb);
     aliskiri->print(fb);
     aliskanan->print(fb);
     if(mode==1){
@@ -96,13 +96,27 @@ struct Wajah {
     rambut->print(fb);
   }
   void jadibiasa(){
+    if(mode==3){
+      aliskanan = new Alis();
+      aliskiri = new Alis();
+      aliskiri->move(250,0);
+      aliskanan->move(400,0);
+    }
     mode=1;
   }
   void jadisenyum(){
+    if(mode==3){
+      aliskanan = new Alis();
+      aliskiri = new Alis();
+      aliskiri->move(250,0);
+      aliskanan->move(400,0);
+    }
     mode=2;
   }
   void jadisedih(){
     mode=3;
+    aliskanan->rotateCenter(180);
+    aliskiri->rotateCenter(180);
   }
   void move(double x,double y){
     kepala->move(x,y);
