@@ -4,6 +4,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+const double eps = 1e-2;
+
 /**
  * Class that represents 2D point
  */
@@ -58,7 +60,7 @@ public:
   }
   
   bool operator==(const Point<T>& p) {
-    return this->x == p.x && this->y == p.y && this->z == p.z;
+    return abs(this->x-p.x) < eps && abs(this->y-p.y) < eps && abs(this->z-p.z) < eps;
   }
   bool operator!=(const Point<T>& p) {
     return !(*this == p);

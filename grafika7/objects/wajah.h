@@ -118,6 +118,7 @@ struct Wajah {
       matakirimerem->print(fb);
     }
     rambut->print(fb);
+    rambut->print_frame(fb,255,255,255,0);
   }
   void jadibiasa(){
     if(mode==3){

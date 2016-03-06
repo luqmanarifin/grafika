@@ -54,7 +54,9 @@ struct MataSipit : public Polygon {
 struct Tangisan : public Polygon {
   Tangisan() {
     addCurve(Point<double>(290, 335), Point<double>(310, 365), Point<double>(360, 365), Point<double>(380, 335));
-    addCurve(Point<double>(380, 335), Point<double>(360, 355), Point<double>(310, 355), Point<double>(290, 335));
+    addPoint(Point<double>(377, 335));
+    addCurve(Point<double>(375, 335), Point<double>(360, 355), Point<double>(310, 355), Point<double>(295, 335));
+    addPoint(Point<double>(293, 335));
     setColor(176,224,230,0);
   }
 };
@@ -62,7 +64,9 @@ struct Tangisan : public Polygon {
 struct Alis : public Polygon {
   Alis() {
     addCurve(Point<double>(290, 290), Point<double>(310, 280), Point<double>(360, 280), Point<double>(380, 290));
-    addCurve(Point<double>(380, 290), Point<double>(360, 285), Point<double>(310, 285), Point<double>(290, 290));
+    addPoint(Point<double>(377, 290));
+    addCurve(Point<double>(375, 290), Point<double>(360, 285), Point<double>(310, 285), Point<double>(295, 290));
+    addPoint(Point<double>(293, 290));
     setColor(139,0,0,0);
   }
 };

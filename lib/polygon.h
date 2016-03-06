@@ -12,7 +12,6 @@
 
 using namespace std;
 
-const double eps = 1e-13;
 
 struct Polygon {
   Polygon() {
@@ -56,6 +55,9 @@ struct Polygon {
     if ( points != NULL) delete[] points;
   }
   double ratio(double a, double b) { return abs(a / b); }
+  bool isEqueal(Point<double> p1,Point<double> p2){
+    return !islessgreater(p1.x,p2.x) && !islessgreater(p1.y,p2.y) && !islessgreater(p1.z,p2.z);
+  }
   void addCurve(Point<double> a, Point<double> b, Point<double> c, Point<double> d) 
   {
     Vector<double> ab(a, b); 
@@ -71,6 +73,7 @@ struct Polygon {
         
         if(size>0){
           if(points[size-1]!=d){
+            cout << d << ' ' << points[size-1]<< endl;
             addPoint(d);
           }
         }
@@ -154,7 +157,7 @@ struct Polygon {
           double la = points[i].x;
           double ra = points[j].x;
           if(same(l, r)) {
-            //a[sz++] = min(la, ra);
+            a[sz++] = min(la, ra);
             a[sz++] = max(la, ra);
           } else {
             double d = fabs(l - y)*fabs(la - ra)/fabs(l - r);
@@ -163,6 +166,7 @@ struct Polygon {
         }
       }
       sort(a, a + sz);
+      sz = unique(a,a+sz)-a;
       for(int i = 0; i + 1 < sz; i += 2) {
         for(int j = (int) a[i]; j <= a[i + 1]; j++) {
           fb.set(j, y, warna);
@@ -186,7 +190,7 @@ struct Polygon {
           double la = points[i].y;
           double ra = points[j].y;
           if(same(l, r)) {
-            //a[sz++] = min(la, ra);
+            a[sz++] = min(la, ra);
             a[sz++] = max(la, ra);
           } else {
             double d = abs(l - b)*abs(la - ra)/abs(l - r);
@@ -195,6 +199,7 @@ struct Polygon {
         }
       }
       sort(a, a + sz);
+      sz = unique(a,a+sz)-a;
       for(int i = 0; i + 1 < sz; i += 2) {
         for(int j = (int) a[i]; j <= a[i + 1]; j++) {
           fb.set(b, j, warna);
