@@ -112,28 +112,44 @@ struct Polygon {
       line((int) points[i].x, (int) points[i].y, (int) points[j].x, (int) points[j].y, Color(red, green, blue, alpha)).print(fb);
     }
   }
+  // normalize the point to be printed
+  // this method does not change the properties of polygon
+  // parameter : the new normalized point that will be printed
+  // return the new size of point
+  int normalize(Point<int>* p) {
+    int sz = 0;
+    for(int i = 0; i < size; i++) {
+      Point<int> temp = Point<int>((int)(points[i].x + 0.5), (int)(points[i].y + 0.5), (int)(points[i].z + 0.5));
+      if(sz >= 2 && temp == p[sz - 1] && temp == p[sz - 2]) continue;
+      p[sz++] = temp;
+    }
+    return sz;
+  }
   Polygon& print(FrameBuffer& fb) {
-    double ymin = 1e9, ymak = -1e9;
+    Point<int>* points = new Point<int>[size];
+    int size = normalize(points);
+ 
+    int ymin = 1e9, ymak = -1e9;
     for(int i = 0; i < size; i++) {
       ymin = min(ymin, points[i].y);
       ymak = max(ymak, points[i].y);
     }
 
-    double* a = new double[2 * size];
+    int* a = new int[2 * size];
     for(int y = ymin; y <= ymak; y++) {
       int sz = 0;
       for(int i = 0; i < size; i++) {
         int j = (i + 1) % size;
-        double l = points[i].y;
-        double r = points[j].y;
+        int l = points[i].y;
+        int r = points[j].y;
         if(min(l, r) <= y && y <= max(l, r)) {
-          double la = points[i].x;
-          double ra = points[j].x;
+          int la = points[i].x;
+          int ra = points[j].x;
           if(same(l, r)) {
             a[sz++] = min(la, ra);
             a[sz++] = max(la, ra);
           } else {
-            double d = fabs(l - y)*fabs(la - ra)/fabs(l - r);
+            int d = (int)round((double) fabs(l - y)*fabs(la - ra)/fabs(l - r));
             a[sz++] = la + (la < ra? d : -d);
           }
         }
@@ -146,7 +162,7 @@ struct Polygon {
       }
     }
     
-    double bmin = 1e9, bmak = -1e9;
+    int bmin = 1e9, bmak = -1e9;
     for(int i = 0; i < size; i++) {
       bmin = min(bmin, points[i].x);
       bmak = max(bmak, points[i].x);
@@ -156,16 +172,16 @@ struct Polygon {
       int sz = 0;
       for(int i = 0; i < size; i++) {
         int j = (i + 1) % size;
-        double l = points[i].x;
-        double r = points[j].x;
+        int l = points[i].x;
+        int r = points[j].x;
         if(min(l, r) <= b && b <= max(l, r)) {
-          double la = points[i].y;
-          double ra = points[j].y;
+          int la = points[i].y;
+          int ra = points[j].y;
           if(same(l, r)) {
             a[sz++] = min(la, ra);
             a[sz++] = max(la, ra);
           } else {
-            double d = abs(l - b)*abs(la - ra)/abs(l - r);
+            int d = (int)round((double)abs(l - b)*abs(la - ra)/abs(l - r));
             a[sz++] = la + (la < ra? d : -d);
           }
         }
@@ -178,7 +194,7 @@ struct Polygon {
       }
     }
     if ( a != NULL) delete[] a;
-    print_frame(fb,255,255,255,0);
+    //print_frame(fb,255,255,255,0);
     return *this;
   }
   int MaxX(){

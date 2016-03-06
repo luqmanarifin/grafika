@@ -1,7 +1,7 @@
 compile : main.cpp
-	sudo g++ main.cpp -o e -std=c++11
+	g++ main.cpp -o e -std=c++11
 test : driver.cpp
-	sudo g++ driver.cpp -o driver -std=c++11
-	sudo ./driver
+	g++ driver.cpp -o driver -std=c++11
+	./driver
 run : e
 	sudo ./e

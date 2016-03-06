@@ -57,6 +57,13 @@ public:
     return *this;
   }
   
+  bool operator==(const Point<T>& p) {
+    return this->x == p.x && this->y == p.y && this->z == p.z;
+  }
+  bool operator!=(const Point<T>& p) {
+    return !(*this == p);
+  }
+
   Point<T>& rotate(double degreeZ, const Point<T>& center = Point<T>(0, 0), double degreeX = 0, double degreeY = 0) {
     *this -= center;
     Point<T> temp = *this;
