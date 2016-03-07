@@ -14,6 +14,10 @@ using namespace std;
 
 
 struct Polygon {
+  ///////////////
+  /* OOP basic */
+  ///////////////
+  
   Polygon() {
     warna = Color::WHITE;
     points = NULL;
@@ -34,7 +38,7 @@ struct Polygon {
     size = _polygon.size;
     points = new Point<double>[size];
     for(int i=0;i<size;i++){
-      points[i]=Point<double>(_polygon.points[i]);
+      points[i] = Point<double>(_polygon.points[i]);
     }    
     if (size > 2) generateNormal();
     done = new bool*[1366];
@@ -46,7 +50,7 @@ struct Polygon {
     if ( points != NULL) delete[] points;
     points = new Point<double>[size];
     for(int i=0;i<size;i++){
-      points[i]=Point<double>(_polygon.points[i]);
+      points[i] = Point<double>(_polygon.points[i]);
     }    
     if (size > 2) generateNormal();
     return *this;
@@ -54,89 +58,73 @@ struct Polygon {
   ~Polygon() {
     if ( points != NULL) delete[] points;
   }
-  double ratio(double a, double b) { return abs(a / b); }
-  bool isEqueal(Point<double> p1,Point<double> p2){
-    return !islessgreater(p1.x,p2.x) && !islessgreater(p1.y,p2.y) && !islessgreater(p1.z,p2.z);
-  }
-  void addCurve(Point<double> a, Point<double> b, Point<double> c, Point<double> d) 
-  {
-    Vector<double> ab(a, b); 
-    Vector<double> bc(b, c); 
-    Vector<double> cd(c, d);
-    double magn1 = ab.magnitude * bc.magnitude;
-    double magn2 = bc.magnitude * cd.magnitude;
-    //warna = _color;
-    //cout << a << ' ' << b << ' ' << c << ' ' << d << endl;
-    if (ratio( Vector<double>::dot( ab, bc ), magn1 ) > 0.995 &&
-        ratio( Vector<double>::dot( bc, cd ), magn2 ) > 0.995 ) {
-        //straightLine = new line((int)round(a.x), (int)round(a.y), (int)round(d.x), (int)round(d.y), color);
-        
-        if(size>0){
-          if(points[size-1]!=d){
-            //cout << d << ' ' << points[size-1]<< endl;
-            addPoint(d);
-          }
-        }
-        else{
-          //addPoint(a);
-          addPoint(d);
-        }
-    } else {
-      Point<double> d1 = (a + b) * 0.5;
-      Point<double> d2 = (b*2 + a + c) * 0.25;
-      Point<double> d3 = (a + b*3 + c*3 + d) * 0.125;
-      Point<double> d4 = (c*2 + b + d) * 0.25;
-      Point<double> d5 = (c + d) * 0.5;
-      addCurve(a, d1, d2, d3);
-      addCurve(d3, d4, d5, d);
-    }
-  }
-  Polygon& addPoint(const Point<double>& p) {
-    /*if(size>2){
-      if(points[size-1]==p){
-        //return *this;
-      }
-    }
-    else{*/
-      Point<double>* newPoints = new Point<double>[size + 1];
-      for(int i = 0; i < size; i++) {
-        newPoints[i] = points[i];
-      }
-      //size++;
-      newPoints[size++] = p;
-      if ( points != NULL) delete[] points;
-      points = newPoints;
-
-      // update center
-      center.x *= (size - 1);
-      center.x += p.x;
-      center.x /= size;
-      center.y *= (size - 1);
-      center.y += p.y;
-      center.y /= size;
-      center.z *= (size - 1);
-      center.z += p.z;
-      center.z /= size;
-      // cout << center << endl;
-      if (size > 2) generateNormal();
-    //}
-      
-      return *this;
-  }
 
   // Set Color
   Polygon& setColor(int red, int green, int blue, int alpha) { warna = Color(red, green, blue, alpha); return *this; }
   Polygon& setColor(const Color& color) { warna = color; return *this; }
 
+  double ratio(double a, double b) { return abs(a / b); }
+
+  bool isEqueal(Point<double> p1,Point<double> p2){
+    return !islessgreater(p1.x,p2.x) && !islessgreater(p1.y,p2.y) && !islessgreater(p1.z,p2.z);
+  }
+
+  void addCurve(curve c)
+  {
+    for (vector< Point<double> >::iterator i = c.points.begin(); i != c.points.end(); ++i)
+    {
+      Point<double> d = *i;
+      if (size > 0) {
+        if (points[size - 1] != d) {
+          addPoint(d);
+        }
+      }
+      else {
+        addPoint(d);
+      }
+    }
+  }
+
+  Polygon& addPoint(const Point<double>& p) {
+    Point<double>* newPoints = new Point<double>[size + 1];
+    for(int i = 0; i < size; i++) {
+      newPoints[i] = points[i];
+    }
+    
+    newPoints[size++] = p;
+    if ( points != NULL) delete[] points;
+    points = newPoints;
+
+    // update center
+    center.x *= (size - 1);
+    center.x += p.x;
+    center.x /= size;
+    center.y *= (size - 1);
+    center.y += p.y;
+    center.y /= size;
+    center.z *= (size - 1);
+    center.z += p.z;
+    center.z /= size;
+
+    if (size > 2) generateNormal();
+    
+    return *this;
+  }
+
   static bool same(double a, double b) {
     return fabs(a - b) < eps;
   }
   
-  void print_frame(FrameBuffer& fb, int red, int green, int blue, int alpha) {
+  ///////////
+  /* Print */
+  ///////////
+  
+  Polygon& print_frame(FrameBuffer& fb, int red, int green, int blue, int alpha) {
     for(int i = 0; i < size; i++) {
       int j = (i + 1) % size;
       line((int) points[i].x, (int) points[i].y, (int) points[j].x, (int) points[j].y, Color(red, green, blue, alpha)).print(fb);
     }
+    return *this;
   }
 
   Polygon& print(FrameBuffer& fb) {
@@ -207,11 +195,15 @@ struct Polygon {
       }
     }
     if ( a != NULL) delete[] a;
-    //print_frame(fb,255,255,255,0);
+
     return *this;
 
   }
 
+  ////////////////
+  /* Boundaries */
+  ////////////////
+  
   int MaxX(){
     int Max=0;
     for(int  i=0;i <size;i++){
@@ -249,6 +241,10 @@ struct Polygon {
     } 
     return Min;
   }
+  
+  ////////////////////
+  /* Transformation */
+  ////////////////////
   
   Polygon& resize(double factor, const Point<double>& center = Point<double>()) {
     for (int i = 0; i < size; ++i) {

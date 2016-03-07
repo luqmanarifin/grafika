@@ -17,13 +17,13 @@ vector< Point<T> >& make_convex_hull (vector< Point<T> > P)
 
   // Build lower hull
   for (int i = 0; i < n; ++i) {
-    while (k >= 2 && cross(H[k-2], H[k-1], P[i]) <= 0) k--;
+    while (k >= 2 && Vector::cross(Vector(H[k-2], H[k-1]), Vector(H[k-2], P[i])) <= 0) k--;
     H[k++] = P[i];
   }
 
   // Build upper hull
   for (int i = n-2, t = k+1; i >= 0; i--) {
-    while (k >= t && cross(H[k-2], H[k-1], P[i]) <= 0) k--;
+    while (k >= t && Vector::cross(Vector(H[k-2], H[k-1]), Vector(H[k-2], P[i])) <= 0) k--;
     H[k++] = P[i];
   }
 
