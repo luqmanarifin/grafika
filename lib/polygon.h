@@ -73,7 +73,7 @@ struct Polygon {
         
         if(size>0){
           if(points[size-1]!=d){
-            cout << d << ' ' << points[size-1]<< endl;
+            //cout << d << ' ' << points[size-1]<< endl;
             addPoint(d);
           }
         }
