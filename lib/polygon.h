@@ -8,6 +8,7 @@
 #include "framebuffer.h"
 #include "line.h"
 #include "color.h"
+#include "curve.h"
 #include "vector.h"
 
 using namespace std;
@@ -60,7 +61,7 @@ struct Polygon {
   }
 
   // Set Color
-  Polygon& setColor(int red, int green, int blue, int alpha) { warna = Color(red, green, blue, alpha); return *this; }
+  Polygon& setColor(int red, int green, int blue, int alpha = 1.0) { warna = Color(red, green, blue, alpha); return *this; }
   Polygon& setColor(const Color& color) { warna = color; return *this; }
 
   double ratio(double a, double b) { return abs(a / b); }
@@ -204,42 +205,91 @@ struct Polygon {
   /* Boundaries */
   ////////////////
   
-  int MaxX(){
-    int Max=0;
-    for(int  i=0;i <size;i++){
-       if(points[i].x>Max){
-          Max = points[i].x;
-       }
+  int MaxX() {
+    if (maxX != DUMMY) return maxX;
+
+    int Max = 0;
+    for(int i = 0; i < size; i++) {
+      int rounded = (int)round(points[i].x);
+      if(rounded > Max) {
+        Max = rounded;
+      }
     } 
-    return Max;
+    return maxX = Max;
   }
-  int MaxY(){
-    int Max=0;
-    for(int  i=0;i <size;i++){
-       if(points[i].y>Max){
-          Max = points[i].y;
-       }
+  int MaxY() {
+    if (maxY != DUMMY) return maxY;
+
+    int Max = 0;
+    for(int i = 0; i < size; i++) {
+      int rounded = (int)round(points[i].y);
+      if(rounded > Max) {
+        Max = rounded;
+      }
     } 
-    return Max;
+    return maxY = Max;
+  }
+  int MaxZ() {
+    if (maxZ != DUMMY) return maxZ;
+
+    int Max = DUMMY + 1;
+    for(int i = 0; i < size; i++) {
+      int rounded = (int)round(points[i].z);
+      if(rounded > Max) {
+        Max = rounded;
+      }
+    } 
+    return maxZ = Max;
   }
   
-  int MinX(){
-    int Min=1400;
-    for(int  i=0;i <size;i++){
-       if(points[i].x<Min){
-          Min = points[i].x;
-       }
+  int MinX() {
+    if (minX != DUMMY) return minX;
+
+    int Min = 1400;
+    for(int i = 0; i < size; i++) {
+      int rounded = (int)round(points[i].x);
+      if(rounded < Min) {
+        Min = rounded;
+      }
     } 
-    return Min;
+    return minX = Min;
   }
-  int MinY(){
-    int Min=800;
-    for(int  i=0;i <size;i++){
-       if(points[i].y<Min){
-          Min = points[i].y;
-       }
+  int MinY() {
+    if (minY != DUMMY) return minY;
+
+    int Min = 800;
+    for(int i = 0; i < size; i++) {
+      int rounded = (int)round(points[i].y);
+      if(rounded < Min) {
+        Min = rounded;
+      }
     } 
-    return Min;
+    return minY = Min;
+  }
+  int MinZ() {
+    if (minZ != DUMMY) return minZ;
+
+    int Min = DUMMY - 1;              // overflow cycle (min - 1 = max) :P
+    for(int i = 0; i < size; i++) {
+      int rounded = (int)round(points[i].z);
+      if(rounded < Min) {
+        Min = rounded;
+      }
+    } 
+    return minZ = Min;
+  }
+
+  void resetBoundaries() {
+    minX = DUMMY;
+    minY = DUMMY;
+    minZ = DUMMY;
+    maxX = DUMMY;
+    maxY = DUMMY;
+    maxZ = DUMMY;
+  }
+
+  friend bool operator<(const Polygon& l, const Polygon& r) {
+    return l.MaxZ() < r.MaxZ();
   }
   
   ////////////////////
@@ -251,6 +301,7 @@ struct Polygon {
       points[i].scale(factor, center);
     }
     this->center.scale(factor, center);
+    resetBoundaries();
     return *this;
   }
   Polygon& resizeCenter(double factor) {
@@ -261,6 +312,7 @@ struct Polygon {
       points[i].move(x, y);
     }
     center.move(x, y);
+    resetBoundaries();
     return *this;
   }
   Polygon& rotate(double degreeZ, const Point<double>& center = Point<double>(0, 0), double degreeX = 0, double degreeY = 0) {
@@ -268,6 +320,7 @@ struct Polygon {
       points[i].rotate(degreeZ, center, degreeX, degreeY);
     }
     this->center.rotate(degreeZ, center, degreeX, degreeY);
+    resetBoundaries();
 
     if (size > 2) norm.rotate(degreeZ, degreeX, degreeY);
     return *this;
@@ -286,6 +339,16 @@ struct Polygon {
   Point<double> center;
   Vector<double> norm;
   Color warna;
+
+private:
+  // Memo
+  const int DUMMY = = 0x80000000;
+  int minX = DUMMY;
+  int minY = DUMMY;
+  int minZ = DUMMY;
+  int maxX = DUMMY;
+  int maxY = DUMMY;
+  int maxZ = DUMMY;
 
   // properties for dfs
   bool** done;
