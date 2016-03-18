@@ -50,7 +50,7 @@ struct Polygon {
     if ( points != NULL) delete[] points;
   }
   double ratio(double a, double b) { return abs(a / b); }
-  void addCurve(Point<double> a, Point<double> b, Point<double> c, Point<double> d) 
+  void addCurve(curve(Point<double> a, Point<double> b, Point<double> c, Point<double> d) )
   {
     Vector<double> ab(a, b); 
     Vector<double> bc(b, c); 
@@ -69,8 +69,8 @@ struct Polygon {
       Point<double> d3 = (a + b*3 + c*3 + d) * 0.125;
       Point<double> d4 = (c*2 + b + d) * 0.25;
       Point<double> d5 = (c + d) * 0.5;
-      addCurve(a, d1, d2, d3);
-      addCurve(d3, d4, d5, d);
+      addCurve(curve(a, d1, d2, d3));
+      addCurve(curve(d3, d4, d5, d));
     }
   }
   Polygon& addPoint(const Point<double>& p) {

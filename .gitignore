@@ -1,7 +1,7 @@
 **/*~
 */*.o
+*/*out
 */main
-*/out
 */driver
 */objects/*.gch
 */e

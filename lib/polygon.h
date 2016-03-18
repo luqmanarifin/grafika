@@ -8,12 +8,17 @@
 #include "framebuffer.h"
 #include "line.h"
 #include "color.h"
+#include "curve.h"
 #include "vector.h"
 
 using namespace std;
 
 
 struct Polygon {
+  ///////////////
+  /* OOP basic */
+  ///////////////
+  
   Polygon() {
     warna = Color::WHITE;
     points = NULL;
@@ -34,7 +39,7 @@ struct Polygon {
     size = _polygon.size;
     points = new Point<double>[size];
     for(int i=0;i<size;i++){
-      points[i]=Point<double>(_polygon.points[i]);
+      points[i] = Point<double>(_polygon.points[i]);
     }    
     if (size > 2) generateNormal();
     done = new bool*[1366];
@@ -46,7 +51,7 @@ struct Polygon {
     if ( points != NULL) delete[] points;
     points = new Point<double>[size];
     for(int i=0;i<size;i++){
-      points[i]=Point<double>(_polygon.points[i]);
+      points[i] = Point<double>(_polygon.points[i]);
     }    
     if (size > 2) generateNormal();
     return *this;
@@ -54,90 +59,73 @@ struct Polygon {
   ~Polygon() {
     if ( points != NULL) delete[] points;
   }
+
+  // Set Color
+  Polygon& setColor(int red, int green, int blue, int alpha = 1.0) { warna = Color(red, green, blue, alpha); return *this; }
+  Polygon& setColor(const Color& color) { warna = color; return *this; }
+
   double ratio(double a, double b) { return abs(a / b); }
+
   bool isEqueal(Point<double> p1,Point<double> p2){
     return !islessgreater(p1.x,p2.x) && !islessgreater(p1.y,p2.y) && !islessgreater(p1.z,p2.z);
   }
-  Polygon& addCurve(Point<double> a, Point<double> b, Point<double> c, Point<double> d) 
+  void addCurve(curve c)
   {
-    Vector<double> ab(a, b); 
-    Vector<double> bc(b, c); 
-    Vector<double> cd(c, d);
-    double magn1 = ab.magnitude * bc.magnitude;
-    double magn2 = bc.magnitude * cd.magnitude;
-    //warna = _color;
-    //cout << a << ' ' << b << ' ' << c << ' ' << d << endl;
-    if (ratio( Vector<double>::dot( ab, bc ), magn1 ) > 0.995 &&
-        ratio( Vector<double>::dot( bc, cd ), magn2 ) > 0.995 ) {
-        //straightLine = new line((int)round(a.x), (int)round(a.y), (int)round(d.x), (int)round(d.y), color);
-        
-        if(size>0){
-          if(points[size-1]!=d){
-            cout << d << ' ' << points[size-1]<< endl;
-            addPoint(d);
-          }
-        }
-        else{
-          //addPoint(a);
+    for (vector< Point<double> >::iterator i = c.points.begin(); i != c.points.end(); ++i)
+    {
+      Point<double> d = *i;
+      if (size > 0) {
+        if (points[size - 1] != d) {
           addPoint(d);
         }
-    } else {
-      Point<double> d1 = (a + b) * 0.5;
-      Point<double> d2 = (b*2 + a + c) * 0.25;
-      Point<double> d3 = (a + b*3 + c*3 + d) * 0.125;
-      Point<double> d4 = (c*2 + b + d) * 0.25;
-      Point<double> d5 = (c + d) * 0.5;
-      addCurve(a, d1, d2, d3);
-      addCurve(d3, d4, d5, d);
+      }
+      else {
+        addPoint(d);
+      }
     }
     return *this;
   }
+
   Polygon& addPoint(const Point<double>& p) {
-    /*if(size>2){
-      if(points[size-1]==p){
-        //return *this;
-      }
+    Point<double>* newPoints = new Point<double>[size + 1];
+    for(int i = 0; i < size; i++) {
+      newPoints[i] = points[i];
     }
-    else{*/
-      Point<double>* newPoints = new Point<double>[size + 1];
-      for(int i = 0; i < size; i++) {
-        newPoints[i] = points[i];
-      }
-      //size++;
-      newPoints[size++] = p;
-      if ( points != NULL) delete[] points;
-      points = newPoints;
+    
+    newPoints[size++] = p;
+    if ( points != NULL) delete[] points;
+    points = newPoints;
 
-      // update center
-      center.x *= (size - 1);
-      center.x += p.x;
-      center.x /= size;
-      center.y *= (size - 1);
-      center.y += p.y;
-      center.y /= size;
-      center.z *= (size - 1);
-      center.z += p.z;
-      center.z /= size;
-      // cout << center << endl;
-      if (size > 2) generateNormal();
-    //}
-      
-      return *this;
+    // update center
+    center.x *= (size - 1);
+    center.x += p.x;
+    center.x /= size;
+    center.y *= (size - 1);
+    center.y += p.y;
+    center.y /= size;
+    center.z *= (size - 1);
+    center.z += p.z;
+    center.z /= size;
+
+    if (size > 2) generateNormal();
+    
+    return *this;
   }
-
-  // Set Color
-  Polygon& setColor(int red, int green, int blue, int alpha) { warna = Color(red, green, blue, alpha); return *this; }
-  Polygon& setColor(const Color& color) { warna = color; return *this; }
 
   static bool same(double a, double b) {
     return fabs(a - b) < eps;
   }
   
-  void print_frame(FrameBuffer& fb, int red, int green, int blue, int alpha) {
+  ///////////
+  /* Print */
+  ///////////
+  
+  Polygon& print_frame(FrameBuffer& fb, int red, int green, int blue, int alpha) {
     for(int i = 0; i < size; i++) {
       int j = (i + 1) % size;
       line((int) points[i].x, (int) points[i].y, (int) points[j].x, (int) points[j].y, Color(red, green, blue, alpha)).print(fb);
     }
+    return *this;
   }
 
   Polygon& print(FrameBuffer& fb) {
@@ -213,49 +201,107 @@ struct Polygon {
 
   }
 
-  int MaxX(){
-    int Max=0;
-    for(int  i=0;i <size;i++){
-       if(points[i].x>Max){
-          Max = points[i].x;
-       }
+  ////////////////
+  /* Boundaries */
+  ////////////////
+  
+  int MaxX() {
+    if (maxX != DUMMY) return maxX;
+
+    int Max = 0;
+    for(int i = 0; i < size; i++) {
+      int rounded = (int)round(points[i].x);
+      if(rounded > Max) {
+        Max = rounded;
+      }
     } 
-    return Max;
+    return maxX = Max;
   }
-  int MaxY(){
-    int Max=0;
-    for(int  i=0;i <size;i++){
-       if(points[i].y>Max){
-          Max = points[i].y;
-       }
+  int MaxY() {
+    if (maxY != DUMMY) return maxY;
+
+    int Max = 0;
+    for(int i = 0; i < size; i++) {
+      int rounded = (int)round(points[i].y);
+      if(rounded > Max) {
+        Max = rounded;
+      }
     } 
-    return Max;
+    return maxY = Max;
+  }
+  int MaxZ() {
+    if (maxZ != DUMMY) return maxZ;
+
+    int Max = DUMMY + 1;
+    for(int i = 0; i < size; i++) {
+      int rounded = (int)round(points[i].z);
+      if(rounded > Max) {
+        Max = rounded;
+      }
+    } 
+    return maxZ = Max;
   }
   
-  int MinX(){
-    int Min=1400;
-    for(int  i=0;i <size;i++){
-       if(points[i].x<Min){
-          Min = points[i].x;
-       }
+  int MinX() {
+    if (minX != DUMMY) return minX;
+
+    int Min = 1400;
+    for(int i = 0; i < size; i++) {
+      int rounded = (int)round(points[i].x);
+      if(rounded < Min) {
+        Min = rounded;
+      }
     } 
-    return Min;
+    return minX = Min;
   }
-  int MinY(){
-    int Min=800;
-    for(int  i=0;i <size;i++){
-       if(points[i].y<Min){
-          Min = points[i].y;
-       }
+  int MinY() {
+    if (minY != DUMMY) return minY;
+
+    int Min = 800;
+    for(int i = 0; i < size; i++) {
+      int rounded = (int)round(points[i].y);
+      if(rounded < Min) {
+        Min = rounded;
+      }
     } 
-    return Min;
+    return minY = Min;
   }
+  int MinZ() {
+    if (minZ != DUMMY) return minZ;
+
+    int Min = DUMMY - 1;              // overflow cycle (min - 1 = max) :P
+    for(int i = 0; i < size; i++) {
+      int rounded = (int)round(points[i].z);
+      if(rounded < Min) {
+        Min = rounded;
+      }
+    } 
+    return minZ = Min;
+  }
+
+  void resetBoundaries() {
+    minX = DUMMY;
+    minY = DUMMY;
+    minZ = DUMMY;
+    maxX = DUMMY;
+    maxY = DUMMY;
+    maxZ = DUMMY;
+  }
+
+  friend bool operator<(const Polygon& l, const Polygon& r) {
+    return l.MaxZ() < r.MaxZ();
+  }
+  
+  ////////////////////
+  /* Transformation */
+  ////////////////////
   
   Polygon& resize(double factor, const Point<double>& center = Point<double>()) {
     for (int i = 0; i < size; ++i) {
       points[i].scale(factor, center);
     }
     this->center.scale(factor, center);
+    resetBoundaries();
     return *this;
   }
   Polygon& resizeCenter(double factor) {
@@ -266,6 +312,7 @@ struct Polygon {
       points[i].move(x, y);
     }
     center.move(x, y);
+    resetBoundaries();
     return *this;
   }
   Polygon& rotate(double degreeZ, const Point<double>& center = Point<double>(0, 0), double degreeX = 0, double degreeY = 0) {
@@ -273,6 +320,7 @@ struct Polygon {
       points[i].rotate(degreeZ, center, degreeX, degreeY);
     }
     this->center.rotate(degreeZ, center, degreeX, degreeY);
+    resetBoundaries();
 
     if (size > 2) norm.rotate(degreeZ, degreeX, degreeY);
     return *this;
@@ -291,6 +339,16 @@ struct Polygon {
   Point<double> center;
   Vector<double> norm;
   Color warna;
+
+private:
+  // Memo
+  const int DUMMY = = 0x80000000;
+  int minX = DUMMY;
+  int minY = DUMMY;
+  int minZ = DUMMY;
+  int maxX = DUMMY;
+  int maxY = DUMMY;
+  int maxZ = DUMMY;
 
   // properties for dfs
   bool** done;

@@ -4,6 +4,10 @@
 #include "polygon.h"
 
 struct Shape {
+  ///////////////
+  /* OOP basic */
+  ///////////////
+  
   Shape() {
     polygons = NULL;
     size = 0;
@@ -53,6 +57,12 @@ struct Shape {
 
     return *this;
   }
+
+
+  ///////////
+  /* Print */
+  ///////////
+
   Shape& print(FrameBuffer& fb) {
     for (int i = 0; i < size; ++i) {
       Vector<double> norm = polygons[i].norm;
@@ -65,11 +75,97 @@ struct Shape {
   Shape& printframe(FrameBuffer& fb) {
     for (int i = 0; i < size; ++i) {
       Vector<double> norm = polygons[i].norm;
-      //if (norm.z * Vector<double>::dot(norm, Vector<double>(polygons[i].points[0], center)) < 0) {
+      if (norm.z * Vector<double>::dot(norm, Vector<double>(polygons[i].points[0], center)) < 0) {
         polygons[i].print_frame(fb,255,255,255,0);
-      //}
+      }
     }
     return *this;
+  }
+
+
+  ////////////////
+  /* Boundaries */
+  ////////////////
+  
+  int MaxX() {
+    if (maxX != DUMMY) return maxX;
+
+    int Max = 0;
+    for(int i = 0; i < size; i++) {
+      if(polygons[i].MaxX() > Max) {
+        Max = polygons[i].MaxX();
+      }
+    } 
+    return maxX = Max;
+  }
+  int MaxY() {
+    if (maxY != DUMMY) return maxY;
+
+    int Max = 0;
+    for(int i = 0; i < size; i++) {
+      if(polygons[i].MaxY() > Max) {
+        Max = polygons[i].MaxY();
+      }
+    } 
+    return maxY = Max;
+  }
+  int MaxZ() {
+    if (maxZ != DUMMY) return maxZ;
+
+    int Max = DUMMY + 1;
+    for(int i = 0; i < size; i++) {
+      if(polygons[i].MaxZ() > Max) {
+        Max = polygons[i].MaxZ();
+      }
+    } 
+    return maxZ = Max;
+  }
+  
+  int MinX() {
+    if (minX != DUMMY) return minX;
+
+    int Min = 1400;
+    for(int i = 0; i < size; i++) {
+      if(polygons[i].MinX() < Min) {
+        Min = polygons[i].MinX();
+      }
+    } 
+    return minX = Min;
+  }
+  int MinY() {
+    if (minY != DUMMY) return minY;
+
+    int Min = 800;
+    for(int i = 0; i < size; i++) {
+      if(polygons[i].MinY() < Min) {
+        Min = polygons[i].MinY();
+      }
+    } 
+    return minY = Min;
+  }
+  int MinZ() {
+    if (minZ != DUMMY) return minZ;
+
+    int Min = DUMMY - 1;              // overflow cycle (min - 1 = max) :P
+    for(int i = 0; i < size; i++) {
+      if(polygons[i].MinZ() < Min) {
+        Min = polygons[i].MinZ();
+      }
+    } 
+    return minZ = Min;
+  }
+
+  void resetBoundaries() {
+    minX = DUMMY;
+    minY = DUMMY;
+    minZ = DUMMY;
+    maxX = DUMMY;
+    maxY = DUMMY;
+    maxZ = DUMMY;
+  }
+
+  friend bool operator<(const Polygon& l, const Polygon& r) {
+    return l.MaxZ() < r.MaxZ();
   }
 
   Shape& resize(double factor, const Point<double>& center = Point<double>()) {
@@ -77,6 +173,7 @@ struct Shape {
       polygons[i].resize(factor, center);
     }
     this->center.scale(factor, center);
+    resetBoundaries();
     return *this;
   }
   Shape& resizeCenter(double factor) {
@@ -87,6 +184,7 @@ struct Shape {
       polygons[i].move(x, y);
     }
     center.move(x, y);
+    resetBoundaries();
     return *this;
   }
   Shape& rotate(double degreeZ, const Point<double>& center = Point<double>(0, 0), double degreeX = 0, double degreeY = 0) {
@@ -94,6 +192,7 @@ struct Shape {
       polygons[i].rotate(degreeZ, center, degreeX, degreeY);
     }
     this->center.rotate(degreeZ, center, degreeX, degreeY);
+    resetBoundaries();
     return *this;
   }
   Shape& rotateCenter(double degreeZ, double degreeX = 0, double degreeY = 0) {
@@ -103,6 +202,16 @@ struct Shape {
   Polygon* polygons;
   int size;
   Point<double> center;
+
+private:
+  // Memo
+  const int DUMMY = = 0x80000000;
+  int minX = DUMMY;
+  int minY = DUMMY;
+  int minZ = DUMMY;
+  int maxX = DUMMY;
+  int maxY = DUMMY;
+  int maxZ = DUMMY;
 };
 
 #endif
