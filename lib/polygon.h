@@ -58,7 +58,7 @@ struct Polygon {
   bool isEqueal(Point<double> p1,Point<double> p2){
     return !islessgreater(p1.x,p2.x) && !islessgreater(p1.y,p2.y) && !islessgreater(p1.z,p2.z);
   }
-  void addCurve(Point<double> a, Point<double> b, Point<double> c, Point<double> d) 
+  Polygon& addCurve(Point<double> a, Point<double> b, Point<double> c, Point<double> d) 
   {
     Vector<double> ab(a, b); 
     Vector<double> bc(b, c); 
@@ -90,6 +90,7 @@ struct Polygon {
       addCurve(a, d1, d2, d3);
       addCurve(d3, d4, d5, d);
     }
+    return *this;
   }
   Polygon& addPoint(const Point<double>& p) {
     /*if(size>2){
@@ -207,7 +208,7 @@ struct Polygon {
       }
     }
     if ( a != NULL) delete[] a;
-    //print_frame(fb,255,255,255,0);
+    print_frame(fb,50,50,50,0);
     return *this;
 
   }

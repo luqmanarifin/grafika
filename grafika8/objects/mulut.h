@@ -36,8 +36,11 @@ struct Bibir2 : public Polygon {
 struct MulutSenyum : public Polygon {
   MulutSenyum() {
     //baw
+    //Cek addsingle point dan pojok Curve
+    //addPoint(Point<double>(210, 490));
     addCurve(Point<double>(210, 500), Point<double>(240, 520), Point<double>(300, 520), Point<double>(330, 500));
-    //addCurve(Point<double>(330, 500), Point<double>(300, 515), Point<double>(240, 515), Point<double>(210, 500));
+    //addPoint(Point<double>(340, 490));
+    addCurve(Point<double>(350, 500), Point<double>(380, 520), Point<double>(440, 520), Point<double>(470, 500));
     setColor(255,255,255,0);
   }
 };
@@ -46,6 +49,8 @@ struct MulutTertawa : public Polygon {
   MulutTertawa() {
     //baw
     addCurve(Point<double>(210, 500), Point<double>(240, 520), Point<double>(300, 520), Point<double>(330, 500));
+    addCurve(Point<double>(330, 500), Point<double>(360, 480), Point<double>(420, 480), Point<double>(450, 500));
+    addCurve(Point<double>(450, 500), Point<double>(480, 520), Point<double>(540, 480), Point<double>(570, 500));
     //addCurve(Point<double>(330, 500), Point<double>(300, 515), Point<double>(240, 515), Point<double>(210, 500));
     setColor(160,82,45,0);
   }
