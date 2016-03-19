@@ -80,6 +80,7 @@ int main() {
     /*
     Kubus* kubus = new Kubus(400,300,50);
     while(true){
+      
       //system("clear");
       
       else if (cmd == 's' || cmd == 'S' || cmd == -2) {
