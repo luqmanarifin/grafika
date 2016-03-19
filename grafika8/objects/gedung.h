@@ -128,25 +128,64 @@ struct Jalan{
   blok* jalanparkiranbelakang;
   blok* jalanparkirankekiri;
   blok* jalanparkirankekanan;
+  blok* jalanboulevard;
+  blok* jalankirigku;
+  blok* jalanmesinmatik;
+  blok* jalanintel;
+  blok* jalantaman;
+  blok* jalansunken;
+  blok* jalanseblabtek;
+  blok* jalansetlabtek;
+  blok* jalansebperpus;
+  blok* gangkanan;
   //blok* atap;
-  Jalan(){  
-    
-    jalanparkirankekiri = new blok(100,560,480,10,5,1,56);
-    jalanparkirankekanan = new blok(100,560,0,10,5,1,56);
-    jalanparkiran = new blok(100,560,0,10,5,48,1);
-    jalanparkiranbelakang = new blok(650,560,0,10,5,48,1); 
+  Jalan(){
+    jalanparkirankekiri = new blok(100,560,480,10,1,1,56);
+    jalanparkirankekanan = new blok(100,560,0,10,1,1,20);
+    jalanparkiran = new blok(100,560,0,10,1,48,1);
+    jalanparkiranbelakang = new blok(650,560,120,10,1,36,1); 
+    jalanboulevard = new blok(100,560,240,10,1,2,20); 
+    jalankirigku = new blok(100,560,400,10,1,1,25);
+    jalanintel = new blok(300,560,235,10,1,3,12);
+    jalanmesinmatik = new blok(400,560,360,10,1,1,16);
+    jalantaman = new blok(430,560,235,10,1,3,12);
+    jalansunken = new blok(560,560,230,10,1,4,9);
+    jalanseblabtek = new blok(300,560,0,10,1,48,1);
+    jalansetlabtek = new blok(420,560,120,10,1,25,1);
+    jalansebperpus = new blok(550,560,120,10,1,25,1);
+    gangkanan = new blok(300,560,120,10,1,1,40);
   }
   void print(FrameBuffer& fb){
     jalanparkiran->print(fb);
     jalanparkiranbelakang->print(fb);
     jalanparkirankekiri->print(fb);
     jalanparkirankekanan->print(fb);
+    jalankirigku->print(fb);
+    jalanboulevard->print(fb);
+    jalanintel->print(fb);
+    jalanmesinmatik->print(fb);
+    jalantaman->print(fb);
+    jalansunken->print(fb);
+    jalanseblabtek->print(fb);
+    jalansetlabtek->print(fb);
+    jalansebperpus->print(fb);
+    gangkanan->print(fb);
   }
   void rotate(double degreeZ, const Point<double>& center = Point<double>(0,0), double degreeX = 0, double degreeY = 0){
     jalanparkiran->rotate(degreeZ,center,degreeX,degreeY);
     jalanparkiranbelakang->rotate(degreeZ,center,degreeX,degreeY);
     jalanparkirankekiri->rotate(degreeZ,center,degreeX,degreeY);
     jalanparkirankekanan->rotate(degreeZ,center,degreeX,degreeY);
+    jalankirigku->rotate(degreeZ,center,degreeX,degreeY);
+    jalanboulevard->rotate(degreeZ,center,degreeX,degreeY);
+    jalanintel->rotate(degreeZ,center,degreeX,degreeY);
+    jalanmesinmatik->rotate(degreeZ,center,degreeX,degreeY);
+    jalantaman->rotate(degreeZ,center,degreeX,degreeY);
+    jalansunken->rotate(degreeZ,center,degreeX,degreeY);
+    jalanseblabtek->rotate(degreeZ,center,degreeX,degreeY);
+    jalansetlabtek->rotate(degreeZ,center,degreeX,degreeY);
+    jalansebperpus->rotate(degreeZ,center,degreeX,degreeY);
+    gangkanan->rotate(degreeZ,center,degreeX,degreeY);
   }
 };
 #endif

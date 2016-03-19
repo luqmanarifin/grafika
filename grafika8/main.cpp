@@ -2,7 +2,6 @@
 #include "../lib/polygon.h"
 #include "../lib/line.h"
 #include "../lib/conio2.h"
-#include "objects/wajah.h"
 #include "objects/pln.h"
 #include "objects/gedung.h"
 #include <bits/stdc++.h>
@@ -34,11 +33,11 @@ int main(int argc, char const *argv[])
   );
   */
   Jalan* pp = new Jalan();
-  //pp->rotate(0,Point<double>(512,354,240),90,0);
+  pp->rotate(0,Point<double>(512,354,240),90,0);
   while (1) {
     fb.clear();
     system("clear");
-    pp->rotate(0,Point<double>(640,400,240),1,0);
+    //pp->rotate(0,Point<double>(640,400,240),1,0);
    // pp->rotate(0,Point<double>(340,335,15),0,1);
     pp->print(fb);
     fb.print();

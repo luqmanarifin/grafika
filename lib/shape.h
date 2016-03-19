@@ -163,10 +163,10 @@ struct Shape {
     maxY = DUMMY;
     maxZ = DUMMY;
   }
-
+/*
   friend bool operator<(const Polygon& l, const Polygon& r) {
     return l.MaxZ() < r.MaxZ();
-  }
+  }*/
 
   Shape& resize(double factor, const Point<double>& center = Point<double>()) {
     for (int i = 0; i < size; ++i) {
@@ -205,7 +205,7 @@ struct Shape {
 
 private:
   // Memo
-  const int DUMMY = = 0x80000000;
+  const int DUMMY = 0x80000000;
   int minX = DUMMY;
   int minY = DUMMY;
   int minZ = DUMMY;

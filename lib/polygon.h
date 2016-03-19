@@ -83,7 +83,7 @@ struct Polygon {
         addPoint(d);
       }
     }
-    return *this;
+    //return *this;
   }
 
   Polygon& addPoint(const Point<double>& p) {
@@ -288,7 +288,7 @@ struct Polygon {
     maxZ = DUMMY;
   }
 
-  friend bool operator<(const Polygon& l, const Polygon& r) {
+  friend bool operator<(Polygon l, Polygon r) {
     return l.MaxZ() < r.MaxZ();
   }
   
@@ -342,7 +342,7 @@ struct Polygon {
 
 private:
   // Memo
-  const int DUMMY = = 0x80000000;
+  const int DUMMY  = 0x80000000;
   int minX = DUMMY;
   int minY = DUMMY;
   int minZ = DUMMY;
