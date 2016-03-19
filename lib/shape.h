@@ -81,7 +81,18 @@ struct Shape {
     }
     return *this;
   }
-
+  Shape& setColor(int red, int green, int blue, int alpha = 1.0) { 
+    for (int i = 0; i < size; ++i) {
+        polygons[i].setColor(Color(red, green, blue, alpha));
+    }
+    return *this; 
+  }
+  Shape& setColor(const Color& color) { 
+    for (int i = 0; i < size; ++i) {
+        polygons[i].setColor(color);
+    }
+    return *this; 
+  }
 
   ////////////////
   /* Boundaries */

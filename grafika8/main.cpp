@@ -32,9 +32,9 @@ int main(int argc, char const *argv[])
       .addPoint(Point<double>(x,y+s,s))
   );
   */
-  Jalan* pp = new Jalan();
+  ITB* pp = new ITB();
   pp->rotate(0,Point<double>(512,354,240),90,0);
-  while (1) {
+  //while (1) {
     fb.clear();
     system("clear");
     //pp->rotate(0,Point<double>(640,400,240),1,0);
@@ -43,6 +43,6 @@ int main(int argc, char const *argv[])
     fb.print();
     fb.clear();
     usleep(75000);
-  }
+  //}
   return 0;
 }
