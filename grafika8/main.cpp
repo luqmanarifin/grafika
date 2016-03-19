@@ -5,7 +5,7 @@
 #include "objects/pln.h"
 #include "objects/gedung.h"
 #include "objects/perpus.h"
-#include "objects/aulabarattimur.h"
+#include "objects/atapaulabarattimur.h"
 #include <bits/stdc++.h>
 #include <unistd.h>
 
@@ -17,7 +17,7 @@ int main(int argc, char const *argv[])
   int cmd = ' ';
   // fb.clear();
   system("clear");
-  AulaBaratTimur* pp = new AulaBaratTimur();
+  AtapAulaBaratTimur* pp = new AtapAulaBaratTimur();
 	//lantai satu
 	//bawah
 	
