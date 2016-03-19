@@ -7,7 +7,6 @@
 #include "Sumatra.h"
 #include "Kepulauan.h"
 #include "seram.h"
-#include "buru.h"
 #include "halmahera.h"
 #include "Sulawesi.h"
 #include "Papua.h"
@@ -25,11 +24,11 @@ using namespace std;
       sumatra = new Sumatra();
       belitung = new Belitung();
       bangka = new Bangka();
-      sumatra->resizes(0.7);
+      sumatra->resizeCenter(0.7);
       sumatra->move(-100,0);
-      belitung->resizes(0.06);
+      belitung->resizeCenter(0.06);
       belitung->move(190,60);
-      bangka->resizes(0.16);
+      bangka->resizeCenter(0.16);
       bangka->move(60,150);
     }
     void print(FrameBuffer fb){
@@ -56,9 +55,9 @@ using namespace std;
     KepJawa() {  
       jawa = new Jawa();
       madura = new Madura();
-      jawa->resizes(1);
+      jawa->resizeCenter(1);
       jawa->move(0,300);
-      madura->resizes(0.28);
+      madura->resizeCenter(0.28);
       madura->move(60,40);
     }
     void print(FrameBuffer fb){
@@ -112,11 +111,11 @@ using namespace std;
       ntb = new NTB1();
       bali = new Bali();
       lombok = new Lombok();
-      ntb->resizes(1);
+      ntb->resizeCenter(1);
       ntb->move(100,-30);
-      bali->resizes(0.2);
+      bali->resizeCenter(0.2);
       bali->move(-250,0);
-      lombok->resizes(0.15);
+      lombok->resizeCenter(0.15);
       lombok->move(-50,-80);
     }
     void print(FrameBuffer fb){
@@ -140,40 +139,39 @@ using namespace std;
 struct Maluku{
     Ambon* ambon;
     Seram* seram;
-    Buru* buru;
     Halmahera* halmahera;
     Maluku() {     
       ambon = new Ambon();
       seram = new Seram();
-      buru = new Buru();
+      
       halmahera = new Halmahera();
-      halmahera->resizes(5);
+      halmahera->resizeCenter(5);
       halmahera->move(-200,0);
-      ambon->resizes(0.1);
+      ambon->resizeCenter(0.1);
       ambon->move(-100,290);
-      seram->resizes(6);
+      seram->resizeCenter(6);
       seram->move(-80,300);
-      buru->resizes(5);
-      buru->move(-250,300);
+      
+      
     }
     void print(FrameBuffer fb){
       halmahera->print(fb);
       ambon->print(fb);
       seram->print(fb);
-      buru->print(fb);
+      
     }
     void resize(float skala){
       halmahera->resize(skala,Point<double>(tengah_A,tengah_B));
       ambon->resize(skala,Point<double>(tengah_A,tengah_B));
       seram->resize(skala,Point<double>(tengah_A,tengah_B));
-      buru->resize(skala,Point<double>(tengah_A,tengah_B));
+      
     
     }
     void move(int x, int y){
       halmahera->move(x,y);
       ambon->move(x,y);
       seram->move(x,y);
-      buru->move(x,y);
+      
     }
     
     };
@@ -200,11 +198,11 @@ struct Maluku{
       sumatra->move(-230,0);
       maluku->resize(0.13);
       maluku->move(30,-70);
-      papua->resizes(0.3);
+      papua->resizeCenter(0.3);
       papua->move(500,200);
-      sulawesi->resizes(0.27);
+      sulawesi->resizeCenter(0.27);
       sulawesi->move(350,90);
-      kalimantan->resizes(0.27);
+      kalimantan->resizeCenter(0.27);
       kalimantan->move(90,80);
       ntt->resize(0.2);
       ntt->move(30,100);
@@ -217,7 +215,8 @@ struct Maluku{
       
     }
     void print(FrameBuffer fb, Polygon* back, int red = 0, int green = 174, int blue = 239, int alpha = 0){
-      back->print(fb, red, green, blue, alpha);
+      back->setColor(red, green, blue, alpha);
+      back->print(fb);
       sumatra->print(fb);
       /*maluku->print(fb);
       papua->print(fb);

@@ -3,9 +3,9 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "lib/conio2.h"
-//#include "lib/bitmap.h"
-#include "lib/framebuffer.h"
+#include "../lib/conio2.h"
+//#include "../lib/bitmap.h"
+#include "../lib/framebuffer.h"
 #include <pthread.h>
 using namespace std;
 int px,py;

@@ -1,7 +1,7 @@
 #ifndef __LOMBOK_H_
 #define __LOMBOK_H_
 
-#include "../lib/polygon.h" 
+#include "../../lib/polygon.h" 
 
 struct Lombok2 : public Polygon {
   Lombok2() {

@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #include <vector>
 #include <map>
+#include <queue>
 #include <cmath>
 #include <algorithm>
 
@@ -31,6 +32,7 @@
  * Must be "print()" to be printed in monitor
  */
 class FrameBuffer : public Frame {
+  typedef std::pair<std::pair<int, std::pair<int,int> >, Color > query;
 public: 
   FrameBuffer() {
     if (fbp == NULL) {
@@ -74,8 +76,11 @@ public:
     /* map the device to memory */
     fbp = (char*)mmap(0, finfo.smem_len, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, 0);
 
+    /* Construct hstack & vstack */
+    hstack = new std::priority_queue<query> [yres];
+    vstack = new std::priority_queue<query> [xres];
+
     /* initialize visited vector */
-    // visited.clear();
     if (visited.empty()) {
       visited.resize(xres);
       for (int i = 0; i < xres; ++i) {
@@ -88,7 +93,6 @@ public:
         color[i].resize(yres);
       }
     }
-    // lastSet.clear();
   }
 
   /**
@@ -103,6 +107,23 @@ public:
    */
   void set(Point<int> p, Color c) {
     set(p.x, p.y, c.red, c.green, c.blue, c.alpha);
+  }
+
+#define MP make_pair
+  /**
+   * Vertical pixel range setter
+   */
+  void vset(int z, int x, int y1, int y2, Color color) {
+    if (x < 0 || x >= xres) return;
+    vstack[x].push(MP(MP(z, MP(y1, y2)), color));
+  }
+
+  /**
+   * Horizontal pixel range setter
+   */
+  void hset(int z, int y, int x1, int x2, Color color) {
+    if (y < 0 || y >= yres) return;
+    hstack[y].push(MP(MP(z, MP(x1, x2)), color));
   }
 
   /**
@@ -123,6 +144,8 @@ public:
   }
 
   void print() {
+    propagate();
+
     for(int i = 0; i < lastSet.size(); i++) {
       int x = lastSet[i].x;
       int y = lastSet[i].y;
@@ -283,6 +306,7 @@ public:
   int getYSize() {
     return yres;
   }
+
 protected:
   /**
    * Get memory offset for pixel at (x, y).
@@ -290,6 +314,43 @@ protected:
   int getLocation(int x, int y) {
     return (x + vinfo.xoffset) * (vinfo.bits_per_pixel / 8)
         + (y + vinfo.yoffset) * finfo.line_length;
+  }
+
+  /**
+   * Propagate the range draws
+   */
+  void propagate() {
+    /**
+     * Horizontal
+     */
+    for (int row = 0; row < yres; ++row) {
+      /* For all range queries */
+      while (!hstack[row].empty()) {
+        std::pair<int, int> rng = hstack[row].top().first.second;
+        Color c = hstack[row].top().second;
+        hstack[row].pop();
+
+        for (int col = rng.first; col < rng.second; ++col) {
+          set(col, row, c);
+        }
+      }
+    }
+
+    /**
+     * Vertical
+     */
+    for (int col = 0; col < xres; ++col) {
+      /* For all range queries */
+      while (!vstack[col].empty()) {
+        std::pair<int, int> rng = vstack[col].top().first.second;
+        Color c = vstack[col].top().second;
+        vstack[col].pop();
+
+        for (int row = rng.first; row < rng.second; ++row) {
+          set(col, row, c);
+        }
+      }
+    }
   }
 
   int xres, yres;     /* screen resolution */
@@ -300,6 +361,8 @@ protected:
   static std::vector<std::vector<int> > visited;
   static std::vector<Point<int> > lastSet;
   static std::vector<std::vector<Color> > color;
+  std::priority_queue<query> *hstack;
+  std::priority_queue<query> *vstack;
 };
 
 /* set default values for static variables */

@@ -23,6 +23,10 @@ public:
   bool operator!= (const Color &rhs) const {
     return (!(*this == rhs));
   }
+
+  bool operator< (const Color &rhs) const {
+    return true;
+  }
   /* static constants */
   static const Color RED, GREEN, BLUE, YELLOW, PURPLE, CYAN, BLACK, WHITE, EMPTY;
 };

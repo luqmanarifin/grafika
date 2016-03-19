@@ -1,7 +1,7 @@
-#include "lib/polygon.h"
+#include "../lib/polygon.h"
 #include <iostream>
 #include <unistd.h>
-#include "lib/conio2.h"
+#include "../lib/conio2.h"
 
 #include "objects/belakang.h"
 #include "objects/window.h"
@@ -76,7 +76,7 @@ int main() {
       if(zoom < MAKS_ZOOM) {
         indo->resize(ZOOM_IN);
         zoom++;
-        kotak->resizes(1 / ZOOM_IN);
+        kotak->resizeCenter(1 / ZOOM_IN);
         //if(trans>1.2){
           trans *= 1 / ZOOM_IN;
         //}
@@ -86,7 +86,7 @@ int main() {
       if(zoom > MIN_ZOOM) { 
         indo->resize(ZOOM_OUT);
         zoom--;
-        kotak->resizes(1/ZOOM_OUT);
+        kotak->resizeCenter(1/ZOOM_OUT);
         //if(trans>1.2){
           trans *= 1 / ZOOM_OUT;
         //}

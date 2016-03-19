@@ -1,7 +1,7 @@
 #ifndef __SULAWESI_H_
 #define __SULAWESI_H_
 
-#include "../lib/polygon.h" 
+#include "../../lib/polygon.h" 
 
 struct Sulawesi : public Polygon {
   Sulawesi() {

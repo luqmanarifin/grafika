@@ -1,6 +1,6 @@
-#include "lib/polygon.h"
+#include "../lib/polygon.h"
 #include <iostream>
-#include "lib/conio2.h"
+#include "../lib/conio2.h"
 #include <unistd.h>
 #include "objects/orang.h"
 #include "objects/roda.h"

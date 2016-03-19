@@ -113,7 +113,7 @@ int main() {
     kubus2->print(fb);
     //kubus2->printframe(fb);
     fb.print();
-    usleep(75000);
+    usleep(20000);
   }
   return 0;
 }

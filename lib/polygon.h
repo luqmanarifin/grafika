@@ -30,7 +30,6 @@ struct Polygon {
     warna = Color::WHITE;
     points = _points;
     size = _size;
-    if (size > 2) generateNormal();
     done = new bool*[1366];
     for(int i = 0; i < 1366; i++) done[i] = new bool[768];
   }
@@ -41,7 +40,6 @@ struct Polygon {
     for(int i=0;i<size;i++){
       points[i] = Point<double>(_polygon.points[i]);
     }    
-    if (size > 2) generateNormal();
     done = new bool*[1366];
     for(int i = 0; i < 1366; i++) done[i] = new bool[768];
   }
@@ -53,7 +51,6 @@ struct Polygon {
     for(int i=0;i<size;i++){
       points[i] = Point<double>(_polygon.points[i]);
     }    
-    if (size > 2) generateNormal();
     return *this;
   }
   ~Polygon() {
@@ -66,7 +63,7 @@ struct Polygon {
 
   double ratio(double a, double b) { return abs(a / b); }
 
-  bool isEqueal(Point<double> p1,Point<double> p2){
+  bool isEqueal(Point<double> p1,Point<double> p2) {
     return !islessgreater(p1.x,p2.x) && !islessgreater(p1.y,p2.y) && !islessgreater(p1.z,p2.z);
   }
 
@@ -106,8 +103,6 @@ struct Polygon {
     center.z *= (size - 1);
     center.z += p.z;
     center.z /= size;
-
-    if (size > 2) generateNormal();
     
     return *this;
   }
@@ -123,19 +118,21 @@ struct Polygon {
   Polygon& print_frame(FrameBuffer& fb, int red, int green, int blue, int alpha) {
     for(int i = 0; i < size; i++) {
       int j = (i + 1) % size;
-      line((int) points[i].x, (int) points[i].y, (int) points[j].x, (int) points[j].y, Color(red, green, blue, alpha)).print(fb);
+      line((int) points[i].x, (int) points[i].y, (int) points[j].x, (int) points[j].y, Color(red, green, blue, alpha)).print(fb, MinZ());
     }
     return *this;
   }
 
-  Polygon& print(FrameBuffer& fb) {
+  Polygon& print(FrameBuffer& fb) 
+  {
+    double* a = new double[2 * size];
+
     double ymin = 1e9, ymak = -1e9;
     for(int i = 0; i < size; i++) {
       ymin = min(ymin, points[i].y);
       ymak = max(ymak, points[i].y);
     }
 
-    double* a = new double[2 * size];
     for(int y = ymin; y <= ymak; y++) {
       int sz = 0;
       for(int i = 0; i < size; i++) {
@@ -157,9 +154,7 @@ struct Polygon {
       sort(a, a + sz);
       sz = unique(a,a+sz)-a;
       for(int i = 0; i + 1 < sz; i += 2) {
-        for(int j = (int) a[i]; j <= a[i + 1]; j++) {
-          fb.set(j, y, warna);
-        }
+        fb.hset(MinZ(), y, (int)round(a[i]), (int)round(a[i+1]), warna);
       }
     }
     
@@ -190,82 +185,19 @@ struct Polygon {
       sort(a, a + sz);
       sz = unique(a,a+sz)-a;
       for(int i = 0; i + 1 < sz; i += 2) {
-        for(int j = (int) a[i]; j <= a[i + 1]; j++) {
-          fb.set(b, j, warna);
-        }
+        fb.vset(MinZ(), b, (int)round(a[i]), (int)round(a[i+1]), warna);
       }
     }
-    if ( a != NULL) delete[] a;
+
+    if (a != NULL) delete[] a;
 
     return *this;
-
   }
 
   ////////////////
   /* Boundaries */
   ////////////////
   
-  int MaxX() {
-    if (maxX != DUMMY) return maxX;
-
-    int Max = 0;
-    for(int i = 0; i < size; i++) {
-      int rounded = (int)round(points[i].x);
-      if(rounded > Max) {
-        Max = rounded;
-      }
-    } 
-    return maxX = Max;
-  }
-  int MaxY() {
-    if (maxY != DUMMY) return maxY;
-
-    int Max = 0;
-    for(int i = 0; i < size; i++) {
-      int rounded = (int)round(points[i].y);
-      if(rounded > Max) {
-        Max = rounded;
-      }
-    } 
-    return maxY = Max;
-  }
-  int MaxZ() {
-    if (maxZ != DUMMY) return maxZ;
-
-    int Max = DUMMY + 1;
-    for(int i = 0; i < size; i++) {
-      int rounded = (int)round(points[i].z);
-      if(rounded > Max) {
-        Max = rounded;
-      }
-    } 
-    return maxZ = Max;
-  }
-  
-  int MinX() {
-    if (minX != DUMMY) return minX;
-
-    int Min = 1400;
-    for(int i = 0; i < size; i++) {
-      int rounded = (int)round(points[i].x);
-      if(rounded < Min) {
-        Min = rounded;
-      }
-    } 
-    return minX = Min;
-  }
-  int MinY() {
-    if (minY != DUMMY) return minY;
-
-    int Min = 800;
-    for(int i = 0; i < size; i++) {
-      int rounded = (int)round(points[i].y);
-      if(rounded < Min) {
-        Min = rounded;
-      }
-    } 
-    return minY = Min;
-  }
   int MinZ() {
     if (minZ != DUMMY) return minZ;
 
@@ -278,19 +210,6 @@ struct Polygon {
     } 
     return minZ = Min;
   }
-
-  void resetBoundaries() {
-    minX = DUMMY;
-    minY = DUMMY;
-    minZ = DUMMY;
-    maxX = DUMMY;
-    maxY = DUMMY;
-    maxZ = DUMMY;
-  }
-
-  friend bool operator<(const Polygon& l, const Polygon& r) {
-    return l.MaxZ() < r.MaxZ();
-  }
   
   ////////////////////
   /* Transformation */
@@ -301,7 +220,7 @@ struct Polygon {
       points[i].scale(factor, center);
     }
     this->center.scale(factor, center);
-    resetBoundaries();
+    minZ = DUMMY;
     return *this;
   }
   Polygon& resizeCenter(double factor) {
@@ -312,7 +231,7 @@ struct Polygon {
       points[i].move(x, y);
     }
     center.move(x, y);
-    resetBoundaries();
+    minZ = DUMMY;
     return *this;
   }
   Polygon& rotate(double degreeZ, const Point<double>& center = Point<double>(0, 0), double degreeX = 0, double degreeY = 0) {
@@ -320,38 +239,30 @@ struct Polygon {
       points[i].rotate(degreeZ, center, degreeX, degreeY);
     }
     this->center.rotate(degreeZ, center, degreeX, degreeY);
-    resetBoundaries();
+    minZ = DUMMY;
 
-    if (size > 2) norm.rotate(degreeZ, degreeX, degreeY);
     return *this;
   }
   Polygon& rotateCenter(double degreeZ, double degreeX = 0, double degreeY = 0) {
     return rotate(degreeZ, this->center, degreeX, degreeY);
   }
-  Polygon& generateNormal() {
-    assert(this->size > 2);
-    norm = Vector<double>::cross(Vector<double>(points[0],points[1]), Vector<double>(points[0], points[2]));
-    return *this;
-  }
+
+  /**
+   * Fields
+   */
 
   Point<double>* points;
   int size;
   Point<double> center;
-  Vector<double> norm;
   Color warna;
-
-private:
-  // Memo
-  const int DUMMY = = 0x80000000;
-  int minX = DUMMY;
-  int minY = DUMMY;
-  int minZ = DUMMY;
-  int maxX = DUMMY;
-  int maxY = DUMMY;
-  int maxZ = DUMMY;
 
   // properties for dfs
   bool** done;
+
+private:
+  // Memo
+  const int DUMMY = 0x80000000;
+  int minZ = DUMMY;
 };
 
 #endif

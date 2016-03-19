@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#include "lib/point.h"
+#include "../lib/point.h"
 
 int main(int argc, char const *argv[])
 {

@@ -1,7 +1,7 @@
 #ifndef __KALIMANTAN_H_
 #define __KALIMANTAN_H_
 
-#include "../lib/polygon.h" 
+#include "../../lib/polygon.h" 
 
 struct Kalimantan : public Polygon {
   Kalimantan() {

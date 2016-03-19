@@ -36,7 +36,7 @@ struct Rambut : public Polygon {
     addPoint(Point<double>(20, 559));
     addCurve(curve(Point<double>(20, 559), Point<double>(40, 500), Point<double>(30, 440), Point<double>(10, 350)));
     addPoint(Point<double>(10, 349));
-    addCurve(curve(Point<double>(10, 349), Point<double>(40, 170), Point<double>(100, 100), Point<double>(250, 30));	)
+    addCurve(curve(Point<double>(10, 349), Point<double>(40, 170), Point<double>(100, 100), Point<double>(250, 30)));
     addPoint(Point<double>(250, 30));
     //addPoint(Point<double>(310, 30));
     //last point

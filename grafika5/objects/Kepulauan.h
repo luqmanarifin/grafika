@@ -1,7 +1,7 @@
 #ifndef __Kepulauan_H_
 #define __Kepulauan_H_
 
-#include "../lib/polygon.h" 
+#include "../../lib/polygon.h" 
 
 struct Sumbawa : public Polygon {
   Sumbawa() {

@@ -1,7 +1,7 @@
 #ifndef __PAPUA_H_
 #define __PAPUA_H_
 
-#include "../lib/polygon.h" 
+#include "../../lib/polygon.h" 
 
 struct Papua : public Polygon {
   Papua() {
