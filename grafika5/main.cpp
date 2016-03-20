@@ -2,7 +2,6 @@
 #include <iostream>
 #include <unistd.h>
 #include "../lib/conio2.h"
-
 #include "objects/belakang.h"
 #include "objects/window.h"
 #include "objects/Indonesia.h"
@@ -34,14 +33,12 @@ int main() {
   indo->move(-10, 0);
   indo->print(fb, new Belakang());
   fb.print();
-
   Indonesia* small_indo = new Indonesia();
   small_indo->resize(0.3);
   small_indo->move(473, 273);
   small_indo->print(fb, window, 255, 0, 0, 0);
   kotak->print_frame(fb, 0, 0, 0, 0);
   fb.print_include(window_a, window_b);
-
   int zoom = 0;
   while(true){ 
     cmd = getch();

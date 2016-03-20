@@ -237,7 +237,9 @@ struct Jalan{
   blok* jalanboulevard;
   blok* jalanboulevard1;
   blok* jalanboulevard2;
-  blok* jalankirigku;[
+  blok* jalanboulevard3;
+  blok* jalanboulevard4;
+  blok* jalankirigku;
   blok* jalanmesinmatik;
   blok* jalanintel;
   blok* jalantaman;
@@ -263,6 +265,8 @@ struct Jalan{
     jalanboulevard = new blok(100,400,-200,10,1,-2,20);
     jalanboulevard1 = new blok(210,400,-220,10,1,-10,1);
     jalanboulevard2 = new blok(210,400,-310,10,1,-1,10);
+    jalanboulevard3 = new blok(210,400,-220,10,1,-10,1);
+    jalanboulevard4 = new blok(210,400,-310,10,1,-1,10);
     jalankirigku = new blok(100,400,-420,10,1,-1,25);
     jalanintel = new blok(300,400,-195,10,1,-3,12);
     jalangkutokema = new blok(300,400,-340,10,1,-1,10);
