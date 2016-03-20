@@ -27,7 +27,7 @@ int mode = 0;
 Font font;
 
 void print_all() {
-  font.print(fb, "ALL", UJUNG_X, UJUNG_Y, FONT_SIZE, Color::WHITE);
+  font.print(fb, "ALL ABOUT ITB", UJUNG_X, UJUNG_Y, FONT_SIZE, Color::WHITE);
 }
 
 void print_jalan() {
