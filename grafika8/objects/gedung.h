@@ -411,8 +411,8 @@ struct KumpulanGedung  {
     labkelautan->setColor(230,230,0);
   }
   void print(FrameBuffer& fb){
-	  gedunggeodesi->print(fb);
-	  aulabarat->print(fb);
+    gedunggeodesi->print(fb);
+    aulabarat->print(fb);
     aulatimur->print(fb);
     SBM->print(fb);
     bsca->print(fb);
@@ -442,18 +442,63 @@ struct KumpulanGedung  {
     PAU->print(fb);
     Perpus->print(fb);
     cas->print(fb);
-	  tvst->print(fb);
-	  gedungfisikalama->print(fb);
-	  gedungarsi->print(fb);
+    tvst->print(fb);
+    gedungfisikalama->print(fb);
+    gedungarsi->print(fb);
     gedungdkv->print(fb);
     gedungplano->print(fb);
     gedunglingkungan->print(fb);
     gkutimur->print(fb);
-	  gedungtimurjauh->print(fb);
+    gedungtimurjauh->print(fb);
     bscb->print(fb);
     gedungfttm->print(fb);
     bengkok->print(fb);
     labkelautan->print(fb);
+   }
+  void move(int x,int y){
+    gedunggeodesi->move(x,y);
+    aulabarat->move(x,y);
+    aulatimur->move(x,y);
+    SBM->move(x,y);
+    bsca->move(x,y);
+    gkubarat->move(x,y);
+    Mkor->move(x,y);
+    gedungsipil->move(x,y);
+    gedungfisikabaru->move(x,y);
+    labrh->move(x,y);
+    kontrolPower->move(x,y);
+    Mesin->move(x,y);
+    Mesin1->move(x,y);
+    matematikaindustri->move(x,y);
+    TeknikKimia->move(x,y);
+    oktagon->move(x,y);
+    Biomedis->move(x,y);
+    gedungBio->move(x,y);
+    labtekV->move(x,y);
+    labtekVI->move(x,y);
+    labtekVII->move(x,y);
+    labtekVIII->move(x,y);
+    Mektan->move(x,y);
+    ccBarat->move(x,y);
+    comlabs->move(x,y);
+    pln->move(x,y);
+    ccTimur->move(x,y);
+    sebelahPAU->move(x,y);
+    PAU->move(x,y);
+    Perpus->move(x,y);
+    cas->move(x,y);
+    tvst->move(x,y);
+    gedungfisikalama->move(x,y);
+    gedungarsi->move(x,y);
+    gedungdkv->move(x,y);
+    gedungplano->move(x,y);
+    gedunglingkungan->move(x,y);
+    gkutimur->move(x,y);
+    gedungtimurjauh->move(x,y);
+    bscb->move(x,y);
+    gedungfttm->move(x,y);
+    bengkok->move(x,y);
+    labkelautan->move(x,y);
    }
   void resize(double fb){
     Point<double> center (550,560,140);
@@ -662,6 +707,34 @@ struct Jalan{
     jalansebgang3->print(fb);
     gangkanan->print(fb);
   }
+  void move(int x,int y){
+    jalanparkiran->move(x,y);
+    jalanparkiranbelakang->move(x,y);
+    jalanparkirankekiri->move(x,y);
+    jalanparkirankekanan->move(x,y);
+    jalanujungkiribelakang->move(x,y);
+    jalanujungkiri->move(x,y);
+    jalanujungkanan->move(x,y);
+    jalankirigku->move(x,y);
+    jalanboulevard->move(x,y);
+    jalanboulevard1->move(x,y);
+    jalanboulevard2->move(x,y);
+    jalanboulevard3->move(x,y);
+    jalanboulevard4->move(x,y);
+    jalanintel->move(x,y);
+    jalanmesinmatik->move(x,y);
+    jalangkumesin->move(x,y);
+    jalangkutokema->move(x,y);
+    jalantaman->move(x,y);
+    jalansunken->move(x,y);
+    jalanseblabtek->move(x,y);
+    jalansetlabtek->move(x,y);
+    jalansebperpus->move(x,y);
+    jalansebgang1->move(x,y);
+    jalansebgang2->move(x,y);
+    jalansebgang3->move(x,y);
+    gangkanan->move(x,y);
+  }
   void resize(double fb){
     Point<double> center (550,560,140);
     jalanparkiran->resize(fb,center);
@@ -753,6 +826,11 @@ struct ITB{
     tanah->resize(fb,center);
     gedungitb->resize(fb);
     jalanitb->resize(fb);
+  }
+  void move(int x,int y){
+    tanah->move(x,y);
+    gedungitb->move(x,y);
+    jalanitb->move(x,y);
   }
   void rotate(double degreeZ, const Point<double>& center = Point<double>(0,0), double degreeX = 0, double degreeY = 0){
     tanah->rotate(degreeZ,center,degreeX,degreeY);

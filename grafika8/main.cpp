@@ -105,8 +105,20 @@ int main(int argc, char const *argv[])
 			pp->resize(1.1);
 		  }
       else if (cmd == 'r' || cmd == 'R') {
-			pp->resize(0.9);
-		  }	 
+      pp->resize(0.9);
+      }  
+      else if (cmd == 'i' || cmd == 'I') {
+      pp->move(0,-10);
+      }  
+      else if (cmd == 'j' || cmd == 'J') {
+      pp->move(-10,0);
+      }  
+      else if (cmd == 'k' || cmd == 'K') {
+      pp->move(0,10);
+      }  
+      else if (cmd == 'l' || cmd == 'L') {
+      pp->move(10,0);
+      }  
       else if (cmd == 'd' || cmd == 'D') {
 			  int i=0;
 			  while(i<18){
