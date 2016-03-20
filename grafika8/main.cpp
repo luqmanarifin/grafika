@@ -48,9 +48,10 @@ int main(int argc, char const *argv[])
   // fb.clear();
   system("clear");
   ITB* pp = new ITB();
+  Point<double> center (512,560,200);
 	//lantai satu
 	//bawah
-	pp->rotate(0,Point<double>(512,400,-200),-140,0);
+	pp->rotate(0,center,-140,0);
   print_all();
   while (1) {
   	pp->print(fb);
@@ -59,26 +60,26 @@ int main(int argc, char const *argv[])
     fb.clear();
     system("clear");
       if (cmd == 'q' || cmd == 'Q') {
-	        pp->rotate(0,Point<double>(512,400,-200),-10,0);
+	        pp->rotate(0,center,-10,0);
 	      }
       else if (cmd == 'w' || cmd == 'W') {
-			pp->rotate(0,Point<double>(512,400,-200),10,0);
+			pp->rotate(0,center,10,0);
 		  }
       else if (cmd == 'p' || cmd == 'P') {
 			  break;
 		  }
-      else if (cmd == 'a' || cmd == 'A') {        
-			pp->rotate(10,Point<double>(512,400,-200),0,0);
+      else if (cmd == 'a' || cmd == 'A') {     
+			pp->rotate(10,center,0,0);
           }
       else if (cmd == 's' || cmd == 'S') {
-			pp->rotate(-10,Point<double>(512,400,-200),0,0);
+			pp->rotate(-10,center,0,0);
 		  }
       else if (cmd == 'z' || cmd == 'Z') {
-			pp->rotate(0,Point<double>(512,400,-200),0,10);
+			pp->rotate(0,center,0,10);
 		  }
       else if (cmd == 'x' || cmd == 'X') {
-			pp->rotate(0,Point<double>(512,400,-200),0,-10);
-		  }
+			pp->rotate(0,center,0,-10);
+		  }	 
       else if(cmd == 'y' || cmd == 'Y') {
         mode = (mode + 1) % 4;
         switch(mode) {

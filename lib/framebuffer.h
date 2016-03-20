@@ -1,5 +1,5 @@
-// Copyright by azaky
-// azaky.github.io
+// Copyright by @azaky (azaky.github.io)
+// Modified by @icalF (icalicul.me) and @luqmanarifin (luqmanarifin.github.io)
 
 #ifndef FRAMEBUFFER_H
 #define FRAMEBUFFER_H
@@ -14,6 +14,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include <vector>
 #include <map>
 #include <queue>
@@ -32,7 +33,6 @@
  * Must be "print()" to be printed in monitor
  */
 class FrameBuffer : public Frame {
-  typedef std::pair<std::pair<int, std::pair<int,int> >, Color > query;
 public: 
   FrameBuffer() {
     if (fbp == NULL) {
@@ -76,10 +76,6 @@ public:
     /* map the device to memory */
     fbp = (char*)mmap(0, finfo.smem_len, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, 0);
 
-    /* Construct hstack & vstack */
-    hstack = new std::priority_queue<query, std::vector<query>, std::greater<query> > [yres];
-    vstack = new std::priority_queue<query, std::vector<query>, std::greater<query> > [xres];
-
     /* initialize visited vector */
     if (visited.empty()) {
       visited.resize(xres);
@@ -95,64 +91,51 @@ public:
     }
   }
 
+#define MP make_pair
+
   /**
-   * Set pixel at (x, y) using color c.
+   * Set pixel at (x, y, z) using color c.
    */
-  void set(int x, int y, Color c) {
-    set(x, y, c.red, c.green, c.blue, c.alpha);
+  void set(int x, int y, int z = INT_MAX, Color c = Color::BLACK) {
+    set(x, y, z, c.red, c.green, c.blue, c.alpha);
   }
 
   /**
    * Set pixel at p using color c.
    */
   void set(Point<int> p, Color c) {
-    set(p.x, p.y, c.red, c.green, c.blue, c.alpha);
-  }
-
-#define MP make_pair
-  /**
-   * Vertical pixel range setter
-   */
-  void vset(int z, int x, int y1, int y2, Color color) {
-    if (x < 0 || x >= xres) return;
-    vstack[x].push(MP(MP(z, MP(y1, y2)), color));
+    set(p.x, p.y, p.z, c.red, c.green, c.blue, c.alpha);
   }
 
   /**
-   * Horizontal pixel range setter
-   */
-  void hset(int z, int y, int x1, int x2, Color color) {
-    if (y < 0 || y >= yres) return;
-    hstack[y].push(MP(MP(z, MP(x1, x2)), color));
-  }
-
-  /**
-   * Set pixel at (x, y) using RGBA red, green, blue, and alpha.
+   * Set pixel at (x, y, z) using RGBA red, green, blue, and alpha.
    * The value of alpha is unnecessary, the default is 0;
    */
-  void set(int x, int y, char red, char green, char blue, char alpha = 0) {
+  void set(int x, int y, int z, char red = 0, char green = 0, char blue = 0, char alpha = 0) {
     /* Validate coordinate */
     if (x < 0 || x >= xres || y < 0 || y >= yres) {
       return;
     }
+
+    Color warna = Color(red, green, blue, alpha);
     /* adds to lastSet */
     if (!visited[x][y]) {
-      color[x][y] = Color(red, green, blue, alpha);
+      color[x][y] = MP(z, warna);
       visited[x][y] = 1;
-      lastSet.push_back(Point<int>(x, y));
+      lastSet.push_back(MP(x, y));
+    } else if (z < color[x][y].first) {
+      color[x][y] = MP(z, warna);
     }
   }
 
   void print() {
-    propagate();
-
     for(int i = 0; i < lastSet.size(); i++) {
-      int x = lastSet[i].x;
-      int y = lastSet[i].y;
-      int red = color[x][y].red;
-      int green = color[x][y].green;
-      int blue = color[x][y].blue;
-      int alpha = color[x][y].alpha;
+      int x = lastSet[i].first;
+      int y = lastSet[i].second;
+      int red = color[x][y].second.red;
+      int green = color[x][y].second.green;
+      int blue = color[x][y].second.blue;
+      int alpha = color[x][y].second.alpha;
       int location = getLocation(x, y);
       if (bits_per_pixel == 32) {
         *(fbp + location + 0) = blue;
@@ -168,18 +151,17 @@ public:
         printf("Unknown bpp format: %d bpp\n", vinfo.bits_per_pixel);
       }
     }
-    //printf("%d ",lastSet.size());
   }
   
   void print_exclude(Point<int> a, Point<int> b) {
     for(int i = 0; i < lastSet.size(); i++) {
-      int x = lastSet[i].x;
-      int y = lastSet[i].y;
+      int x = lastSet[i].first;
+      int y = lastSet[i].second;
       if(a.x <= x && x <= b.x && a.y <= y && y <= b.y) continue;
-      int red = color[x][y].red;
-      int green = color[x][y].green;
-      int blue = color[x][y].blue;
-      int alpha = color[x][y].alpha;
+      int red = color[x][y].second.red;
+      int green = color[x][y].second.green;
+      int blue = color[x][y].second.blue;
+      int alpha = color[x][y].second.alpha;
       int location = getLocation(x, y);
       if (bits_per_pixel == 32) {
         *(fbp + location + 0) = blue;
@@ -199,13 +181,13 @@ public:
 
   void print_include(Point<int> a, Point<int> b) {
     for(int i = 0; i < lastSet.size(); i++) {
-      int x = lastSet[i].x;
-      int y = lastSet[i].y;
+      int x = lastSet[i].first;
+      int y = lastSet[i].second;
       if(a.x <= x && x <= b.x && a.y <= y && y <= b.y) {
-        int red = color[x][y].red;
-        int green = color[x][y].green;
-        int blue = color[x][y].blue;
-        int alpha = color[x][y].alpha;
+        int red = color[x][y].second.red;
+        int green = color[x][y].second.green;
+        int blue = color[x][y].second.blue;
+        int alpha = color[x][y].second.alpha;
         int location = getLocation(x, y);
         if (bits_per_pixel == 32) {
           *(fbp + location + 0) = blue;
@@ -266,9 +248,9 @@ public:
    */
   void clear() {
     while (lastSet.size()) {
-      Point<int> &p = lastSet.back();
-      set(p.x, p.y, Color::BLACK);
-      visited[p.x][p.y] = 0;
+      std::pair<int, int> &p = lastSet.back();
+      color[p.first][p.second] = MP(0, Color::BLACK);
+      visited[p.first][p.second] = 0;
       lastSet.pop_back();
     }
   }
@@ -276,8 +258,8 @@ public:
   void clear(std::vector<Point<int> >& all) {
     while(!all.empty()) {
       Point<int> &p = all.back();
-      set(p.x, p.y, Color::BLACK);
       if (0 <= p.x && p.x < xres && 0 <= p.y && p.y < yres) {
+        color[p.x][p.y] = MP(0, Color::BLACK);
         visited[p.x][p.y] = 0;
       }
       all.pop_back();
@@ -316,53 +298,14 @@ protected:
         + (y + vinfo.yoffset) * finfo.line_length;
   }
 
-  /**
-   * Propagate the range draws
-   */
-  void propagate() {
-    /**
-     * Horizontal
-     */
-    for (int row = 0; row < yres; ++row) {
-      /* For all range queries */
-      while (!hstack[row].empty()) {
-        std::pair<int, int> rng = hstack[row].top().first.second;
-        Color c = hstack[row].top().second;
-        hstack[row].pop();
-
-        for (int col = rng.first; col < rng.second; ++col) {
-          set(col, row, c);
-        }
-      }
-    }
-
-    /**
-     * Vertical
-     */
-    for (int col = 0; col < xres; ++col) {
-      /* For all range queries */
-      while (!vstack[col].empty()) {
-        std::pair<int, int> rng = vstack[col].top().first.second;
-        Color c = vstack[col].top().second;
-        vstack[col].pop();
-
-        for (int row = rng.first; row < rng.second; ++row) {
-          set(col, row, c);
-        }
-      }
-    }
-  }
-
   int xres, yres;     /* screen resolution */
   struct fb_var_screeninfo vinfo;
   struct fb_fix_screeninfo finfo;
   static int fbfd;    /* frame buffer file descriptor */
   static char* fbp;   /* pointer to framebuffer */
   static std::vector<std::vector<int> > visited;
-  static std::vector<Point<int> > lastSet;
-  static std::vector<std::vector<Color> > color;
-  std::priority_queue<query, std::vector<query>, std::greater<query> > *hstack;
-  std::priority_queue<query, std::vector<query>, std::greater<query> > *vstack;
+  static std::vector<std::pair<int, int> > lastSet;
+  static std::vector<std::vector<std::pair<int, Color> > > color;
 };
 
 /* set default values for static variables */
@@ -381,7 +324,7 @@ const Color Color::EMPTY    = Color( -1,  -1,  -1);
 int FrameBuffer::fbfd = 0;
 char* FrameBuffer::fbp = NULL;
 std::vector<std::vector<int> > FrameBuffer::visited;
-std::vector<Point<int> > FrameBuffer::lastSet;
-std::vector<std::vector<Color> > FrameBuffer::color;
+std::vector<std::pair<int, int> > FrameBuffer::lastSet;
+std::vector<std::vector<std::pair<int, Color> > > FrameBuffer::color;
 
 #endif
