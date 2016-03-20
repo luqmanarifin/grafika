@@ -32,13 +32,14 @@ int main() {
       .addPoint(Point<double>(1366,768,0))
       .addPoint(Point<double>(1366,0,0))
       .setColor(Color::BLACK);
-    Polygon* kubus2 = new Polygon(Polygon()          // sisi depan
+    Shape* kubus2 = new Shape();
+    kubus2->addPolygon(Polygon()          // sisi depan
       .addPoint(Point<double>(x,y,0))
       .addPoint(Point<double>(x+s,y,0))
       .addPoint(Point<double>(x+s,y-s,0))
       .addPoint(Point<double>(x,y-s,0))
       .setColor(Color::RED)
-    );/*
+    )
     .addPolygon(Polygon()                 // sisi bawah
       .addPoint(Point<double>(x,y,0))
       .addPoint(Point<double>(x+s,y,0))
@@ -57,7 +58,7 @@ int main() {
       .addPoint(Point<double>(x,y,s))
       .addPoint(Point<double>(x+s,y,s))
       .addPoint(Point<double>(x+s,y-s,s))
-      .addPoint(Point<double>(x,y-s,s))s
+      .addPoint(Point<double>(x,y-s,s))
       .setColor(Color::YELLOW)
     )
     .addPolygon(Polygon()                 // sisi atas
@@ -73,7 +74,7 @@ int main() {
       .addPoint(Point<double>(x,y-s,s))  
       .addPoint(Point<double>(x,y-s,0))
       .setColor(Color::PURPLE)
-    );*/
+    );
     //kubus2->resize(3, Point<double>(x+s/2, y-s/2, s/2));
     
     int cmd = ' ';

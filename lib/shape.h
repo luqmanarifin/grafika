@@ -49,7 +49,7 @@ struct Shape {
 
   Shape& setColor(int red, int green, int blue, int alpha = 1.0) { 
     for (int i = 0; i < size; ++i) {
-      polygons[i].setColor(red, green, blue, alpha);
+      polygons[i].setColor(red+(10*i), green+(15*i), blue+(15*i), alpha);
     }
     return *this; 
   }

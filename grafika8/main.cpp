@@ -17,11 +17,10 @@ int main(int argc, char const *argv[])
   int cmd = ' ';
   // fb.clear();
   system("clear");
-  GedungPln* pp = new GedungPln();
+  ITB* pp = new ITB();
 	//lantai satu
 	//bawah
-	//pp->rotate(0,Point<double>(512,560,200),70,0);
-	//pp->rotate(0,Point<double>(512,560,200),0,20);
+	pp->rotate(0,Point<double>(512,560,200),-140,0);
   while (1) {
 	pp->print(fb);
 	fb.print();
@@ -29,25 +28,25 @@ int main(int argc, char const *argv[])
     fb.clear();
     system("clear");
       if (cmd == 'q' || cmd == 'Q') {
-	        pp->rotate(0,Point<double>(512,560,200),-1,0);
+	        pp->rotate(0,Point<double>(512,560,200),-10,0);
 	      }
       else if (cmd == 'w' || cmd == 'W') {
-			pp->rotate(0,Point<double>(512,560,200),1,0);
+			pp->rotate(0,Point<double>(512,560,200),10,0);
 		  }
       else if (cmd == 'p' || cmd == 'P') {
 			  break;
 		  }
       else if (cmd == 'a' || cmd == 'A') {        
-			pp->rotate(1,Point<double>(512,560,200),0,0);
+			pp->rotate(10,Point<double>(512,560,200),0,0);
           }
       else if (cmd == 's' || cmd == 'S') {
-			pp->rotate(-1,Point<double>(512,560,200),0,0);
+			pp->rotate(-10,Point<double>(512,560,200),0,0);
 		  }
       else if (cmd == 'z' || cmd == 'Z') {
-			pp->rotate(0,Point<double>(512,560,200),0,1);
+			pp->rotate(0,Point<double>(512,560,200),0,10);
 		  }
       else if (cmd == 'x' || cmd == 'X') {
-			pp->rotate(0,Point<double>(512,560,200),0,-1);
+			pp->rotate(0,Point<double>(512,560,200),0,-10);
 		  }	 
       pp->print(fb);
       fb.print();
