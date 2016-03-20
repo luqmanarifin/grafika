@@ -128,11 +128,11 @@ int main(int argc, char const *argv[])
 		  }	 
       else if(cmd == 'y' || cmd == 'Y') {
         mode = (mode + 1) % 3;
-        switch(mode) {
-          case 0 : print_all(); break;
-          case 1 : print_jalan(); break;
-          case 2 : print_gedung(); break;
-        }
+      }
+      switch(mode) {
+        case 0 : print_all(); break;
+        case 1 : print_jalan(); break;
+        case 2 : print_gedung(); break;
       }
       pp->print(fb,mode);
       print_keterangan();
