@@ -47,6 +47,18 @@ struct Shape {
   }
 
 
+  Shape& setColor(int red, int green, int blue, int alpha = 1.0) { 
+    for (int i = 0; i < size; ++i) {
+      polygons[i].setColor(red, green, blue, alpha);
+    }
+    return *this; 
+  }
+  Shape& setColor(const Color& color) { 
+    for (int i = 0; i < size; ++i) {
+      polygons[i].setColor(color);
+    }
+    return *this; 
+  }
   ///////////
   /* Print */
   ///////////
@@ -99,6 +111,9 @@ struct Shape {
     return rotate(degreeZ, this->center, degreeX, degreeY);
   }
 
+  
+  
+  
   Polygon* polygons;
   int size;
   Point<double> center;

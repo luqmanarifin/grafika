@@ -30,8 +30,8 @@ void line::print(FrameBuffer& fb, int z)
   int ady = abs(deltay);
   int dy = sign(deltay);
 
-  fb.hset(z, x0, y0, y0, color);
-  fb.vset(z, y0, x0, x0, color);
+  fb.vset(z, x0, y0, y0, color);
+  fb.hset(z, y0, x0, x0, color);
   if (adx < ady) {
     int D = 2 * adx - ady;
     int x = x0;
@@ -41,8 +41,8 @@ void line::print(FrameBuffer& fb, int z)
     }
 
     for (int y = y0 + dy; y != y1; y += dy) {
-      fb.hset(z, x, y, y, color);
-      fb.vset(z, y, x, x, color);
+      fb.vset(z, x, y, y, color);
+      fb.hset(z, y, x, x, color);
       D += 2 * adx;
       while (D > 0) {
         x += dx;
@@ -59,8 +59,8 @@ void line::print(FrameBuffer& fb, int z)
     }
 
     for (int x = x0 + dx; x != x1; x += dx) {
-      fb.hset(z, x, y, y, color);
-      fb.vset(z, y, x, x, color);
+      fb.vset(z, x, y, y, color);
+      fb.hset(z, y, x, x, color);
       D += 2 * ady;
       while (D > 0) {
         y += dy;

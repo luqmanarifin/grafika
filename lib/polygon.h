@@ -118,13 +118,14 @@ struct Polygon {
   Polygon& print_frame(FrameBuffer& fb, int red, int green, int blue, int alpha) {
     for(int i = 0; i < size; i++) {
       int j = (i + 1) % size;
-      line((int) points[i].x, (int) points[i].y, (int) points[j].x, (int) points[j].y, Color(red, green, blue, alpha)).print(fb, MinZ());
+      line((int) points[i].x, (int) points[i].y, (int) points[j].x, (int) points[j].y, Color(red, green, blue, alpha)).print(fb, -99999999);
     }
     return *this;
   }
 
   Polygon& print(FrameBuffer& fb) 
   {
+    print_frame(fb,0,0,0,0);
     double* a = new double[2 * size];
 
     double ymin = 1e9, ymak = -1e9;
@@ -190,8 +191,6 @@ struct Polygon {
     }
 
     if (a != NULL) delete[] a;
-
-    print_frame(fb,50,50,50,0);
     return *this;
   }
 
