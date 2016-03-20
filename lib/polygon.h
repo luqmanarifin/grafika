@@ -118,7 +118,7 @@ struct Polygon {
   Polygon& print_frame(FrameBuffer& fb, int red, int green, int blue, int alpha) {
     for(int i = 0; i < size; i++) {
       int j = (i + 1) % size;
-      line((int) points[i].x, (int) points[i].y, (int) points[j].x, (int) points[j].y, Color(red, green, blue, alpha)).print(fb, -99999999);
+      // line((int) points[i].x, (int) points[i].y, (int) points[j].x, (int) points[j].y, Color(red, green, blue, alpha)).print(fb);
     }
     return *this;
   }
@@ -126,7 +126,7 @@ struct Polygon {
   Polygon& print(FrameBuffer& fb) 
   {
     print_frame(fb,0,0,0,0);
-    double* a = new double[2 * size];
+    pair<double, double>* a = new pair<double, double>[2 * size];
 
     double ymin = 1e9, ymak = -1e9;
     for(int i = 0; i < size; i++) {
@@ -141,54 +141,72 @@ struct Polygon {
         double l = points[i].y;
         double r = points[j].y;
         if(min(l, r) <= y && y <= max(l, r)) {
-          double la = points[i].x;
-          double ra = points[j].x;
+          pair<double, double> la = MP(points[i].x, points[i].z);
+          pair<double, double> ra = MP(points[j].x, points[j].z);
           if(same(l, r)) {
             a[sz++] = min(la, ra);
             a[sz++] = max(la, ra);
           } else {
-            double d = fabs(l - y)*fabs(la - ra)/fabs(l - r);
-            a[sz++] = la + (la < ra? d : -d);
+            double dx = abs(l - y)*abs(la.first - ra.first)/abs(l - r);
+            double dz = abs(l - y)*abs(la.second - ra.second)/abs(l - r);
+            a[sz++] = MP(la.first + (la.first < ra.first? dx : -dx), 
+                        la.second + (la.second < ra.second? dz : -dz));
           }
         }
       }
       sort(a, a + sz);
       sz = unique(a,a+sz)-a;
       for(int i = 0; i + 1 < sz; i += 2) {
-        fb.hset(MinZ(), y, (int)round(a[i]), (int)round(a[i+1]), warna);
+        int lx = (int)round(a[i].first);
+        int lz = (int)round(a[i].second);
+        int rx = (int)round(a[i+1].first);
+        int rz = (int)round(a[i+1].second);
+        for (int x = lx; x <= rx; ++x) {
+          int z = (int)round(double(rz - lz) * (x - lx) / (rx - lx) ) + lz;
+          fb.set(x, y, z, warna);
+        }
       }
     }
     
-    double bmin = 1e9, bmak = -1e9;
-    for(int i = 0; i < size; i++) {
-      bmin = min(bmin, points[i].x);
-      bmak = max(bmak, points[i].x);
-    }
+    // double bmin = 1e9, bmak = -1e9;
+    // for(int i = 0; i < size; i++) {
+    //   bmin = min(bmin, points[i].x);
+    //   bmak = max(bmak, points[i].x);
+    // }
 
-    for(int b = bmin; b <= bmak; b++) {
-      int sz = 0;
-      for(int i = 0; i < size; i++) {
-        int j = (i + 1) % size;
-        double l = points[i].x;
-        double r = points[j].x;
-        if(min(l, r) <= b && b <= max(l, r)) {
-          double la = points[i].y;
-          double ra = points[j].y;
-          if(same(l, r)) {
-            a[sz++] = min(la, ra);
-            a[sz++] = max(la, ra);
-          } else {
-            double d = abs(l - b)*abs(la - ra)/abs(l - r);
-            a[sz++] = la + (la < ra? d : -d);
-          }
-        }
-      }
-      sort(a, a + sz);
-      sz = unique(a,a+sz)-a;
-      for(int i = 0; i + 1 < sz; i += 2) {
-        fb.vset(MinZ(), b, (int)round(a[i]), (int)round(a[i+1]), warna);
-      }
-    }
+    // for(int b = bmin; b <= bmak; b++) {
+    //   int sz = 0;
+    //   for(int i = 0; i < size; i++) {
+    //     int j = (i + 1) % size;
+    //     double l = points[i].x;
+    //     double r = points[j].x;
+    //     if(min(l, r) <= b && y <= max(l, r)) {
+    //       pair<double, double> la = MP(points[i].y, points[i].z);
+    //       pair<double, double> ra = MP(points[j].y, points[j].z);
+    //       if(same(l, r)) {
+    //         a[sz++] = min(la, ra);
+    //         a[sz++] = max(la, ra);
+    //       } else {
+    //         double dx = abs(l - y)*abs(la.first - ra.first)/abs(l - r);
+    //         double dz = abs(l - y)*abs(la.second - ra.second)/abs(l - r);
+    //         a[sz++] = MP(la.first + (la.first < ra.first? dx : -dx), 
+    //                     la.second + (la.second < ra.second? dz : -dz));
+    //       }
+    //     }
+    //   }
+    //   sort(a, a + sz);
+    //   sz = unique(a,a+sz)-a;
+    //   for(int i = 0; i + 1 < sz; i += 2) {
+    //     int lx = (int)round(a[i].first);
+    //     int lz = (int)round(a[i].second);
+    //     int rx = (int)round(a[i+1].first);
+    //     int rz = (int)round(a[i+1].second);
+    //     for (int x = lx; x <= rx; ++x) {
+    //       int z = (int)round(fabs( double(rz - lz) * (x - lx) / (rx - lx) )) + lz;
+    //       fb.set(x, y, z, warna);
+    //     }
+    //   }
+    // }
 
     if (a != NULL) delete[] a;
     return *this;
@@ -201,7 +219,7 @@ struct Polygon {
   int MinZ() {
     if (minZ != DUMMY) return minZ;
 
-    int Min = DUMMY - 1;              // overflow cycle (min - 1 = max) :P
+    int Min = DUMMY - 1;              // overflow cycle (min - 1 = may) :P
     for(int i = 0; i < size; i++) {
       int rounded = (int)round(points[i].z);
       if(rounded < Min) {
