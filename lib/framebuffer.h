@@ -77,8 +77,8 @@ public:
     fbp = (char*)mmap(0, finfo.smem_len, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, 0);
 
     /* Construct hstack & vstack */
-    hstack = new std::priority_queue<query> [yres];
-    vstack = new std::priority_queue<query> [xres];
+    hstack = new std::priority_queue<query, std::vector<query>, std::greater<query> > [yres];
+    vstack = new std::priority_queue<query, std::vector<query>, std::greater<query> > [xres];
 
     /* initialize visited vector */
     if (visited.empty()) {
@@ -135,9 +135,9 @@ public:
     if (x < 0 || x >= xres || y < 0 || y >= yres) {
       return;
     }
-    color[x][y] = Color(red, green, blue, alpha);
     /* adds to lastSet */
     if (!visited[x][y]) {
+      color[x][y] = Color(red, green, blue, alpha);
       visited[x][y] = 1;
       lastSet.push_back(Point<int>(x, y));
     }
@@ -361,8 +361,8 @@ protected:
   static std::vector<std::vector<int> > visited;
   static std::vector<Point<int> > lastSet;
   static std::vector<std::vector<Color> > color;
-  std::priority_queue<query> *hstack;
-  std::priority_queue<query> *vstack;
+  std::priority_queue<query, std::vector<query>, std::greater<query> > *hstack;
+  std::priority_queue<query, std::vector<query>, std::greater<query> > *vstack;
 };
 
 /* set default values for static variables */
