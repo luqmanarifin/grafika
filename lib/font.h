@@ -25,7 +25,7 @@ struct Font {
           for(int b = 0; b < size_font; b++) {
             int p = x + j * size_font + a;
             int q = y + i * size_font + b;
-            fb.set(p, q, col);
+            fb.set(p, q, 0, col);
           }
         }
       }
