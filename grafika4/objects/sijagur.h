@@ -1,7 +1,7 @@
 #ifndef __SIJAGUR_H_
 #define __SIJAGUR_H_
 
-#include "../../lib/polygon.h" 
+#include <polygon.h> 
 
 struct SiJagur : public Polygon {
   SiJagur() {

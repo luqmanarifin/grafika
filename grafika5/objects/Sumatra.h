@@ -1,7 +1,7 @@
 #ifndef __SUMATRA_H_
 #define __SUMATRA_H_
 
-#include "../../lib/polygon.h" 
+#include <polygon.h> 
 
 struct Sumatra : public Polygon {
   Sumatra() {

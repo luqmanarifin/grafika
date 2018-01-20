@@ -1,7 +1,7 @@
 #ifndef __FLORES_H_
 #define __FLORES_H_
 
-#include "../../lib/polygon.h" 
+#include <polygon.h> 
 
 struct Flores : public Polygon {
   Flores() {

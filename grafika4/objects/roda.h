@@ -1,7 +1,7 @@
 #ifndef __RODA_H_
 #define __RODA_H_
 
-#include "../../lib/polygon.h" 
+#include <polygon.h> 
 
 struct Roda : public Polygon {
   Roda() {

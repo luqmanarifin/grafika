@@ -1,7 +1,7 @@
 #ifndef __SUMBAWA_H_
 #define __SUMBAWA_H_
 
-#include "../../lib/polygon.h" 
+#include <polygon.h> 
 
 struct Sumbawa : public Polygon {
   Sumbawa() {

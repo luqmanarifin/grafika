@@ -4,6 +4,7 @@
 #include <cassert>
 
 #include <bits/stdc++.h>
+
 #include "point.h"
 #include "framebuffer.h"
 #include "line.h"
@@ -128,11 +129,7 @@ struct Polygon {
     print_frame(fb,0,0,0,0);
     pair<double, double>* a = new pair<double, double>[2 * size];
 
-    double ymin = 1e9, ymak = -1e9;
-    for(int i = 0; i < size; i++) {
-      ymin = min(ymin, points[i].y);
-      ymak = max(ymak, points[i].y);
-    }
+    double ymin = MinY(), ymak = MaxY();
 
     for(int y = ymin; y <= ymak; y++) {
       int sz = 0;
@@ -216,10 +213,62 @@ struct Polygon {
   /* Boundaries */
   ////////////////
   
+  int MaxX() {
+    if (maxX != DUMMY) return maxX;
+
+    int Max = DUMMY;              
+    for(int i = 0; i < size; i++) {
+      int rounded = (int)ceil(points[i].x);
+      if(rounded > Max) {
+        Max = rounded;
+      }
+    } 
+    return maxX = Max;
+  }
+
+  int MinX() {
+    if (minX != DUMMY) return minX;
+
+    int Min = DUMMY - 1;              // overflow cycle (min - 1 = max) :P
+    for(int i = 0; i < size; i++) {
+      int rounded = (int)round(points[i].x);
+      if(rounded < Min) {
+        Min = rounded;
+      }
+    } 
+    return minX = Min;
+  }
+
+  int MaxY() {
+    if (maxY != DUMMY) return maxY;
+
+    int Max = DUMMY;              
+    for(int i = 0; i < size; i++) {
+      int rounded = (int)ceil(points[i].y);
+      if(rounded > Max) {
+        Max = rounded;
+      }
+    } 
+    return maxY = Max;
+  }
+
+  int MinY() {
+    if (minY != DUMMY) return minY;
+
+    int Min = DUMMY - 1;              
+    for(int i = 0; i < size; i++) {
+      int rounded = (int)round(points[i].y);
+      if(rounded < Min) {
+        Min = rounded;
+      }
+    } 
+    return minY = Min;
+  }
+
   int MinZ() {
     if (minZ != DUMMY) return minZ;
 
-    int Min = DUMMY - 1;              // overflow cycle (min - 1 = may) :P
+    int Min = DUMMY - 1;              
     for(int i = 0; i < size; i++) {
       int rounded = (int)round(points[i].z);
       if(rounded < Min) {
@@ -280,6 +329,10 @@ struct Polygon {
 private:
   // Memo
   const int DUMMY = 0x80000000;
+  int maxX = DUMMY;
+  int minX = DUMMY;
+  int maxY = DUMMY;
+  int minY = DUMMY;
   int minZ = DUMMY;
 };
 

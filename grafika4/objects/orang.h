@@ -1,7 +1,7 @@
 #ifndef __ORANG_H_
 #define __ORANG_H_
 
-#include "../../lib/polygon.h" 
+#include <polygon.h> 
 
 struct Orang : public Polygon {
   Orang() {

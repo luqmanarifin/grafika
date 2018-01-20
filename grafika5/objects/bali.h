@@ -1,7 +1,7 @@
 #ifndef __BALI_H_
 #define __BALI_H_
 
-#include "../../lib/polygon.h" 
+#include <polygon.h> 
 
 struct Bali : public Polygon {
   Bali() {

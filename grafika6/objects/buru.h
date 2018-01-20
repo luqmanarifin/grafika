@@ -1,7 +1,7 @@
 #ifndef __BURU_H_
 #define __BURU_H_
 
-#include "../../lib/polygon.h" 
+#include <polygon.h> 
 
 struct Buru : public Polygon {
   Buru() {

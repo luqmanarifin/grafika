@@ -1,7 +1,7 @@
 #ifndef __Halmahera_H_
 #define __Halmahera_H_
 
-#include "../../lib/polygon.h" 
+#include <polygon.h> 
 
 struct Halmahera : public Polygon {
   Halmahera() {

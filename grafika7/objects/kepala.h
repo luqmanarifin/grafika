@@ -1,7 +1,7 @@
 #ifndef __Kepala_H_
 #define __Kepala_H_
 
-#include "../../lib/polygon.h" 
+#include <polygon.h> 
 
 struct Kepala : public Polygon {
   Kepala() {

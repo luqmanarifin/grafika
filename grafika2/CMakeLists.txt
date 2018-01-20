@@ -1,0 +1,1 @@
+add_executable (grafika2 grafika2.cpp)

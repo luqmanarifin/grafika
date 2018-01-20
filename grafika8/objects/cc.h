@@ -1,7 +1,7 @@
 #ifndef __gedung_H_
 #define __gedung_H_
 
-#include "../../lib/shape.h" 
+#include <shape.h> 
 struct atap_labtek : public Shape {
   int x,s,y,z;
   atap_labtek (int _x,int _y, int _z, int _s, int h,int mode){

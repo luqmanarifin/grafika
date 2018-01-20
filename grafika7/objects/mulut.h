@@ -1,7 +1,7 @@
 #ifndef __Mulut_H_
 #define __Mulut_H_
 
-#include "../../lib/polygon.h" 
+#include <polygon.h> 
 
 struct Mulut : public Polygon {
   Mulut() {

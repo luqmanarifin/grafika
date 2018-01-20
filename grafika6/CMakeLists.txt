@@ -1,0 +1,1 @@
+add_executable (grafika6 main.cpp)

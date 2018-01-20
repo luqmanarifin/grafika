@@ -1,7 +1,7 @@
 #ifndef __Pau_H_
 #define __Pau_H_
 
-#include "../../lib/shape.h" 
+#include <shape.h> 
 struct Pau : public Shape {
 	Pau(){
  // bawah

@@ -1,15 +1,16 @@
+#include <bits/stdc++.h>
+#include <unistd.h>
+
 #include "../lib/curve.h"
 #include "../lib/polygon.h"
 #include "../lib/line.h"
 #include "../lib/conio2.h"
 #include "../lib/font.h"
+
 #include "objects/pln.h"
 #include "objects/gedung.h"
 #include "objects/perpus.h"
 #include "objects/aulabarattimur.h"
-#include <bits/stdc++.h>
-#include <unistd.h>
-
 
 using namespace std;
 FrameBuffer fb;

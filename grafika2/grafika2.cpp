@@ -3,11 +3,14 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "../lib/conio2.h"
-//#include "../lib/bitmap.h"
-#include "../lib/framebuffer.h"
+
+#include <conio2.h>
+//#include <bitmap.h>
+#include <framebuffer.h>
 #include <pthread.h>
+
 using namespace std;
+
 int px,py;
 FrameBuffer fb;
 int targetx,tembakanx;
@@ -16,20 +19,20 @@ void borderedRectangle(int x1, int y1, int x2, int y2,
 {
   for (int x = x1; x <= x2; ++x) {
     for (int y = -width; y <= width; ++y) {
-      fb.set(x, y1 + y, p);
-      fb.set(x, y2 + y, p);
+      fb.set(x, y1 + y, 0, p);
+      fb.set(x, y2 + y, 0, p);
     }
   }
   for (int y = y1; y <= y2; ++y) {
     for (int x = -width; x <= width; ++x) {
-      fb.set(x + x1, y, p);
-      fb.set(x + x2, y, p);
+      fb.set(x + x1, y, 0, p);
+      fb.set(x + x2, y, 0, p);
     }
   }
 }
 
 void setWarna(int x, int y) {
-  fb.set(x, y, 100, 15+(x-100)/2, 200-(y-100)/5, 0);
+  fb.set(x, y, 0, 100, 15+(x-100)/2, 200-(y-100)/5, 0);
 } 
 /**
  * MULAI ICAL EDIT

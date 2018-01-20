@@ -1,7 +1,7 @@
 #ifndef __BELAKANG_H_
 #define __BELAKANG_H_
 
-#include "../../lib/polygon.h" 
+#include <polygon.h> 
 
 struct Belakang : public Polygon {
   Belakang() {

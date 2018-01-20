@@ -1,5 +1,7 @@
-#include "../lib/polygon.h"
 #include <iostream>
+
+#include <polygon.h>
+
 using namespace std;
 
 FrameBuffer fb;
@@ -224,7 +226,7 @@ void init() {
   for(int i = 0; i < 5; i++) {
     for(int j = 0; j < names[i].size(); j++) {
       words[i][j] = new Polygon(*proto[names[i][j] - 'A']);
-      words[i][j]->resize(Point(300, 400), 0.1);
+      words[i][j]->resize(0.1, Point<double>(300, 400));
       words[i][j]->move(-100+j*80, -300+(i*70));
     }
   }
@@ -239,7 +241,7 @@ void print(){
 void resize_move(float skala){
   for(int i = 0; i < 5; i++) {
     for(int j = 0; j < names[i].size(); j++) {
-      words[i][j]->resize(Point(400, 200), skala);
+      words[i][j]->resize(skala, Point<double>(400, 200));
     }
   }
 }

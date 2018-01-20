@@ -1,7 +1,9 @@
-#include "../lib/polygon.h"
 #include <iostream>
 #include <unistd.h>
-#include "../lib/conio2.h"
+
+#include <polygon.h>
+#include <conio2.h>
+
 #include "objects/belakang.h"
 #include "objects/window.h"
 #include "objects/Indonesia.h"

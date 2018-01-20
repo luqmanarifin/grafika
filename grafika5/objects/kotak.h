@@ -1,7 +1,7 @@
 #ifndef __KOTAK_H_
 #define __KOTAK_H_
 
-#include "../../lib/polygon.h" 
+#include <polygon.h> 
 
 struct Kotak : public Polygon {
   Kotak(Point<double> a, Point<double> b) {

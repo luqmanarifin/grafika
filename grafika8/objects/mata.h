@@ -1,7 +1,7 @@
 #ifndef __Mata_H_
 #define __Mata_H_
 
-#include "../../lib/polygon.h" 
+#include <polygon.h> 
 
 struct Matakiri : public Polygon {
   Matakiri() {

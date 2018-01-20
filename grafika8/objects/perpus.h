@@ -1,7 +1,7 @@
 #ifndef __Perpus_H_
 #define __Perpus_H_
 
-#include "../../lib/shape.h" 
+#include <shape.h> 
 struct Perpus : public Shape {
 	Perpus(){
     addPolygon(Polygon()

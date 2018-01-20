@@ -1,7 +1,8 @@
-#include "../lib/polygon.h"
 #include <iostream>
 #include <unistd.h>
-#include "../lib/conio2.h"
+
+#include <polygon.h>
+#include <conio2.h>
 
 #include "objects/baling.h"
 #include "objects/belakang.h"
@@ -13,7 +14,9 @@
 #include "objects/roda.h"
 #include "objects/boom.h"
 #include "objects/parachute.h"
+
 using namespace std;
+
 int targetx, tembakanx;
 int boolrubah, booltembak=0,tertembak=0;
 FrameBuffer fb;
@@ -134,9 +137,9 @@ int main() {
       p3->print(fb);p3->setColor(0,0,0,alpa);
       if(booltembak==1){
         for(int j=tembakanx-19;j<tembakanx+19;j++)
-          line(j+34,600,targetx+j-tembakanx,0,Color(190,26,31)).print(fb); 
+          line(j+34,600,0,targetx+j-tembakanx,0,0,Color(190,26,31)).print(fb); 
          for(int j=tembakanx-10;j<tembakanx+10;j++)
-          line(j+34,600,targetx+j-tembakanx,0,Color(235,215,0)).print(fb); 
+          line(j+34,600,0,targetx+j-tembakanx,0,0,Color(235,215,0)).print(fb); 
         waktutembak++;
         meriam->print(fb);meriam->setColor(192,192,192,alpa);
         if(waktutembak==6){
@@ -148,7 +151,7 @@ int main() {
       }
       else{
         for(int j=tembakanx-3;j<tembakanx+3;j++)
-          line(targetx+j-tembakanx,70,targetx+j-tembakanx,77,Color(173,26,31)).print(fb); 
+          line(targetx+j-tembakanx,70,0,targetx+j-tembakanx,77,0,Color(173,26,31)).print(fb); 
        }
       meriam->print(fb);meriam->setColor(192,192,192,alpa);
       usleep(50000);

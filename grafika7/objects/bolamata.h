@@ -1,7 +1,7 @@
 #ifndef __Bolamata_H_
 #define __Bolamata_H_
 
-#include "../../lib/polygon.h" 
+#include <polygon.h> 
 
 /*
 struct Bolamata : public Polygon {

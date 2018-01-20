@@ -1,7 +1,7 @@
 #ifndef __WINDOW_H_
 #define __WINDOW_H_
 
-#include "../../lib/polygon.h" 
+#include <polygon.h> 
 
 struct Window : public Polygon {
   Window(int a, int b) {

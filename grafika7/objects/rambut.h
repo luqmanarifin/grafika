@@ -1,7 +1,7 @@
 #ifndef __Rambut_H_
 #define __Rambut_H_
 
-#include "../../lib/polygon.h" 
+#include <polygon.h> 
 
 struct Rambut : public Polygon {
   Rambut() {

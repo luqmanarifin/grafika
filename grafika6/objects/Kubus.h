@@ -1,7 +1,7 @@
 #ifndef __KUBUS_H_
 #define __KUBUS_H_
 
-#include "../../lib/polygon.h" 
+#include <polygon.h> 
 struct Kubus : public Polygon {
   Kubus(double x,double y, int s) {
     /*addPoint(Point<double>(x,y,0));

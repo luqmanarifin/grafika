@@ -1,7 +1,7 @@
 #ifndef __PELURU_H_
 #define __PELURU_H_
 
-#include "../../lib/polygon.h" 
+#include <polygon.h> 
 
 struct Peluru : public Polygon {
   Peluru() {

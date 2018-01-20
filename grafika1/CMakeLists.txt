@@ -1,0 +1,1 @@
+add_executable (grafika1 coba.cpp)

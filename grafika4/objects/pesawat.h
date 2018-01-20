@@ -1,7 +1,7 @@
 #ifndef __PESAWAT_H_
 #define __PESAWAT_H_
 
-#include "../../lib/polygon.h" 
+#include <polygon.h> 
 
 struct Pesawat : public Polygon {
   Pesawat() {

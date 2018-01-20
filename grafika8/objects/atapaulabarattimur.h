@@ -1,7 +1,7 @@
 #ifndef __AulaBaratTimur_H_
 #define __AulaBaratTimur_H_
 
-#include "../../lib/shape.h" 
+#include <shape.h> 
 struct AtapAulaBaratTimur : public Shape {
 	AtapAulaBaratTimur(){
 	//Lantai Satu

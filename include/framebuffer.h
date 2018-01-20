@@ -1,5 +1,5 @@
 // Copyright by @azaky (azaky.github.io)
-// Modified by @icalF (icalicul.me) and @luqmanarifin (luqmanarifin.github.io)
+// Modified by @icalF (icalf.github.io) and @luqmanarifin (luqmanarifin.github.io)
 
 #ifndef FRAMEBUFFER_H
 #define FRAMEBUFFER_H

@@ -1,10 +1,12 @@
-#include "../lib/curve.h"
-#include "../lib/polygon.h"
-#include "../lib/line.h"
-#include "../lib/conio2.h"
-#include "objects/wajah.h"
-#include <bits/stdc++.h>
 #include <unistd.h>
+#include <bits/stdc++.h>
+
+#include <curve.h>
+#include <polygon.h>
+#include <line.h>
+#include <conio2.h>
+
+#include "objects/wajah.h"
 
 using namespace std;
 FrameBuffer fb;

@@ -1,7 +1,7 @@
 #ifndef __JAWA_H_
 #define __JAWA_H_
 
-#include "../../lib/polygon.h" 
+#include <polygon.h> 
 
 struct Jawa : public Polygon {
   Jawa() {

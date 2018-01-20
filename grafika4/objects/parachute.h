@@ -1,7 +1,7 @@
 #ifndef __PARACHUTE_H_
 #define __PARACHUTE_H_
 
-#include "../../lib/polygon.h" 
+#include <polygon.h> 
 
 struct Parachute : public Polygon {
   Parachute() {

@@ -1,7 +1,7 @@
 #ifndef __BOOM_H_
 #define __BOOM_H_
 
-#include "../../lib/polygon.h" 
+#include <polygon.h> 
 
 struct Boom : public Polygon {
   Boom() {

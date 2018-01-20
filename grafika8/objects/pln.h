@@ -1,7 +1,7 @@
 #ifndef __Pln_H_
 #define __Pln_H_
 
-#include "../../lib/shape.h" 
+#include <shape.h> 
 
 struct Pln : public Shape {
   int x,s,y,z;

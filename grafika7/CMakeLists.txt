@@ -1,0 +1,1 @@
+add_executable (grafika7 main.cpp)
