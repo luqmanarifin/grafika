@@ -2,6 +2,8 @@
 #define POINT_H__
 
 #include <bits/stdc++.h>
+#include <geo.h>
+
 using namespace std;
 
 const double eps = 1e-2;
@@ -70,9 +72,9 @@ public:
     *this -= center;
     Point<T> temp = *this;
 
-    double radX = degreeX * 3.14159265358979323846 / 180.0 *0.9999;
-    double radY = degreeY * 3.14159265358979323846 / 180.0 *0.9999;
-    double radZ = degreeZ * 3.14159265358979323846 / 180.0 *0.9999;
+    double radX = degToRad(degreeX);
+    double radY = degToRad(degreeY);
+    double radZ = degToRad(degreeZ);
 
     // depend on which axis
     // versi cacat
