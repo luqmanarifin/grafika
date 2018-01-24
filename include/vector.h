@@ -2,7 +2,7 @@
 #define _VECTOR_H 1
 
 #include <cmath>
-#include "point.h"
+#include <point.h>
 using namespace std;
 
 template<class T>

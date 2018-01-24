@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 2.8.11)
 project (GRAFIKA)
 
-include_directories(include)
+include_directories(${CMAKE_SOURCE_DIR}/include)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -20,12 +20,14 @@ endif()
 # Add link dependencies recursively
 macro (add_executable _name)
     # invoke built-in add_executable
+    add_definitions(${grafika_DEFINITIONS})
     _add_executable(${ARGV})
     if (TARGET ${_name})
-        target_link_libraries (${_name} ${CMAKE_THREAD_LIBS_INIT})
+        target_link_libraries (${_name} grafika ${CMAKE_THREAD_LIBS_INIT})
     endif()
 endmacro()
 
+add_subdirectory (common)
 add_subdirectory (grafika1)
 add_subdirectory (grafika2)
 add_subdirectory (grafika3)
