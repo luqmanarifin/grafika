@@ -69,9 +69,8 @@ struct Polygon {
   }
   Polygon& addCurve(curve c)
   {
-    for (vector< Point<double> >::iterator i = c.points.begin(); i != c.points.end(); ++i)
+    for (auto d : c.points)
     {
-      Point<double> d = *i;
       if (size > 0) {
         if (points[size - 1] != d) {
           addPoint(d);
@@ -117,10 +116,10 @@ struct Polygon {
   ///////////
   
   Polygon& print_frame(FrameBuffer& fb, int red, int green, int blue, int alpha) {
-    for(int i = 0; i < size; i++) {
-      int j = (i + 1) % size;
+    // for(int i = 0; i < size; i++) {
+      // int j = (i + 1) % size;
       // line((int) points[i].x, (int) points[i].y, (int) points[j].x, (int) points[j].y, Color(red, green, blue, alpha)).print(fb);
-    }
+    // }
     return *this;
   }
 
